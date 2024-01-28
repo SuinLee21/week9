@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../css/profileEdit.css">
+</head>
+
+<body>
+    <form class="profileEditForm">
+        <input class="profileEditFormChild" placeholder="qwer1234" disabled>
+        <input type="password" id="userPw" class="profileEditFormChild" name="userPw" placeholder="비밀번호(영어+숫자+특수문자, 각 최소 1개 이상, 8~16글자)
+        ">
+        <input type="text" id="userName" class="profileEditFormChild" name="userName" placeholder="이름(2~10글자)
+        ">
+        <input type="text" id="userPhoneNum" class="profileEditFormChild" name="userPhoneNum" placeholder="전화번호"
+            oninput="autoHyphenateEvent(event)">
+        <input type="submit" class="profileEditFormChild profileEditFormSubmit" value="회원가입">
+        <button class="profileEditFormChild profileEditFormButton">회원탈퇴</button>
+    </form>
+
+    <img id="viewImg" class="viewImg" src="../img/view.jpg" onclick="conversionEvent()">
+
+    <script src="../js/accountManager.js"></script>
+</body>
+
+</html>

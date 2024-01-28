@@ -3,13 +3,13 @@ body {
     padding: 0;
 }
 
-.signUpForm {
+.profileEditForm {
     width: 550px;
     margin: 150px auto 0 auto;
     position: relative;
 }
 
-.signUpFormChild {
+.profileEditFormChild {
     font-size: 18px;
     width: 100%;
     height: 100px;
@@ -19,17 +19,16 @@ body {
     padding: 10px;
 }
 
-.signUpFormSubmit {
+.profileEditFormSubmit {
     background-color: rgb(68, 114, 196);
     font-size: 20px;
     color: white;
 }
 
-.duplicateCheck {
-    position: absolute;
-    top: 190px;
-    right: 590px;
-    font-size: 15px;
+.profileEditFormButton {
+    background-color: red;
+    font-size: 20px;
+    color: white;
 }
 
 .viewImg {

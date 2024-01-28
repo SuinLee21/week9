@@ -3,13 +3,12 @@ body {
     padding: 0;
 }
 
-.signUpForm {
+.findPwForm {
     width: 550px;
     margin: 150px auto 0 auto;
-    position: relative;
 }
 
-.signUpFormChild {
+.findPwFormChild {
     font-size: 18px;
     width: 100%;
     height: 100px;
@@ -19,23 +18,8 @@ body {
     padding: 10px;
 }
 
-.signUpFormSubmit {
+.findPwFormSubmit {
     background-color: rgb(68, 114, 196);
     font-size: 20px;
     color: white;
-}
-
-.duplicateCheck {
-    position: absolute;
-    top: 190px;
-    right: 590px;
-    font-size: 15px;
-}
-
-.viewImg {
-    position: absolute;
-    top: 310px;
-    right: 590px;
-    width: 30px;
-    cursor: pointer;
 }
