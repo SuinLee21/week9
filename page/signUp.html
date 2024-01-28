@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link rel="stylesheet" type="text/css" href="../css/signUp.css">
+</head>
+
+<body>
+    <form class="signUpForm">
+        <input type="text" id="userId" class="signUpFormChild" name="userId" placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12 글자)
+        ">
+        <input type="password" id="userPw" class="signUpFormChild" name="userPw" placeholder="비밀번호(영어+숫자+특수문자, 각 최소 1개 이상, 8~16글자)
+        ">
+        <input type="text" id="userName" class="signUpFormChild" name="userName" placeholder="이름(2~10글자)
+        ">
+        <input type="text" id="userPhoneNum" class="signUpFormChild" name="userPhoneNum" placeholder="전화번호"
+            oninput="autoHyphenateEvent()">
+        <input type="submit" class="signUpFormChild signUpFormSubmit" value="회원가입">
+    </form>
+
+    <button class="duplicateCheck">중복체크</button>
+    <img id="viewImg" class="viewImg" src="../img/view.jpg" onclick="conversionEvent()">
+
+    <!-- <script src="../../js/7weeks/checkValidity.js"></script> -->
+    <script src="../js/accountManager.js"></script>
+</body>
+
+</html>

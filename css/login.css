@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.loginForm {
+    width: 550px;
+    margin: 150px auto 0 auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 45px;
+    margin: 0 0 35px 0;
+}
+
+.loginFormChild {
+    font-size: 18px;
+    width: 100%;
+    height: 100px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    margin: 0 0 20px 0;
+    padding: 10px;
+}
+
+.loginFormSubmit {
+    background-color: rgb(68, 114, 196);
+    font-size: 20px;
+    color: white;
+}
+
+.loginFormLink {
+    display: inline-block;
+    width: 32%;
+}
+
+.buttonLeft {
+    text-align: left;
+}
+
+.buttonCenter {
+    text-align: center;
+}
+
+.buttonRight {
+    text-align: right;
+}
