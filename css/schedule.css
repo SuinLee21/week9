@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    position: relative;
 }
 
 nav {
@@ -96,4 +97,108 @@ main {
     width: 40px;
     height: 0px;
     background-color: red;
+}
+
+/* modal */
+
+.modal {
+    overflow-y: scroll;
+    position: absolute;
+    top: 70px;
+    left: 500px;
+    background-color: white;
+    width: 700px;
+    height: 722px;
+    border: 1px solid;
+    text-align: center;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.scheduleSection {
+    display: flex;
+    height: 60px;
+    /* align-items: center; */
+    margin: 0 5px 10px 5px;
+}
+
+.schedule {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid;
+    /* height: 100%; */
+    flex-grow: 1;
+    font-size: 18px;
+}
+
+.hiddenSchedule {
+    flex-grow: 1;
+    display: flex;
+    display: none;
+}
+
+.modifySelect {
+    width: 35px;
+}
+
+.modifyTextarea {
+    flex-grow: 1;
+}
+
+.scheduleText {
+    flex-grow: 1;
+    font-size: 16px;
+}
+
+.scheduleTime {
+    text-align: left;
+    width: 100px;
+    /* font-size: 18px; */
+}
+
+.modify {
+    width: 30px;
+    color: gray;
+    font-size: 14px;
+    margin: 5px;
+}
+
+.delete {
+    width: 30px;
+    color: gray;
+    font-size: 14px;
+    margin: 5px;
+}
+
+.scheduleWritingSection {
+    position: fixed;
+    display: flex;
+    bottom: 15px;
+    width: 700px;
+    height: 80px;
+    background-color: white;
+    margin: 10px 0 10px 0;
+}
+
+.writeSelect {
+    width: 40px;
+    font-size: 20px;
+}
+
+.scheduleInput {
+    flex-grow: 1;
+    font-size: 20px;
+}
+
+.submitButton {
+    width: 100px;
+    background-color: rgb(68, 114, 196);
+    font-size: 20px;
 }

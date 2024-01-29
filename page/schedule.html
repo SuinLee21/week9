@@ -25,13 +25,41 @@
         <div id="monthSection" class="monthSection"></div>
     </main>
 
-    <div>
-        <div>
-            정적데이터입니다.
+    <div id="modal" class="modal">
+        <h1>할 일</h1>
+        <div class="closeButton" onclick="modalCloseEvent()">X</div>
+        <div class="scheduleSection">
+            <div id="divSchedule" class="schedule">
+                <div class="scheduleTime">14시 39분</div>
+                <h2 class="scheduleText">정적데이터입니다.</h2>
+            </div>
+            <div id="hiddenSchedule" class="hiddenSchedule">
+                <select id="modifyHourSelect" class="modifySelect">
+                    <option value="">시</option>
+                </select>
+                <select id="modifyMinuteSelect" class="modifySelect">
+                    <option value="">분</option>
+                </select>
+                <textarea maxlength="100" id="modifyTextarea" class="modifyTextarea"></textarea>
+            </div>
+            <div class="modify" onclick="modifyEvent(event)">수정</div>
+            <div class="delete">삭제</div>
+        </div>
+        <div class="scheduleWritingSection">
+            <select id="writeHourSelect" class="writeSelect">
+                <option value="">시</option>
+            </select>
+            <select id="writeMinuteSelect" class="writeSelect">
+                <option value="">분</option>
+            </select>
+            <textarea maxlength="100" class="scheduleInput" placeholder="내용을 입력하세요.(100자 이하)"></textarea>
+            <input type="submit" class="submitButton" value="작성">
         </div>
     </div>
 
     <script src="../js/createCalendar.js"></script>
+    <script src="../js/createSchedule.js"></script>
+    <script src="../js/functions.js"></script>
 </body>
 
 </html>
