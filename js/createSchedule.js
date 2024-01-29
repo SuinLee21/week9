@@ -72,3 +72,25 @@ function createSchedule() {
     createHourSelect.appendChild(createHourOption);
     createMinuteSelect.appendChild(createMinuteOption);
 }
+
+function createOption(hourSelectId, minuteSelectId) {
+    var hourSelect = document.getElementById(hourSelectId);
+    var minuteSelect = document.getElementById(minuteSelectId);
+
+    for (i = 1; i <= 23; i++) {
+        var createOption = document.createElement('option');
+
+        createOption.setAttribute('value', `${i}`);
+        createOption.innerText = i;
+
+        hourSelect.appendChild(createOption);
+    }
+    for (i = 1; i <= 59; i++) {
+        var createOption = document.createElement('option');
+
+        createOption.setAttribute('value', `${i}`);
+        createOption.innerText = i;
+
+        minuteSelect.appendChild(createOption);
+    }
+}

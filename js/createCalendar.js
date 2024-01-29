@@ -1,4 +1,5 @@
 var date = new Date();
+var keepPreviousMonthId = "";
 
 function createMonth() {
     var monthSectionId = document.getElementById('monthSection');
@@ -6,12 +7,15 @@ function createMonth() {
     for (i = 1; i <= 12; i++) {
         var createButton = document.createElement('button');
 
+        createButton.setAttribute('id', `monthButton${i}`);
         createButton.setAttribute('class', 'monthButton');
         createButton.setAttribute('onclick', 'createDayEvent(event)');
         createButton.innerText = i;
 
         monthSectionId.appendChild(createButton);
     }
+    keepPreviousMonthId = document.getElementById('monthButton' + String(date.getMonth() + 1));
+    keepPreviousMonthId.style.backgroundColor = "rgb(218, 227, 243)";
 }
 
 function createDay(lastDay) {
@@ -32,7 +36,10 @@ function createDay(lastDay) {
         var createTextDiv = document.createElement('div');
         // var createScheduleDiv = document.createElement('div');
 
+        createDivChild.setAttribute('id', `day${i}`);
         createDivChild.setAttribute('class', 'day');
+        createDivChild.setAttribute('onclick', 'openModalEvent(event)')
+
         createTextDiv.setAttribute('class', 'dayText');
         // createScheduleDiv.setAttribute('class', 'scheduleCount');
 
@@ -68,6 +75,12 @@ function getLastDay(month) {
 
 function createDayEvent(e) {
     getLastDay(parseInt(e.target.innerText));
+
+    if (e.target != keepPreviousMonthId) {
+        keepPreviousMonthId.style.backgroundColor = "white";
+        keepPreviousMonthId = e.target;
+        e.target.style.backgroundColor = "rgb(218, 227, 243)";
+    }
 }
 
 createMonth();

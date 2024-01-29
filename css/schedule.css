@@ -83,6 +83,7 @@ main {
     flex-direction: column;
     /* justify-content: space-between; */
     border: 1px solid;
+    cursor: pointer;
 }
 
 .dayText {

@@ -1,26 +1,28 @@
+var keepPreviousDayId = document.getElementById('day' + String(date.getDate()));
 var keepScheduleSectionId = "";
 var keepDivScheduleId = "";
 var keepHiddenScheduleId = "";
+keepPreviousDayId.style.backgroundColor = "rgb(218, 227, 243)";
 
-function createOption(hourSelectId, minuteSelectId) {
-    var hourSelect = document.getElementById(hourSelectId);
-    var minuteSelect = document.getElementById(minuteSelectId);
+function yearMinusEvent() {
+    var year = document.getElementById('year');
+    var yearValue = parseInt(year.innerText) - 1;
+    year.innerText = yearValue;
+}
 
-    for (i = 1; i <= 23; i++) {
-        var createOption = document.createElement('option');
+function yearPlusEvent() {
+    var year = document.getElementById('year');
+    var yearValue = parseInt(year.innerText) + 1;
+    year.innerText = yearValue;
+}
 
-        createOption.setAttribute('value', `${i}`);
-        createOption.innerText = i;
+function openModalEvent(e) {
+    document.getElementById('modal').style.display = "block";
 
-        hourSelect.appendChild(createOption);
-    }
-    for (i = 1; i <= 59; i++) {
-        var createOption = document.createElement('option');
-
-        createOption.setAttribute('value', `${i}`);
-        createOption.innerText = i;
-
-        minuteSelect.appendChild(createOption);
+    if (e.target != keepPreviousDayId) {
+        keepPreviousDayId.style.backgroundColor = "white";
+        keepPreviousDayId = e.target;
+        e.target.style.backgroundColor = "rgb(218, 227, 243)";
     }
 }
 
