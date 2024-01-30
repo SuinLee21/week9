@@ -5,24 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignUp</title>
-    <link rel="stylesheet" type="text/css" href="../css/signUp.css">
+    <link rel="stylesheet" type="text/css" href="../css/accountManager.css">
 </head>
 
 <body>
-    <form class="signUpForm">
-        <input type="text" id="userId" class="signUpFormChild" name="userId" placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12 글자)
-        ">
-        <input type="password" id="userPw" class="signUpFormChild" name="userPw" placeholder="비밀번호(영어+숫자+특수문자, 각 최소 1개 이상, 8~16글자)
-        ">
-        <input type="text" id="userName" class="signUpFormChild" name="userName" placeholder="이름(2~10글자)
-        ">
-        <input type="text" maxlength="13" id="userPhoneNum" class="signUpFormChild" name="userPhoneNum"
-            placeholder="전화번호" oninput="phoneNumberInputEvent(event)">
-        <input type="submit" class="signUpFormChild signUpFormSubmit" value="회원가입">
+    <form class="accountForm">
+        <div class="idInputParent">
+            <input type="text" id="userId" class="accountFormChild" name="userId"
+                placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12 글자)">
+            <button class="duplicateCheck" onclick="openPopUpEvent()">중복체크</button>
+        </div>
+        <div class="pwInputParent">
+            <input type="password" id="userPw" class="accountFormChild" name="userPw"
+                placeholder="비밀번호(영어+숫자+특수문자, 각 최소 1개 이상, 8~16글자)">
+            <img id="viewImg" class="viewImg" src="../img/view.jpg" onclick="conversionEvent()">
+        </div>
+        <div>
+            <input type="text" id="userName" class="accountFormChild" name="userName" placeholder="이름(2~10글자)">
+        </div>
+        <div>
+            <input type="text" maxlength="13" id="userPhoneNum" class="accountFormChild" name="userPhoneNum"
+                placeholder="전화번호" oninput="phoneNumberInputEvent(event)">
+        </div>
+        <input type="submit" class="accountFormChild accountFormSubmit" value="회원가입">
     </form>
-
-    <button class="duplicateCheck">중복체크</button>
-    <img id="viewImg" class="viewImg" src="../img/view.jpg" onclick="conversionEvent()">
 
     <!-- <script src="../../js/7weeks/checkValidity.js"></script> -->
     <script src="../js/accountManager.js"></script>

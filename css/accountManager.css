@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.accountForm {
+    width: 550px;
+    margin: 150px auto 0 auto;
+}
+
+.accountFormChild {
+    font-size: 18px;
+    width: 100%;
+    height: 100px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    margin: 0 0 20px 0;
+    padding: 10px;
+}
+
+.accountFormSubmit {
+    background-color: rgb(68, 114, 196);
+    font-size: 20px;
+    color: white;
+}
+
+/* login */
+
+.title {
+    text-align: center;
+    font-size: 45px;
+    margin: 0 0 35px 0;
+}
+
+.loginFormLink {
+    display: inline-block;
+    width: 32%;
+}
+
+.buttonLeft {
+    text-align: left;
+}
+
+.buttonCenter {
+    text-align: center;
+}
+
+.buttonRight {
+    text-align: right;
+}
+
+/* signUp, profileEdit */
+
+.idInputParent {
+    position: relative;
+}
+
+.pwInputParent {
+    position: relative;
+}
+
+.duplicateCheck {
+    position: absolute;
+    top: 35px;
+    right: 10px;
+    font-size: 15px;
+}
+
+.viewImg {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    width: 30px;
+    cursor: pointer;
+}
+
+/* profileEdit */
+
+.withdrawalButton {
+    background-color: red;
+    font-size: 20px;
+    color: white;
+}

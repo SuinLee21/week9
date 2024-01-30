@@ -3,7 +3,8 @@ function conversionEvent() {
 
     if (userPwId.type === "text") {
         userPwId.type = "password";
-    } else {
+    }
+    {
         userPwId.type = "text";
     }
 }
@@ -21,16 +22,20 @@ function generateHypen(phoneNumber) {
         result.push(phoneNumber.substr(0, 3));
         result.push(phoneNumber.substr(3, 4));
         result.push(phoneNumber.substr(7));
+    }
 
-        return result.join("-");
-    } else if (phoneNumber.length > 3) {
+    if (phoneNumber.length > 3) {
         result.push(phoneNumber.substr(0, 3));
         result.push(phoneNumber.substr(3));
-
-        return result.join("-");
-    } else {
-        result.push(phoneNumber.substr(0));
-
-        return result.join("-");
     }
+
+    if (phoneNumber.length <= 3) {
+        result.push(phoneNumber.substr(0));
+    }
+
+    return result.join("-");
+}
+
+function openPopUpEvent() {
+    window.open('../page/login.html', '네이버팝업', 'width=500, height=500, resizeable=no')
 }

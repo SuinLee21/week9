@@ -5,18 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FindId</title>
-    <link rel="stylesheet" type="text/css" href="../css/findId.css">
+    <link rel="stylesheet" type="text/css" href="../css/accountManager.css">
 </head>
 
 <body>
-    <form class="findIdForm">
-        <input type="text" id="userName" class="findIdFormChild" name="userName"
-            placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12 글자)">
-        <input type="text" id="userPhoneNum" class="findIdFormChild" name="userPhoneNum" placeholder="전화번호">
-        <input type="submit" class="findIdFormChild findIdFormSubmit" value="아이디 찾기">
+    <form class="accountForm">
+        <div>
+            <input type="text" id="userName" class="accountFormChild" name="userName"
+                placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12 글자)">
+        </div>
+        <div>
+            <input maxlength="13" type="text" id="userPhoneNum" class="accountFormChild" name="userPhoneNum"
+                placeholder="전화번호" oninput="phoneNumberInputEvent(event)">
+        </div>
+        <div>
+            <input type="submit" class="accountFormChild accountFormSubmit" value="아이디 찾기">
+        </div>
     </form>
 
-    <script src="../../js/7weeks/checkValidity.js"></script>
+    <!-- <script src="../../js/7weeks/checkValidity.js"></script> -->
+    <script src="../js/accountManager.js"></script>
 </body>
 
 </html>

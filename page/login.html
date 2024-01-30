@@ -5,23 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link rel="stylesheet" type="text/css" href="../css/accountManager.css">
 </head>
 
 <body>
 
-    <form class="loginForm">
+    <form class="accountForm">
         <div class="title">schduler</div>
-        <input type="text" id="userId" class="loginFormChild" name="userId" placeholder="아이디(영어+숫자, 각 최소 1개 이상,8~12글자)">
-        <input type="password" id="userPw" class="loginFormChild" name="userPw"
-            placeholder="비밀번호(영어+숫자+특수문자, 각 최소 1개 이상, 8~16글자)">
-        <input type="submit" class="loginFormChild loginFormSubmit" value="로그인">
+        <div>
+            <input type="text" id="userId" class="accountFormChild" name="userId"
+                placeholder="아이디(영어+숫자, 각 최소 1개 이상,8~12글자)">
+        </div>
+        <div>
+            <input type="password" id="userPw" class="accountFormChild" name="userPw"
+                placeholder="비밀번호(영어+숫자+특수문자, 각 최소 1개 이상, 8~16글자)">
+        </div>
+        <div>
+            <input type="submit" class="accountFormChild accountFormSubmit" value="로그인">
+        </div>
         <a href="findId.html" class="loginFormLink buttonLeft">아이디 찾기</a>
         <a href="findPw.html" class="loginFormLink buttonCenter">비밀번호 찾기</a>
         <a href="signUp.html" class="loginFormLink buttonRight">회원가입</a>
     </form>
 
     <!-- <script src="../../js/7weeks/checkValidity.js"></script> -->
+    <script src="../js/accountManager.js"></script>
 </body>
 
 </html>

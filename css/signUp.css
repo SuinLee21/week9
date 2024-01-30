@@ -9,6 +9,14 @@ body {
     position: relative;
 }
 
+.idInputParent {
+    position: relative;
+}
+
+.pwInputParent {
+    position: relative;
+}
+
 .signUpFormChild {
     font-size: 18px;
     width: 100%;
@@ -27,15 +35,15 @@ body {
 
 .duplicateCheck {
     position: absolute;
-    top: 190px;
-    right: 590px;
+    top: 35px;
+    right: 10px;
     font-size: 15px;
 }
 
 .viewImg {
     position: absolute;
-    top: 310px;
-    right: 590px;
+    top: 40px;
+    right: 10px;
     width: 30px;
     cursor: pointer;
 }

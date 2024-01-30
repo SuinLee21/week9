@@ -5,19 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FindPw</title>
-    <link rel="stylesheet" type="text/css" href="../css/findPw.css">
+    <link rel="stylesheet" type="text/css" href="../css/accountManager.css">
 </head>
 
 <body>
-    <form class="findPwForm">
-        <input type="text" id="userId" class="findPwFormChild" name="userId"
-            placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12글자)">
-        <input type="text" id="userName" class="findPwFormChild" name="userName" placeholder="이름(2~10글자)">
-        <input type="text" id="userPhoneNum" class="findPwFormChild" name="userPhoneNum" placeholder="전화번호">
-        <input type="submit" class="findPwFormChild findPwFormSubmit" value="비밀번호 찾기">
+    <form class="accountForm">
+        <div>
+            <input type="text" id="userId" class="accountFormChild" name="userId"
+                placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12글자)">
+        </div>
+        <div>
+            <input type="text" id="userName" class="accountFormChild" name="userName" placeholder="이름(2~10글자)">
+        </div>
+        <div>
+            <input maxlength="13" type="text" id="userPhoneNum" class="accountFormChild" name="userPhoneNum"
+                placeholder="전화번호" oninput="phoneNumberInputEvent(event)">
+        </div>
+        <div>
+            <input type="submit" class="accountFormChild accountFormSubmit" value="비밀번호 찾기">
+        </div>
     </form>
 
     <!-- <script src="../../js/7weeks/checkValidity.js"></script> -->
+    <script src="../js/accountManager.js"></script>
 </body>
 
 </html>
