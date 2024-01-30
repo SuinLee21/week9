@@ -16,8 +16,8 @@
         ">
         <input type="text" id="userName" class="signUpFormChild" name="userName" placeholder="이름(2~10글자)
         ">
-        <input type="text" id="userPhoneNum" class="signUpFormChild" name="userPhoneNum" placeholder="전화번호"
-            oninput="autoHyphenateEvent(event)">
+        <input type="text" maxlength="13" id="userPhoneNum" class="signUpFormChild" name="userPhoneNum"
+            placeholder="전화번호" oninput="phoneNumberInputEvent(event)">
         <input type="submit" class="signUpFormChild signUpFormSubmit" value="회원가입">
     </form>
 

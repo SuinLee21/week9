@@ -169,6 +169,7 @@ main {
     color: gray;
     font-size: 14px;
     margin: 5px;
+    cursor: pointer;
 }
 
 .delete {
@@ -176,6 +177,7 @@ main {
     color: gray;
     font-size: 14px;
     margin: 5px;
+    cursor: pointer;
 }
 
 .scheduleWritingSection {

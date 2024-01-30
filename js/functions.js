@@ -1,8 +1,10 @@
 var keepPreviousDayId = document.getElementById('day' + String(date.getDate()));
+var currentDateId = document.getElementById('currentDate');
 var keepScheduleSectionId = "";
 var keepDivScheduleId = "";
 var keepHiddenScheduleId = "";
 keepPreviousDayId.style.backgroundColor = "rgb(218, 227, 243)";
+currentDateId.innerText = String(date.getFullYear()) + "." + String(date.getMonth() + 1) + "." + String(date.getDate());
 
 function yearMinusEvent() {
     var year = document.getElementById('year');
