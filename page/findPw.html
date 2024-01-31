@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <form class="accountForm">
+    <form class="accountForm" onsubmit="return checkValidityEvent({id:true, name:true, phoneNum:true}, 
+        {idOfIdInput: 'userId', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
         <div>
             <input type="text" id="userId" class="accountFormChild" name="userId"
                 placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12글자)">
@@ -26,7 +27,7 @@
         </div>
     </form>
 
-    <!-- <script src="../../js/7weeks/checkValidity.js"></script> -->
+    <script src="../js/checkValidity.js"></script>
     <script src="../js/accountManager.js"></script>
 </body>
 

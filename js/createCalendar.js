@@ -14,7 +14,7 @@ function createMonth() {
 
         monthSectionId.appendChild(createButton);
     }
-    keepPreviousMonthId = document.getElementById('monthButton' + String(date.getMonth() + 1));
+    keepPreviousMonthId = document.getElementById('monthButton' + (date.getMonth() + 1).toString());
     keepPreviousMonthId.style.backgroundColor = "rgb(218, 227, 243)";
 }
 
@@ -31,19 +31,19 @@ function createDay(lastDay) {
     createDivParent.setAttribute('id', 'daySection');
     createDivParent.setAttribute('class', 'daySection');
 
-    for (i = 0; i < 35; i++) {
+    for (i = 1; i <= 35; i++) {
         var createDivChild = document.createElement('div');
         var createTextDiv = document.createElement('div');
         // var createScheduleDiv = document.createElement('div');
 
         createDivChild.setAttribute('id', `day${i}`);
         createDivChild.setAttribute('class', 'day');
-        createDivChild.setAttribute('onclick', 'openModalEvent(event)')
 
         createTextDiv.setAttribute('class', 'dayText');
         // createScheduleDiv.setAttribute('class', 'scheduleCount');
 
         if (dayCount <= lastDay) {
+            createDivChild.setAttribute('onclick', 'openModalEvent(event)')
             createTextDiv.innerText = dayCount;
             dayCount++;
         } else {
@@ -62,7 +62,13 @@ function createDay(lastDay) {
 function getLastDay(month) {
     var thirtyOneList = [1, 3, 5, 7, 8, 10, 12];
     var thirtyList = [4, 6, 9, 11];
-    var twentyEightList = [2];
+
+    // const today = new Date(); // 24년 1월 30일 
+    // today.setDate(1); // 24년 1월 1일
+    // today.setMonth(today.getMonth() + 1); // 24년 2월 1일
+    // today.setDate(today.getDate() - 1); // 24년 1월 31
+
+    // const forNum = today.getDate();
 
     if (thirtyOneList.includes(month)) {
         createDay(31);
@@ -75,6 +81,14 @@ function getLastDay(month) {
 
 function createDayEvent(e) {
     getLastDay(parseInt(e.target.innerText));
+
+    // const monthSelection = document.getElementById('monthSection');
+    // const btnList = monthSelection.getElementsByTagName('button');
+
+    // const monthBtnList = document.querySelectorAll('.monthButton');
+    // monthBtnList.forEach((btn) => {
+    //     // 전부 흰색으로 바꿈
+    // })
 
     if (e.target != keepPreviousMonthId) {
         keepPreviousMonthId.style.backgroundColor = "white";

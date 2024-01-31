@@ -42,22 +42,28 @@
                     <option value="">분</option>
                 </select>
                 <textarea maxlength="100" id="modifyTextarea" class="modifyTextarea"></textarea>
+                <div class="modify" onclick="modifyEvent(event)">수정</div>
             </div>
-            <div class="modify" onclick="modifyEvent(event)">수정</div>
             <div class="delete">삭제</div>
         </div>
-        <div class="scheduleWritingSection">
+        <form class="scheduleWritingSection"
+            onsubmit="checkValidityEvent({hour: true, minute: true, text: true},
+            {idOfHourSelect: 'writeHourSelect', idOfMinuteSelect: 'writeMinuteSelect', idOfTextarea: 'scheduleTextarea'})">
             <select id="writeHourSelect" class="writeSelect">
                 <option value="">시</option>
+                <option value="1">1</option>
             </select>
             <select id="writeMinuteSelect" class="writeSelect">
                 <option value="">분</option>
+                <option value="1">1</option>
             </select>
-            <textarea maxlength="100" class="scheduleInput" placeholder="내용을 입력하세요.(100자 이하)"></textarea>
+            <textarea maxlength="100" id="scheduleTextarea" class="scheduleInput"
+                placeholder="내용을 입력하세요.(100자 이하)"></textarea>
             <input type="submit" class="submitButton" value="작성">
-        </div>
+        </form>
     </div>
 
+    <script src="../js/checkValidity.js"></script>
     <script src="../js/createCalendar.js"></script>
     <script src="../js/createSchedule.js"></script>
     <script src="../js/functions.js"></script>

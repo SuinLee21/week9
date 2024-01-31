@@ -21,9 +21,9 @@ function createSchedule() {
     createSchdule.setAttribute('class', 'schedule');
 
     createScheduleTime.setAttribute('class', 'scheduleTime');
-    // createScheduleTime.innerText = 
 
     createScheduleText.setAttribute('class', 'scheduleText');
+    // createScheduleTime.innerText = 
     // createScheduleText.innerText = 
 
     createhiddenSchedule.setAttribute('id', 'hiddenSchedule');//
@@ -78,7 +78,7 @@ function createOption(hourSelectId, minuteSelectId) {
     var minuteSelect = document.getElementById(minuteSelectId);
 
     for (i = 1; i <= 23; i++) {
-        var createOption = document.createElement('option');
+        var createOption = document.createElement('option'); //함수랑 변수 중복 ㄴㄴ
 
         createOption.setAttribute('value', `${i}`);
         createOption.innerText = i;

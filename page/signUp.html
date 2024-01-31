@@ -9,11 +9,12 @@
 </head>
 
 <body>
-    <form class="accountForm">
+    <form class="accountForm" onsubmit="return checkValidityEvent({id:true, pw:true, name:true, phoneNum:true}, 
+        {idOfIdInput: 'userId', idOfPwInput: 'userPw', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
         <div class="idInputParent">
             <input type="text" id="userId" class="accountFormChild" name="userId"
                 placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12 글자)">
-            <button class="duplicateCheck" onclick="openPopUpEvent()">중복체크</button>
+            <button class="duplicateCheck" onclick="openPopUpEvent(event)">중복체크</button>
         </div>
         <div class="pwInputParent">
             <input type="password" id="userPw" class="accountFormChild" name="userPw"
@@ -30,7 +31,7 @@
         <input type="submit" class="accountFormChild accountFormSubmit" value="회원가입">
     </form>
 
-    <!-- <script src="../../js/7weeks/checkValidity.js"></script> -->
+    <script src="../js/checkValidity.js"></script>
     <script src="../js/accountManager.js"></script>
 </body>
 

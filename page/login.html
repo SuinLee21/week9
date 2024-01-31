@@ -9,15 +9,15 @@
 </head>
 
 <body>
-
-    <form class="accountForm">
-        <div class="title">schduler</div>
+    <form class="accountForm"
+        onsubmit="return checkValidityEvent({id: true, pw: true}, {idOfIdInput: 'userId', idOfPwInput: 'userPw'})">
+        <div class="title">scheduler</div>
         <div>
             <input type="text" id="userId" class="accountFormChild" name="userId"
                 placeholder="아이디(영어+숫자, 각 최소 1개 이상,8~12글자)">
         </div>
         <div>
-            <input type="password" id="userPw" class="accountFormChild" name="userPw"
+            <input maxlength="13" type="password" id="userPw" class="accountFormChild" name="userPw"
                 placeholder="비밀번호(영어+숫자+특수문자, 각 최소 1개 이상, 8~16글자)">
         </div>
         <div>
@@ -28,7 +28,7 @@
         <a href="signUp.html" class="loginFormLink buttonRight">회원가입</a>
     </form>
 
-    <!-- <script src="../../js/7weeks/checkValidity.js"></script> -->
+    <script src="../js/checkValidity.js"></script>
     <script src="../js/accountManager.js"></script>
 </body>
 
