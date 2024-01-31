@@ -19,13 +19,16 @@ function yearPlusEvent() {
 }
 
 function openModalEvent(e) {
+    var daySelectionId = document.getElementById('daySection');
+    var buttonList = daySelectionId.getElementsByTagName('button');
+
     document.getElementById('modal').style.display = "block";
 
-    if (e.target != keepPreviousDayId) {
-        keepPreviousDayId.style.backgroundColor = "white";
-        keepPreviousDayId = e.target;
-        e.target.style.backgroundColor = "rgb(218, 227, 243)";
+    for (i = 0; i < 31; i++) {
+        buttonList[i].style.backgroundColor = "white";
     }
+    buttonList[e.target.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
+    // e.target.style.backgroundColor = "rgb(218, 227, 243)";
 }
 
 function modalCloseEvent() {

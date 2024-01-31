@@ -33,6 +33,7 @@ function checkValidityEvent(booleanOptions, htmlOptions) {
         }
     }
 
+
     if (booleanOptions.hour === true) {
         var hourSelectElement = document.getElementById(htmlOptions.idOfHourSelect);
         if (!hourSelectElement.options[hourSelectElement.selectedIndex].value) {
