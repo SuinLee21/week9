@@ -9,10 +9,11 @@
 </head>
 
 <body>
-    <form class="accountForm"
+    <form action="../jspAction/findIdAction.jsp" class="accountForm"
         onsubmit="return checkValidityEvent({name: true, phoneNum: true}, {idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
         <div>
-            <input type="text" id="userName" class="accountFormChild" name="userName" placeholder="이름(2~10글자)">
+            <input maxlength="10" type="text" id="userName" class="accountFormChild" name="userName"
+                placeholder="이름(2~10글자)">
         </div>
         <div>
             <input maxlength="13" type="text" id="userPhoneNum" class="accountFormChild" name="userPhoneNum"
@@ -21,6 +22,7 @@
         <div>
             <input type="submit" class="accountFormChild accountFormSubmit" value="아이디 찾기">
         </div>
+        <a href="login.html">로그인 페이지로 이동</a>
     </form>
 
     <script src="../js/checkValidity.js"></script>

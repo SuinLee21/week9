@@ -9,14 +9,15 @@
 </head>
 
 <body>
-    <form class="accountForm" onsubmit="return checkValidityEvent({id:true, name:true, phoneNum:true}, 
+    <form action="../jspAction/findPwAction.jsp" class="accountForm" onsubmit="return checkValidityEvent({id:true, name:true, phoneNum:true}, 
         {idOfIdInput: 'userId', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
         <div>
-            <input type="text" id="userId" class="accountFormChild" name="userId"
+            <input maxlength="12" type="text" id="userId" class="accountFormChild" name="userId"
                 placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12글자)">
         </div>
         <div>
-            <input type="text" id="userName" class="accountFormChild" name="userName" placeholder="이름(2~10글자)">
+            <input maxlength="10" type="text" id="userName" class="accountFormChild" name="userName"
+                placeholder="이름(2~10글자)">
         </div>
         <div>
             <input maxlength="13" type="text" id="userPhoneNum" class="accountFormChild" name="userPhoneNum"
@@ -25,6 +26,7 @@
         <div>
             <input type="submit" class="accountFormChild accountFormSubmit" value="비밀번호 찾기">
         </div>
+        <a href="login.html">로그인 페이지로 이동</a>
     </form>
 
     <script src="../js/checkValidity.js"></script>

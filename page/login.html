@@ -9,11 +9,11 @@
 </head>
 
 <body>
-    <form class="accountForm"
+    <form action="../jspAction/loginAction.jsp" class="accountForm"
         onsubmit="return checkValidityEvent({id: true, pw: true}, {idOfIdInput: 'userId', idOfPwInput: 'userPw'})">
         <div class="title">scheduler</div>
         <div>
-            <input type="text" id="userId" class="accountFormChild" name="userId"
+            <input maxlength="12" type="text" id="userId" class="accountFormChild" name="userId"
                 placeholder="아이디(영어+숫자, 각 최소 1개 이상,8~12글자)">
         </div>
         <div>

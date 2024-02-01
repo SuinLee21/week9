@@ -95,4 +95,4 @@ function createDayEvent(e) {
 }
 
 createMonth();
-createDay(date.getMonth() + 1, false);
+createDay(date.getMonth() + 1, true);
