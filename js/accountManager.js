@@ -1,10 +1,10 @@
 function conversionEvent() {
-    var userPwId = document.getElementById('userPw');
+    var userPwElement = document.getElementById('userPw');
 
-    if (userPwId.type === "text") {
-        userPwId.type = "password";
+    if (userPwElement.type === "text") {
+        userPwElement.type = "password";
     } else {
-        userPwId.type = "text";
+        userPwElement.type = "text";
     }
 }
 

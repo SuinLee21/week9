@@ -1,96 +1,97 @@
 function createSchedule() {
-    var modalId = document.getElementById('modal');
-    var createScheduleSection = document.createElement('div');
-    var createSchdule = document.createElement('div');
-    var createScheduleTime = document.createElement('div');
-    var createScheduleText = document.createElement('h2');
-    var createhiddenSchedule = document.createElement('div');
-    var createHourSelect = document.createElement('select');
-    var createMinuteSelect = document.createElement('select');
-    var createHourOption = document.createElement('option');
-    var createMinuteOption = document.createElement('option');
-    var createModifyTextarea = document.createElement('textarea');
-    var createModify = document.createElement('div');
-    var createDelete = document.createElement('div');
+    var modalElement = document.getElementById('modal');
+    var newScheduleSectionDiv = document.createElement('div');
+    var newSchduleDiv = document.createElement('div');
+    var newScheduleTimeDiv = document.createElement('div');
+    var newScheduleTextHtwo = document.createElement('h2');
+    var newhiddenScheduleForm = document.createElement('form');
+    var newModifyHourSelect = document.createElement('select');
+    var newModifyMinuteSelect = document.createElement('select');
+    var newHourOption = document.createElement('option');
+    var newMinuteOption = document.createElement('option');
+    var newModifyTextarea = document.createElement('textarea');
+    var newModifyDiv = document.createElement('div');
+    var newDeleteDiv = document.createElement('div');
 
     // setAttribute
-    createScheduleSection.setAttribute('id', 'scheduleSection');//
-    createScheduleSection.setAttribute('class', 'scheduleSection');
+    newScheduleSectionDiv.setAttribute('id', 'scheduleSection');//
+    newScheduleSectionDiv.setAttribute('class', 'scheduleSection');
 
-    createSchdule.setAttribute('id', 'divSchedule');//
-    createSchdule.setAttribute('class', 'schedule');
+    newSchduleDiv.setAttribute('id', 'divSchedule');//
+    newSchduleDiv.setAttribute('class', 'schedule');
 
-    createScheduleTime.setAttribute('class', 'scheduleTime');
+    newScheduleTimeDiv.setAttribute('class', 'scheduleTime');
 
-    createScheduleText.setAttribute('class', 'scheduleText');
-    // createScheduleTime.innerText = 
-    // createScheduleText.innerText = 
+    newScheduleTextHtwo.setAttribute('class', 'scheduleText');
+    // newScheduleTimeDiv.innerText = 
+    // newScheduleTextHtwo.innerText = 
 
-    createhiddenSchedule.setAttribute('id', 'hiddenSchedule');//
-    createhiddenSchedule.setAttribute('class', 'hiddenSchedule');
+    newhiddenScheduleForm.setAttribute('id', 'hiddenSchedule');//
+    newhiddenScheduleForm.setAttribute('class', 'hiddenSchedule');
+    newhiddenScheduleForm.setAttribute('onsubmit', "checkValidityEvent({hour: true, minute: true, text: true}, {idOfHourSelect: 'modifyHourSelect', idOfMinuteSelect: 'modifyMinuteSelect', idOfTextarea: 'modifyTextarea'})");
 
-    createHourSelect.setAttribute('id', 'modifyHourSelect');//
-    createHourSelect.setAttribute('class', 'modifySelect');
+    newModifyHourSelect.setAttribute('id', 'modifyHourSelect');//
+    newModifyHourSelect.setAttribute('class', 'modifySelect');
 
-    createHourOption.setAttribute('value', '');
-    createHourOption.innerText = '시';
+    newHourOption.setAttribute('value', '');
+    newHourOption.innerText = '시';
 
-    createMinuteSelect.setAttribute('id', 'modifyMinuteSelect');//
-    createMinuteSelect.setAttribute('class', 'modifySelect');
+    newModifyMinuteSelect.setAttribute('id', 'modifyMinuteSelect');//
+    newModifyMinuteSelect.setAttribute('class', 'modifySelect');
 
-    createMinuteOption.setAttribute('value', '');
-    createMinuteOption.innerText = '분';
+    newMinuteOption.setAttribute('value', '');
+    newMinuteOption.innerText = '분';
 
-    createModifyTextarea.setAttribute('maxlength', '100');
-    createModifyTextarea.setAttribute('id', 'modifyTextarea');//
-    createModifyTextarea.setAttribute('class', 'modifyTextarea');
+    newModifyTextarea.setAttribute('maxlength', '100');
+    newModifyTextarea.setAttribute('id', 'modifyTextarea');//
+    newModifyTextarea.setAttribute('class', 'modifyTextarea');
 
-    createModify.setAttribute('class', 'modify');
-    // createModify.setAttribute('data-value', '');
-    createModify.setAttribute('onclick', 'modifyEvent(event)');
-    createModify.innerText = '수정';
+    newModifyDiv.setAttribute('class', 'modify');
+    // newModifyDiv.setAttribute('data-value', '');
+    newModifyDiv.setAttribute('onclick', 'modifyEvent(event)');
+    newModifyDiv.innerText = '수정';
 
-    createDelete.setAttribute('class', 'delete');
-    createDelete.innerText = '삭제';
+    newDeleteDiv.setAttribute('class', 'delete');
+    newDeleteDiv.innerText = '삭제';
 
     // appendChild
 
-    modalId.appendChild(createScheduleSection);
+    modalElement.appendChild(newScheduleSectionDiv);
 
-    createScheduleSection.appendChild(createSchdule);
-    createScheduleSection.appendChild(createhiddenSchedule);
-    createScheduleSection.appendChild(createModify);
-    createScheduleSection.appendChild(createDelete);
+    newScheduleSectionDiv.appendChild(newSchduleDiv);
+    newScheduleSectionDiv.appendChild(newhiddenScheduleForm);
+    newScheduleSectionDiv.appendChild(newModifyDiv);
+    newScheduleSectionDiv.appendChild(newDeleteDiv);
 
-    createSchdule.appendChild(createScheduleTime);
-    createSchdule.appendChild(createScheduleText);
+    newSchduleDiv.appendChild(newScheduleTimeDiv);
+    newSchduleDiv.appendChild(newScheduleTextHtwo);
 
-    createhiddenSchedule.appendChild(createHourSelect);
-    createhiddenSchedule.appendChild(createMinuteSelect);
-    createhiddenSchedule.appendChild(createModifyTextarea);
+    newhiddenScheduleForm.appendChild(newModifyHourSelect);
+    newhiddenScheduleForm.appendChild(newModifyMinuteSelect);
+    newhiddenScheduleForm.appendChild(newModifyTextarea);
 
-    createHourSelect.appendChild(createHourOption);
-    createMinuteSelect.appendChild(createMinuteOption);
+    newModifyHourSelect.appendChild(newHourOption);
+    newModifyMinuteSelect.appendChild(newMinuteOption);
 }
 
-function createOption(hourSelectId, minuteSelectId) {
-    var hourSelect = document.getElementById(hourSelectId);
-    var minuteSelect = document.getElementById(minuteSelectId);
+function createOption(idOfHourSelect, idOfMinuteSelect) {
+    var hourSelectElement = document.getElementById(idOfHourSelect);
+    var minuteSelectElement = document.getElementById(idOfMinuteSelect);
 
     for (i = 1; i <= 23; i++) {
-        var createOption = document.createElement('option'); //함수랑 변수 중복 ㄴㄴ
+        var newOption = document.createElement('option'); //함수랑 변수 중복 ㄴㄴ
 
-        createOption.setAttribute('value', `${i}`);
-        createOption.innerText = i;
+        newOption.setAttribute('value', `${i}`);
+        newOption.innerText = i;
 
-        hourSelect.appendChild(createOption);
+        hourSelectElement.appendChild(newOption);
     }
     for (i = 1; i <= 59; i++) {
-        var createOption = document.createElement('option');
+        var newOption = document.createElement('option');
 
-        createOption.setAttribute('value', `${i}`);
-        createOption.innerText = i;
+        newOption.setAttribute('value', `${i}`);
+        newOption.innerText = i;
 
-        minuteSelect.appendChild(createOption);
+        minuteSelectElement.appendChild(newOption);
     }
 }

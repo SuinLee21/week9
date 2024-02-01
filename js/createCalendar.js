@@ -1,25 +1,25 @@
 var date = new Date();
 
 function createMonth() {
-    var monthSectionId = document.getElementById('monthSection');
+    var monthSectionElement = document.getElementById('monthSection');
 
     for (i = 1; i <= 12; i++) {
-        var createButton = document.createElement('button');
+        var newMonthButton = document.createElement('button');
 
-        createButton.setAttribute('id', `monthButton${i}`);
-        createButton.setAttribute('class', 'monthButton');
-        createButton.setAttribute('onclick', 'createDayEvent(event)');
-        createButton.innerText = i;
+        newMonthButton.setAttribute('id', `monthButton${i}`);
+        newMonthButton.setAttribute('class', 'monthButton');
+        newMonthButton.setAttribute('onclick', 'createDayEvent(event)');
+        newMonthButton.innerText = i;
 
-        monthSectionId.appendChild(createButton);
+        monthSectionElement.appendChild(newMonthButton);
     }
     document.getElementById('monthButton' + (date.getMonth() + 1).toString()).style.backgroundColor = "rgb(218, 227, 243)";
 }
 
 function createDay(month, isTargetNumEqualTodayMonth) {
-    var mainId = document.getElementById('main');
-    var daySectionId = document.getElementById('daySection');
-    var createDivParent = document.createElement('div');
+    var mainElement = document.getElementById('main');
+    var daySectionElement = document.getElementById('daySection');
+    var newDaySectionDiv = document.createElement('div');
 
     var thirtyOneList = [1, 3, 5, 7, 8, 10, 12];
     var thirtyList = [4, 6, 9, 11];
@@ -34,42 +34,42 @@ function createDay(month, isTargetNumEqualTodayMonth) {
         lastDay = 28;
     }
 
-    if (daySectionId) {
-        daySectionId.remove();
+    if (daySectionElement) {
+        daySectionElement.remove();
     }
 
-    createDivParent.setAttribute('id', 'daySection');
-    createDivParent.setAttribute('class', 'daySection');
+    newDaySectionDiv.setAttribute('id', 'daySection');
+    newDaySectionDiv.setAttribute('class', 'daySection');
 
     for (i = 1; i <= 35; i++) {
-        var createButtonChild = document.createElement('button');
-        var createTextDiv = document.createElement('div');
+        var newDayButton = document.createElement('button');
+        var newDayTextDiv = document.createElement('div');
         // var createScheduleDiv = document.createElement('div');
 
-        createButtonChild.setAttribute('class', 'day');
+        newDayButton.setAttribute('class', 'day');
 
         // createScheduleDiv.setAttribute('class', 'scheduleCount');
 
         if (dayCount <= lastDay) {
-            createButtonChild.setAttribute('id', `day${i}`);
-            createButtonChild.setAttribute('data-value', `${i - 1}`);
-            createButtonChild.setAttribute('onclick', 'openModalEvent(event)')
+            newDayButton.setAttribute('id', `day${i}`);
+            newDayButton.setAttribute('data-value', `${i - 1}`);
+            newDayButton.setAttribute('onclick', 'openModalEvent(event)')
 
-            createTextDiv.setAttribute('class', 'dayText');
-            createTextDiv.setAttribute('data-value', `${i - 1}`);
-            createTextDiv.innerText = dayCount;
+            newDayTextDiv.setAttribute('class', 'dayText');
+            newDayTextDiv.setAttribute('data-value', `${i - 1}`);
+            newDayTextDiv.innerText = dayCount;
 
             dayCount++;
         } else {
-            createTextDiv.innerText = "\n"
+            newDayTextDiv.innerText = "\n"
         }
 
-        createDivParent.appendChild(createButtonChild);
+        newDaySectionDiv.appendChild(newDayButton);
 
-        createButtonChild.appendChild(createTextDiv);
-        // createButtonChild.appendChild(createScheduleDiv);
+        newDayButton.appendChild(newDayTextDiv);
+        // newDayButton.appendChild(createScheduleDiv);
     }
-    mainId.appendChild(createDivParent)
+    mainElement.appendChild(newDaySectionDiv)
 
     if (isTargetNumEqualTodayMonth) {
         document.getElementById('day' + (date.getDate()).toString()).style.backgroundColor = "rgb(218, 227, 243)";
@@ -77,8 +77,8 @@ function createDay(month, isTargetNumEqualTodayMonth) {
 }
 
 function createDayEvent(e) {
-    var monthSelectionId = document.getElementById('monthSection');
-    var buttonList = monthSelectionId.getElementsByTagName('button');
+    var monthSelectionElement = document.getElementById('monthSection');
+    var buttonList = monthSelectionElement.getElementsByTagName('button');
     var targetNum = parseInt(e.target.innerText);
     var isTargetNumEqualTodayMonth = false;
 
