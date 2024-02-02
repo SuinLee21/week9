@@ -21,7 +21,7 @@
 
     if(isRegexNameValid && isRegexPhoneNumValid){
         Class.forName("com.mysql.jdbc.Driver"); 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/web", "suin", "suin"); 
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
         String sql = "SELECT * FROM user WHERE name=? AND phoneNum=?";
         PreparedStatement query = conn.prepareStatement(sql); 
@@ -33,6 +33,9 @@
 
         while(result.next()){
             id = result.getString("id");
+        }
+        if(id != ""){
+            session.setAttribute("id", id);
         }
     }
 %>
@@ -47,7 +50,6 @@
     <script>
         var id = "<%=id%>";
         var isRegexNameValid = <%=isRegexNameValid%>;
-        var isRegexBirthValid = <%=isRegexBirthValid%>;
         var isRegexPhoneNumValid = <%=isRegexPhoneNumValid%>;
 
         if(!isRegexNameValid){
@@ -58,7 +60,7 @@
             location.href = "../page/findId.html";
         }else{
             if(id !== ""){
-
+                location.href = "../page/findIdResult.jsp";
             }else{
                 alert('가입된 정보가 없습니다.');
                 location.href = "../page/findId.html";

@@ -27,9 +27,9 @@
 
     if(isRegexIdValid && isRegexPwValid && isRegexNameValid && isRegexPhoneNumValid){
         Class.forName("com.mysql.jdbc.Driver"); 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/web", "suin", "suin"); 
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
-        String sql = "SELECT id FROM user WHERE id=?";
+        String sql = "SELECT id FROM user WHERE id=?";//
         PreparedStatement query = conn.prepareStatement(sql);
 
         query.setString(1, idValue);
@@ -39,7 +39,7 @@
         while(result.next()){
             id = result.getString("id");
         }
-        if(id != ""){
+        if(id != ""){//
             isIdDuplicate = true;
         }else{
             sql = "INSERT INTO user(id, pw, name, phoneNum) VALUES(?, ?, ?, ?)";
@@ -66,7 +66,7 @@
 
         if(isIdDuplicate){
             alert('중복된 아이디입니다. 다시 입력해주세요.');
-            location.href = "../page/signUp.html";
+            location.href = "../page/signUp.jsp";
         }else{
             var isRegexIdValid = <%=isRegexIdValid%>;
             var isRegexPwValid = <%=isRegexPwValid%>;
@@ -75,19 +75,19 @@
 
             if(!isRegexIdValid){
                 alert('아이디를 다시 입력하세요.');
-                location.href = "../page/signUp.html";
+                location.href = "../page/signUp.jsp";
             }else if(!isRegexPwValid){
                 alert('비밀번호를 다시 입력하세요.');
-                location.href = "../page/signUp.html";
+                location.href = "../page/signUp.jsp";
             }else if(!isRegexNameValid){
                 alert('이름을 다시 입력하세요.');
-                location.href = "../page/signUp.html";
+                location.href = "../page/signUp.jsp";
             }else if(!isRegexPhoneNumValid){
                 alert('전화번호를 다시 입력하세요.');
-                location.href = "../page/signUp.html";
+                location.href = "../page/signUp.jsp";
             }else{
                 alert('회원가입이 완료되었습니다.');
-                location.href = "../page/schedule.html";
+                location.href = "../page/login.jsp";
             }
         }
     </script>

@@ -13,7 +13,7 @@
         isLogginIn = true;
 
         Class.forName("com.mysql.jdbc.Driver"); 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/web", "suin", "suin"); 
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
         String sql = "Delete FROM user WHERE idx=?";
         PreparedStatement query = conn.prepareStatement(sql);

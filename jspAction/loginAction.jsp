@@ -25,7 +25,7 @@
 
     if(isRegexIdValid && isRegexPwValid){
         Class.forName("com.mysql.jdbc.Driver"); 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/web", "suin", "suin"); 
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
         String sql = "SELECT * FROM user WHERE id=? AND pw=?";
         PreparedStatement query = conn.prepareStatement(sql); 
@@ -75,7 +75,7 @@
         }else{
             if(isInfoMatching){                
                 alert('로그인 성공~');
-                location.href = '../page/schedule.html';
+                location.href = '../page/schedule.jsp';
             }else{
                 alert('다시 로그인 해주세요 ㅠㅠ');
                 location.href = '../page/login.html';

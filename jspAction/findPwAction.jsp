@@ -24,7 +24,7 @@
 
     if(isRegexIdValid && isRegexNameValid && isRegexPhoneNumValid){
         Class.forName("com.mysql.jdbc.Driver"); 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/web", "suin", "suin"); 
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
         String sql = "SELECT * FROM user WHERE id=? AND name=? AND phoneNum=?";
         PreparedStatement query = conn.prepareStatement(sql); 
@@ -37,6 +37,9 @@
 
         while(result.next()){
             pw = result.getString("pw");
+        }
+        if(pw != ""){
+            session.setAttribute("pw", pw);
         }
     }
 %>
@@ -65,7 +68,7 @@
             location.href = "../page/findPw.html";
         }else{
             if(pw !== ""){
-                
+                location.href = "../page/findPwResult.jsp";
             }else{
                 alert('가입된 정보가 없습니다.');
                 location.href = "../page/findPw.html";

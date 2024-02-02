@@ -13,12 +13,10 @@
     String nameValue = request.getParameter("userName");
     String phoneNumValue = request.getParameter("userPhoneNum");
 
-    String regexId = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,12}$";
     String regexPw = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,16}$";
     String regexName = "^[가-힣]{2,10}$";
     String regexPhoneNum = "^010-\\d{4}-\\d{4}$";
 
-    boolean isRegexIdValid = Pattern.matches(regexId, idValue);
     boolean isRegexPwValid = Pattern.matches(regexPw, pwValue);
     boolean isRegexNameValid = Pattern.matches(regexName, nameValue);
     boolean isRegexPhoneNumValid = Pattern.matches(regexPhoneNum, phoneNumValue);
@@ -27,9 +25,9 @@
     if(session.getAttribute("id") != null){
         isLogginIn = true;
 
-        if(isRegexIdValid && isRegexPwValid && isRegexNameValid && isRegexPhoneNumValid){
+        if(isRegexPwValid && isRegexNameValid && isRegexPhoneNumValid){
             Class.forName("com.mysql.jdbc.Driver"); 
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/web", "suin", "suin"); 
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
             String sql = "UPDATE user SET id=?, pw=?, name=?, phoneNum=? WHERE id=?";
             PreparedStatement query = conn.prepareStatement(sql); 
@@ -60,30 +58,26 @@
         var isLogginIn = <%=isLogginIn%>;
 
         if(isLogginIn){
-            var isRegexIdValid = <%=isRegexIdValid%>;
             var isRegexPwValid = <%=isRegexPwValid%>;
             var isRegexNameValid = <%=isRegexNameValid%>;
             var isRegexPhoneNumValid = <%=isRegexPhoneNumValid%>;
 
-            if(!isRegexIdValid){
-                alert('아이디를 다시 입력하세요.');
-                location.href = "../page/profileEdit.html";
-            }else if(!isRegexPwValid){
+            if(!isRegexPwValid){
                 alert('비밀번호를 다시 입력하세요.');
-                location.href = "../page/profileEdit.html";
+                location.href = "../page/profileEdit.jsp";
             }else if(!isRegexNameValid){
                 alert('이름을 다시 입력하세요.');
-                location.href = "../page/profileEdit.html";
+                location.href = "../page/profileEdit.jsp";
             }else if(!isRegexPhoneNumValid){
                 alert('전화번호를 다시 입력하세요.');
-                location.href = "../page/profileEdit.html";
+                location.href = "../page/profileEdit.jsp";
             }else{
                 alert('내정보 수정이 완료되었습니다.');
-                location.href = "../page/schedule.html";
+                location.href = "../page/schedule.jsp";
             }
         }else{
             alert('접근 권한이 없습니다.');
-            location.href = "../page/schedule.html"
+            location.href = "../page/schedule.jsp"
         }
     </script>
 </body>
