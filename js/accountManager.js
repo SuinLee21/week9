@@ -35,7 +35,3 @@ function generateHypen(phoneNumber) {
     return result.join("-");
 }
 
-function openPopUpEvent(e) {
-    e.preventDefault();
-    window.open('../page/login.html', '네이버팝업', 'width=500, height=500, resizeable=no')
-}

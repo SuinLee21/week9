@@ -1,4 +1,8 @@
 function checkValidityEvent(booleanOptions, htmlOptions) {
+    return checkValidity(booleanOptions, htmlOptions);
+}
+
+function checkValidity(booleanOptions, htmlOptions) {
     var regexId = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,12}$/; //영어+숫자, 각 최소 1개 이상 8~12
     var regexPw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/; //영어+숫자, 각 최소 1개 이상 8~16
     var regexName = /^[가-힣]{2,10}$/ //한글만 2~10;
@@ -55,4 +59,6 @@ function checkValidityEvent(booleanOptions, htmlOptions) {
             return false;
         }
     }
+
+    return true;
 }

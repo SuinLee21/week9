@@ -33,20 +33,17 @@
     <form action="../jspAction/profileEditAction.jsp" class="accountForm" onsubmit="return checkValidityEvent({pw:true, name:true, phoneNum:true}, 
         {idOfPwInput: 'userPw', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
         <div>
-            <input class="accountFormChild" placeholder="qwer1234" disabled>
+            <input id="userId" class="accountFormChild" name="userId"  disabled>
         </div>
         <div class="pwInputParent">
-            <input maxlength="16" type="password" id="userPw" class="accountFormChild" name="userPw"
-                placeholder="비밀번호(영어+숫자+특수문자, 각 최소 1개 이상, 8~16글자)">
+            <input maxlength="16" type="password" id="userPw" class="accountFormChild" name="userPw">
             <img id="viewImg" class="viewImg" src="../img/view.jpg" onclick="conversionEvent()">
         </div>
         <div>
-            <input maxlength="10" type="text" id="userName" class="accountFormChild" name="userName"
-                placeholder="이름(2~10글자)">
+            <input maxlength="10" type="text" id="userName" class="accountFormChild" name="userName">
         </div>
         <div>
-            <input maxlength="13" type="text" id="userPhoneNum" class="accountFormChild" name="userPhoneNum"
-                placeholder="전화번호" oninput="phoneNumberInputEvent(event)">
+            <input maxlength="13" type="text" id="userPhoneNum" class="accountFormChild" name="userPhoneNum" oninput="phoneNumberInputEvent(event)">
         </div>
         <div>
             <input type="submit" class="accountFormChild accountFormSubmit" value="회원가입">
@@ -57,4 +54,22 @@
 
     <script src="../js/checkValidity.js"></script>
     <script src="../js/accountManager.js"></script>
+    <script>
+        var isLogginIn = <%=isLogginIn%>;
+
+        if (isLogginIn) {
+            var id = "<%=id%>";
+            var pw = "<%=pw%>";
+            var name = "<%=name%>";
+            var phoneNum = "<%=phoneNum%>";
+
+            document.getElementById('userId').value = id;
+            document.getElementById('userPw').value = pw;
+            document.getElementById('userName').value = name;
+            document.getElementById('userPhoneNum').value = phoneNum;
+        } else {
+            alert('접근 권한이 없습니다.');
+            location.href = "login.html";
+        }
+    </script>
 </body>

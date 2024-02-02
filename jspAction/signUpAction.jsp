@@ -75,19 +75,19 @@
 
             if(!isRegexIdValid){
                 alert('아이디를 다시 입력하세요.');
-                location.href = "../page/signUp.jsp";
+                location.href = "../page/signUp.html";
             }else if(!isRegexPwValid){
                 alert('비밀번호를 다시 입력하세요.');
-                location.href = "../page/signUp.jsp";
+                location.href = "../page/signUp.html";
             }else if(!isRegexNameValid){
                 alert('이름을 다시 입력하세요.');
-                location.href = "../page/signUp.jsp";
+                location.href = "../page/signUp.html";
             }else if(!isRegexPhoneNumValid){
                 alert('전화번호를 다시 입력하세요.');
-                location.href = "../page/signUp.jsp";
+                location.href = "../page/signUp.html";
             }else{
                 alert('회원가입이 완료되었습니다.');
-                location.href = "../page/login.jsp";
+                location.href = "../page/login.html";
             }
         }
     </script>

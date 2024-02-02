@@ -30,8 +30,6 @@ function modifyEvent(e) {
     var keepDivScheduleElement = document.getElementById('divSchedule');
     var keepHiddenScheduleElement = document.getElementById('hiddenSchedule');
 
-    var keepScheduleSectionId = e.target.parentElement;
-
     keepDivScheduleElement.style.display = "none";
     keepHiddenScheduleElement.style.display = "flex";
 
