@@ -15,13 +15,6 @@ function checkValidity(booleanOptions, htmlOptions) {
             return false;
         }
     }
-    if (booleanOptions.checkButton === true) {
-        var idInputElement = document.getElementById(htmlOptions.idOfIdInput);
-        if (idInputElement.disabled === false) {
-            alert('아이디 중복체크를 해주세요.');
-            return false;
-        }
-    }
     if (booleanOptions.pw === true) {
         var pwInputElement = document.getElementById(htmlOptions.idOfPwInput);
         if (!regexPw.test(pwInputElement.value)) {
@@ -41,6 +34,16 @@ function checkValidity(booleanOptions, htmlOptions) {
         if (!regexPhoneNum.test(phoneNumInputElement.value)) {
             alert('전화번호를 다시 입력하세요');
             return false;
+        }
+    }
+
+    if (booleanOptions.checkButton === true) {
+        var idInputElement = document.getElementById(htmlOptions.idOfIdInput);
+        if (idInputElement.disabled === false) {
+            alert('아이디 중복체크를 해주세요.');
+            return false;
+        } else {
+            idInputElement.disabled = false;
         }
     }
 
