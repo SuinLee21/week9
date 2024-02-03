@@ -1,51 +1,63 @@
-function createSchedule() {
-    var modalElement = document.getElementById('modal');
+function createSchedule(scheduleNum, scheduleDataList) {
+    var newAllScheduleDiv = document.getElementById('allSchedule');
+
     var newScheduleSectionDiv = document.createElement('div');
     var newSchduleDiv = document.createElement('div');
     var newScheduleTimeDiv = document.createElement('div');
     var newScheduleTextHtwo = document.createElement('h2');
-    var newhiddenScheduleForm = document.createElement('form');
+    var newHiddenScheduleForm = document.createElement('form');
     var newModifyHourSelect = document.createElement('select');
     var newModifyMinuteSelect = document.createElement('select');
     var newHourOption = document.createElement('option');
     var newMinuteOption = document.createElement('option');
     var newModifyTextarea = document.createElement('textarea');
+    var newHiddenInput = document.createElement('input');
+    var newSubmitButton = document.createElement('input');
     var newModifyDiv = document.createElement('div');
     var newDeleteDiv = document.createElement('div');
 
     // setAttribute
 
-    newScheduleSectionDiv.setAttribute('id', 'scheduleSection');//
+    newScheduleSectionDiv.setAttribute('id', `scheduleSection${scheduleNum}`);
     newScheduleSectionDiv.setAttribute('class', 'scheduleSection');
 
-    newSchduleDiv.setAttribute('id', 'divSchedule');//
+    newSchduleDiv.setAttribute('id', `divSchedule${scheduleNum}`);
     newSchduleDiv.setAttribute('class', 'schedule');
 
     newScheduleTimeDiv.setAttribute('class', 'scheduleTime');
+    newScheduleTimeDiv.innerText = `${scheduleDataList[1]}시${scheduleDataList[2]}`;
 
     newScheduleTextHtwo.setAttribute('class', 'scheduleText');
-    // newScheduleTimeDiv.innerText = 
-    // newScheduleTextHtwo.innerText = 
+    newScheduleTextHtwo.innerText = scheduleDataList[4];
 
-    newhiddenScheduleForm.setAttribute('id', 'hiddenSchedule');//
-    newhiddenScheduleForm.setAttribute('class', 'hiddenSchedule');
-    newhiddenScheduleForm.setAttribute('onsubmit', "checkValidityEvent({hour: true, minute: true, text: true}, {idOfHourSelect: 'modifyHourSelect', idOfMinuteSelect: 'modifyMinuteSelect', idOfTextarea: 'modifyTextarea'})");
-
-    newModifyHourSelect.setAttribute('id', 'modifyHourSelect');//
+    newHiddenScheduleForm.setAttribute('action', 'scheduleEditAction.jsp');
+    newHiddenScheduleForm.setAttribute('id', `hiddenSchedule${scheduleNum}`);
+    newHiddenScheduleForm.setAttribute('class', 'hiddenSchedule');
+    newHiddenScheduleForm.setAttribute
+        ('onsubmit', `checkValidityEvent({hour: true, minute: true, text: true}, {idOfHourSelect: 'modifyHourSelect${scheduleNum}', idOfMinuteSelect: 'modifyMinuteSelect${scheduleNum}', idOfTextarea: 'modifyTextarea'${scheduleNum}})`);
+    //
+    newModifyHourSelect.setAttribute('id', `modifyHourSelect${scheduleNum}`);
     newModifyHourSelect.setAttribute('class', 'modifySelect');
 
     newHourOption.setAttribute('value', '');
     newHourOption.innerText = '시';
 
-    newModifyMinuteSelect.setAttribute('id', 'modifyMinuteSelect');//
+    newModifyMinuteSelect.setAttribute('id', `modifyMinuteSelect${scheduleNum}`);
     newModifyMinuteSelect.setAttribute('class', 'modifySelect');
 
     newMinuteOption.setAttribute('value', '');
     newMinuteOption.innerText = '분';
 
     newModifyTextarea.setAttribute('maxlength', '100');
-    newModifyTextarea.setAttribute('id', 'modifyTextarea');//
+    newModifyTextarea.setAttribute('id', `modifyTextarea${scheduleNum}`);
     newModifyTextarea.setAttribute('class', 'modifyTextarea');
+
+    newHiddenInput.setAttribute('type', 'hidden');
+    newHiddenInput.setAttribute('name', 'modifyText');
+    newHiddenInput.setAttribute('value', '');
+
+    newSubmitButton.setAttribute('type', 'submit');
+    newSubmitButton.setAttribute('value', '저장');
 
     newModifyDiv.setAttribute('class', 'modify');
     // newModifyDiv.setAttribute('data-value', '');
@@ -57,19 +69,21 @@ function createSchedule() {
 
     // appendChild
 
-    modalElement.appendChild(newScheduleSectionDiv);
+    newAllScheduleDiv.appendChild(newScheduleSectionDiv);
 
     newScheduleSectionDiv.appendChild(newSchduleDiv);
-    newScheduleSectionDiv.appendChild(newhiddenScheduleForm);
+    newScheduleSectionDiv.appendChild(newHiddenScheduleForm);
     newScheduleSectionDiv.appendChild(newModifyDiv);
     newScheduleSectionDiv.appendChild(newDeleteDiv);
 
     newSchduleDiv.appendChild(newScheduleTimeDiv);
     newSchduleDiv.appendChild(newScheduleTextHtwo);
 
-    newhiddenScheduleForm.appendChild(newModifyHourSelect);
-    newhiddenScheduleForm.appendChild(newModifyMinuteSelect);
-    newhiddenScheduleForm.appendChild(newModifyTextarea);
+    newHiddenScheduleForm.appendChild(newModifyHourSelect);
+    newHiddenScheduleForm.appendChild(newModifyMinuteSelect);
+    newHiddenScheduleForm.appendChild(newModifyTextarea);
+    newHiddenScheduleForm.appendChild(newHiddenInput);
+    newHiddenScheduleForm.appendChild(newSubmitButton);
 
     newModifyHourSelect.appendChild(newHourOption);
     newModifyMinuteSelect.appendChild(newMinuteOption);

@@ -119,6 +119,7 @@ textarea {
     height: 722px;
     border: 1px solid;
     text-align: center;
+    display: none;
 }
 
 .closeButton {
@@ -149,6 +150,8 @@ textarea {
 .hiddenSchedule {
     flex-grow: 1;
     display: flex;
+    justify-content: center;
+    /* align-items: center; */
     display: none;
     height: 100%;
 }
