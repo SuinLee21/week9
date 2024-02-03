@@ -51,7 +51,7 @@
     <main id="main">
         <div class="yearSection">
             <img class="yearButton" src="../img/left.jpg" onclick="yearMinusEvent()">
-            <div id="year" class="year">2024</div>
+            <div id="year" class="year"></div>
             <img class="yearButton" src="../img/right.jpg" onclick="yearPlusEvent()">
         </div>
 
@@ -59,7 +59,7 @@
     </main>
 
     <div id="modal" class="modal">
-        <h2 id="currentDate"></h2>
+        <h2 id="clickedDate"></h2>
         <h1>할 일</h1>
         <div class="closeButton" onclick="modalCloseEvent()">X</div>
         <div class="scheduleSection">

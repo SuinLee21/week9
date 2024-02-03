@@ -14,6 +14,7 @@ function createSchedule() {
     var newDeleteDiv = document.createElement('div');
 
     // setAttribute
+
     newScheduleSectionDiv.setAttribute('id', 'scheduleSection');//
     newScheduleSectionDiv.setAttribute('class', 'scheduleSection');
 

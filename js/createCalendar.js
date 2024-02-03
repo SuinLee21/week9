@@ -1,5 +1,11 @@
 var date = new Date();
 
+function createYear() {
+    var yearElement = document.getElementById('year');
+
+    yearElement.innerText = date.getFullYear();
+}
+
 function createMonth() {
     var monthSectionElement = document.getElementById('monthSection');
 
@@ -17,8 +23,10 @@ function createMonth() {
 }
 
 function createDay(month, isTargetNumEqualTodayMonth) {
+    var year = document.getElementById('year').innerText;
     var mainElement = document.getElementById('main');
     var daySectionElement = document.getElementById('daySection');
+
     var newDaySectionDiv = document.createElement('div');
 
     var thirtyOneList = [1, 3, 5, 7, 8, 10, 12];
@@ -41,7 +49,7 @@ function createDay(month, isTargetNumEqualTodayMonth) {
     newDaySectionDiv.setAttribute('id', 'daySection');
     newDaySectionDiv.setAttribute('class', 'daySection');
 
-    for (i = 1; i <= 35; i++) {
+    for (day = 1; day <= 35; day++) {
         var newDayButton = document.createElement('button');
         var newDayTextDiv = document.createElement('div');
         // var createScheduleDiv = document.createElement('div');
@@ -49,14 +57,22 @@ function createDay(month, isTargetNumEqualTodayMonth) {
         newDayButton.setAttribute('class', 'day');
 
         // createScheduleDiv.setAttribute('class', 'scheduleCount');
-
         if (dayCount <= lastDay) {
-            newDayButton.setAttribute('id', `day${i}`);
-            newDayButton.setAttribute('data-value', `${i - 1}`);
+            newDayButton.setAttribute('id', `day${day}`);
+            newDayButton.setAttribute('data-value', `${day - 1}`);
+            if (month < 10 && day < 10) {
+                newDayButton.setAttribute('data-date', `${year}0${month}0${day}`);
+            } else if (month < 10 && day > 9) {
+                newDayButton.setAttribute('data-date', `${year}0${month}${day}`);
+            } else if (month > 10 && day < 10) {
+                newDayButton.setAttribute('data-date', `${year}${month}0${day}`);
+            } else if (month > 10 && day > 9) {
+                newDayButton.setAttribute('data-date', `${year}${month}${day}`);
+            }
             newDayButton.setAttribute('onclick', 'openModalEvent(event)')
 
             newDayTextDiv.setAttribute('class', 'dayText');
-            newDayTextDiv.setAttribute('data-value', `${i - 1}`);
+            newDayTextDiv.setAttribute('data-value', `${day - 1}`);
             newDayTextDiv.innerText = dayCount;
 
             dayCount++;
@@ -94,5 +110,6 @@ function createDayEvent(e) {
     createDay(targetNum, isTargetNumEqualTodayMonth);
 }
 
+createYear();
 createMonth();
 createDay(date.getMonth() + 1, true);

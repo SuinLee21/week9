@@ -38,7 +38,7 @@
             document.getElementById('foundId').innerText = '아이디 : ' + sessionId;
         }else{
             alert('접근 권한이 없습니다.');
-            location.href = "../page/findPw.html";
+            location.href = "../page/login.html";
         }
     </script>
 </body>

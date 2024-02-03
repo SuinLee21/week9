@@ -3,7 +3,7 @@
 <% 
     boolean isLogginIn = false;
 
-    if(session.getAttribute("id") != null){
+    if(session.getAttribute("idx") != null){
         isLogginIn = true;
         session.invalidate();
     }

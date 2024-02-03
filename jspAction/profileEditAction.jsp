@@ -22,7 +22,7 @@
     boolean isRegexPhoneNumValid = Pattern.matches(regexPhoneNum, phoneNumValue);
     boolean isLogginIn = false;
 
-    if(session.getAttribute("id") != null){
+    if(session.getAttribute("idx") != null){
         isLogginIn = true;
 
         if(isRegexPwValid && isRegexNameValid && isRegexPhoneNumValid){
