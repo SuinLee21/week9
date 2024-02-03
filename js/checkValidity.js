@@ -15,6 +15,13 @@ function checkValidity(booleanOptions, htmlOptions) {
             return false;
         }
     }
+    if (booleanOptions.checkButton === true) {
+        var idInputElement = document.getElementById(htmlOptions.idOfIdInput);
+        if (idInputElement.disabled === false) {
+            alert('아이디 중복체크를 해주세요.');
+            return false;
+        }
+    }
     if (booleanOptions.pw === true) {
         var pwInputElement = document.getElementById(htmlOptions.idOfPwInput);
         if (!regexPw.test(pwInputElement.value)) {
@@ -36,7 +43,6 @@ function checkValidity(booleanOptions, htmlOptions) {
             return false;
         }
     }
-
 
     if (booleanOptions.hour === true) {
         var hourSelectElement = document.getElementById(htmlOptions.idOfHourSelect);

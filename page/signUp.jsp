@@ -17,8 +17,8 @@
 </head>
 
 <body>
-    <form action="../jspAction/signUpAction.jsp" class="accountForm" onsubmit="return checkValidityEvent({id:true, pw:true, name:true, phoneNum:true}, 
-        {idOfIdInput: 'userId', idOfPwInput: 'userPw', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
+    <form action="../jspAction/signUpAction.jsp" class="accountForm" onsubmit="return checkValidityEvent({id:true, pw:true, name:true, phoneNum:true, checkButton: true}, 
+        {idOfIdInput: 'userId', idOfPwInput: 'userPw', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum', })">
         <div class="idInputParent">
             <input maxlength="12" type="text" id="userId" class="accountFormChild" name="userId"
                 placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12 글자)">
@@ -42,12 +42,10 @@
     </form>
 
     <script src="../js/checkValidity.js"></script>
-    <script src="../js/accountManager.js"></script>
+    <script src="../js/utill.js"></script>
     <script>
         var inputElement = document.getElementById('userId');
         var sessionId = "<%=sessionId%>";
-
-        console.log(sessionId)
         
         if(sessionId){
             inputElement.value = sessionId;

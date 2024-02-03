@@ -53,7 +53,7 @@
     </form>
 
     <script src="../js/checkValidity.js"></script>
-    <script src="../js/accountManager.js"></script>
+    <script src="../js/utill.js"></script>
     <script>
         var isLogginIn = <%=isLogginIn%>;
 
