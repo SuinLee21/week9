@@ -3,8 +3,12 @@
 <% 
     boolean isIdFound = false;
 
+    String sessionId = "";
+
     if(session.getAttribute("id") != null && session.getAttribute("pw") == null){
         isIdFound = true;
+        sessionId = String.valueOf(session.getAttribute("id"));
+        session.invalidate();
     }
 %>
 
@@ -28,10 +32,10 @@
 
     <script>
         var isIdFound = <%=isIdFound%>;
+        var sessionId = "<%=sessionId%>";
 
         if(isIdFound){
-            document.getElementById('foundId').innerText = '아이디 : ' + '<%=session.getAttribute("id")%>';
-            <%session.invalidate();%>;
+            document.getElementById('foundId').innerText = '아이디 : ' + sessionId;
         }else{
             alert('접근 권한이 없습니다.');
             location.href = "../page/findPw.html";

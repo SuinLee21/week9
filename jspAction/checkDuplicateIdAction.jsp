@@ -16,9 +16,6 @@
 
     String id = "";
 
-    String aaa = "rkskek";//
-    session.setAttribute("aaa", aaa);//
-
     if(isRegexIdValid){
         Class.forName("com.mysql.jdbc.Driver"); 
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
@@ -35,7 +32,8 @@
         }
         if(id != ""){
             isIdDuplicate = true;
-            
+        }else{
+            session.setAttribute("id", idValue);
         }
     }
 %>
@@ -44,9 +42,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>checkDuplicateIdAction</title>
+
+    <style>
+        h1{
+            display: inline;
+        }
+        .isEnabled{
+            color: green;
+        }
+        .isDisabled{
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
+    <h1 id="id" class="id"></h1>
+    <h1 id="isEnabled" class="isEnabled"></h1>
+    <h1 id="isDisabled" class="isDisabled"></h1>
+
     <script>
         var isRegexIdValid = <%=isRegexIdValid%>;
         var isIdDuplicate = <%=isIdDuplicate%>;
@@ -56,15 +70,13 @@
 
         if(!isRegexIdValid){
             alert('아이디를 다시 입력하세요.');
-            location.href = "../page/signUp.html";
         }else{
             if(isIdDuplicate){
-                alert('중복된 아이디입니다. 다시 입력해주세요.');
-                location.href = "../page/signUp.html";
+                document.getElementById('isDisabled').innerText = "사용할 수 없는 아이디입니다.";
             }else{
-                alert('사용 가능한 아이디입니다.');
-                location.href = "../page/signUp.html";
+                document.getElementById('isEnabled').innerText = "사용가능한 아이디입니다.";
             }
+            document.getElementById('id').innerText = idValue + "은 ";
         }
     </script>
 </body>

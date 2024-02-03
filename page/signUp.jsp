@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html" pageEncoding="utf-8" %>
 
+<%
+    String sessionId = "";
+
+    if(session.getAttribute("id") != null){
+        sessionId = String.valueOf(session.getAttribute("id"));
+        session.invalidate();
+    }
+%>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,18 +44,28 @@
     <script src="../js/checkValidity.js"></script>
     <script src="../js/accountManager.js"></script>
     <script>
+        var inputElement = document.getElementById('userId');
+        var sessionId = "<%=sessionId%>";
+
+        console.log(sessionId)
+        
+        if(sessionId){
+            inputElement.value = sessionId;
+            inputElement.disabled = true;
+        }
+
         function openPopUpEvent(e) {
             e.preventDefault();
 
-            var inputElement = e.target.previousElementSibling;
             var idOfIdInput = inputElement.id;
-            console.log(inputElement.value)
 
             if (checkValidity({ id: true }, { idOfIdInput: idOfIdInput })) {
                 window.open('../jspAction/checkDuplicateIdAction.jsp?userId=' + inputElement.value, '네이버팝업', 'width=500, height=500, resizeable=no')
             }
-            inputElement.value = "<%=session.getAttribute("aaa")%>"
-            console.log("<%=session.getAttribute("aaa")%>")
+
+            setTimeout(function(){
+                location.reload();
+            }, 100);
         }
     </script>
 </body>
