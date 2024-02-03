@@ -12,7 +12,7 @@
     
     boolean isLogginIn = false;
 
-    if(session.getAttribute("id") != null){
+    if(session.getAttribute("idx") != null){
         isLogginIn = true;
 
         id = String.valueOf(session.getAttribute("id"));
@@ -30,10 +30,10 @@
 </head>
 
 <body>
-    <form action="../jspAction/profileEditAction.jsp" class="accountForm" onsubmit="return checkValidityEvent({pw:true, name:true, phoneNum:true}, 
-        {idOfPwInput: 'userPw', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
+    <form action="../jspAction/profileEditAction.jsp" class="accountForm" onsubmit="return checkValidityEvent({pw:true, name:true, phoneNum:true, inputDiabled:true}, 
+        {idOfIdInput: 'userId', idOfPwInput: 'userPw', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
         <div>
-            <input id="userId" class="accountFormChild" name="userId"  disabled>
+            <input type="text" id="userId" class="accountFormChild" name="userId">
         </div>
         <div class="pwInputParent">
             <input maxlength="16" type="password" id="userPw" class="accountFormChild" name="userPw">
@@ -46,10 +46,10 @@
             <input maxlength="13" type="text" id="userPhoneNum" class="accountFormChild" name="userPhoneNum" oninput="phoneNumberInputEvent(event)">
         </div>
         <div>
-            <input type="submit" class="accountFormChild accountFormSubmit" value="회원가입">
+            <input type="submit" class="accountFormChild accountFormSubmit" value="내 정보 수정">
         </div>
-        <button class="accountFormChild withdrawalButton">회원탈퇴</button>
-        <a href="login.html">로그인 페이지로 이동</a>
+        <button class="accountFormChild withdrawalButton" onclick="confirmWithdrawalEvent(event)">회원탈퇴</button>
+        <a href="schedule.jsp">스케줄 페이지로 이동</a>
     </form>
 
     <script src="../js/checkValidity.js"></script>
@@ -63,7 +63,10 @@
             var name = "<%=name%>";
             var phoneNum = "<%=phoneNum%>";
 
+            console.log(document.getElementById('userId').disabled === true)
+
             document.getElementById('userId').value = id;
+            document.getElementById('userId').disabled = true;
             document.getElementById('userPw').value = pw;
             document.getElementById('userName').value = name;
             document.getElementById('userPhoneNum').value = phoneNum;
@@ -71,5 +74,13 @@
             alert('접근 권한이 없습니다.');
             location.href = "login.html";
         }
+
+        function confirmWithdrawalEvent(e) {
+            e.preventDefault();
+
+            if (confirm("정말 탈퇴하겠습니까?")) {
+                location.href = "../jspAction/withdrawalAction.jsp";
+            }
+        }       
     </script>
 </body>

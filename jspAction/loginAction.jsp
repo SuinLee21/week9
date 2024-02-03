@@ -74,10 +74,9 @@
             location.href = "../page/login.html";
         }else{
             if(isInfoMatching){                
-                alert('로그인 성공~');
                 location.href = '../page/schedule.jsp';
             }else{
-                alert('다시 로그인 해주세요 ㅠㅠ');
+                alert('가입된 정보가 없습니다.');
                 location.href = '../page/login.html';
             }
         }

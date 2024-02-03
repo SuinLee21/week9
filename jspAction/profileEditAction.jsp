@@ -8,15 +8,17 @@
 <% 
     request.setCharacterEncoding("utf-8"); 
 
-    String idValue = request.getParameter("userId"); 
+    String idValue = request.getParameter("userId");
     String pwValue = request.getParameter("userPw");
     String nameValue = request.getParameter("userName");
     String phoneNumValue = request.getParameter("userPhoneNum");
 
+    String regexId = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,12}$";
     String regexPw = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,16}$";
     String regexName = "^[가-힣]{2,10}$";
     String regexPhoneNum = "^010-\\d{4}-\\d{4}$";
 
+    boolean isRegexIdValid = Pattern.matches(regexId, idValue);
     boolean isRegexPwValid = Pattern.matches(regexPw, pwValue);
     boolean isRegexNameValid = Pattern.matches(regexName, nameValue);
     boolean isRegexPhoneNumValid = Pattern.matches(regexPhoneNum, phoneNumValue);
@@ -25,18 +27,17 @@
     if(session.getAttribute("idx") != null){
         isLogginIn = true;
 
-        if(isRegexPwValid && isRegexNameValid && isRegexPhoneNumValid){
+        if(isRegexIdValid && isRegexPwValid && isRegexNameValid && isRegexPhoneNumValid){
             Class.forName("com.mysql.jdbc.Driver"); 
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
-            String sql = "UPDATE user SET id=?, pw=?, name=?, phoneNum=? WHERE id=?";
+            String sql = "UPDATE user SET pw=?, name=?, phoneNum=? WHERE id=?";
             PreparedStatement query = conn.prepareStatement(sql); 
 
-            query.setString(1, idValue);
-            query.setString(2, pwValue);
-            query.setString(3, nameValue);
-            query.setString(4, phoneNumValue);
-            query.setString(5, idValue);
+            query.setString(1, pwValue);
+            query.setString(2, nameValue);
+            query.setString(3, phoneNumValue);
+            query.setString(4, idValue);
             query.executeUpdate();
 
             session.setAttribute("id", idValue);

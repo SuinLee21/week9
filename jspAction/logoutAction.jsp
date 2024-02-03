@@ -24,6 +24,6 @@
         }else{
             alert('접근 권한이 없습니다.');
         }
-        location.href = "../page/schedule.jsp";
+        location.href = "../page/login.html";
     </script>
 </body>

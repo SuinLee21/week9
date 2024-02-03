@@ -86,7 +86,6 @@
                 alert('전화번호를 다시 입력하세요.');
                 location.href = "../page/signUp.html";
             }else{
-                alert('회원가입이 완료되었습니다.');
                 location.href = "../page/login.html";
             }
         }

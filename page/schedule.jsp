@@ -43,9 +43,9 @@
 
 <body>
     <nav>
-        <a class="navLink">로그아웃</a>
+        <a class="navLink" href="../jspAction/logoutAction.jsp">로그아웃</a>
         <a class="navLink" href="profileEdit.jsp">내 정보 수정</a>
-        <a class="navLink" href="viewprofile.html">내 정보 보기</a>
+        <a class="navLink" href="viewprofile.jsp">내 정보 보기</a>
     </nav>
 
     <main id="main">
