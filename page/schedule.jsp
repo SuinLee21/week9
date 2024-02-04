@@ -22,6 +22,7 @@
         ResultSet result = query.executeQuery();
 
         while(result.next()){
+            String scheduleIdx = result.getString("idx");
             String userIdx = result.getString("user_idx");
             String hour = String.valueOf(result.getInt("hour"));
             String minute = String.valueOf(result.getInt("minute"));
@@ -29,6 +30,7 @@
             String contents = result.getString("contents");
 
             ArrayList<String> temp = new ArrayList<String>();
+            temp.add("\"" + scheduleIdx + "\"");
             temp.add("\"" + userIdx + "\"");
             temp.add("\"" + hour + "\"");
             temp.add("\"" + minute + "\"");
@@ -84,24 +86,24 @@
                         <option value="">분</option>
                     </select>
                     <textarea maxlength="100" id="modifyTextarea" class="modifyTextarea"></textarea>
-                    <input type="hidden" name="modifyText" value="">
                     <input type="submit" value="저장">
                 </form>
                 <div id="modify" class="modify" onclick="modifyEvent(event)">수정</div>
                 <div id="delete" class="delete">삭제</div>
             </div>
         </div>
-        <form action="createScheduleAction.jsp" class="scheduleWritingSection"
+        <form action="../jspAction/createScheduleAction.jsp" class="scheduleWritingSection"
             onsubmit="checkValidityEvent({hour: true, minute: true, text: true},
             {idOfHourSelect: 'writeHourSelect', idOfMinuteSelect: 'writeMinuteSelect', idOfTextarea: 'scheduleTextarea'})">
-            <select id="writeHourSelect" class="writeSelect">
+            <select id="writeHourSelect" class="writeSelect" name="writeHourSelect">
                 <option value="">시</option>
             </select>
-            <select id="writeMinuteSelect" class="writeSelect">
+            <select id="writeMinuteSelect" class="writeSelect" name="writeMinuteSelect">
                 <option value="">분</option>
             </select>
             <textarea maxlength="100" id="scheduleTextarea" class="scheduleInput"
-                placeholder="내용을 입력하세요.(100자 이하)"></textarea>
+                placeholder="내용을 입력하세요.(100자 이하)" name="scheduleTextarea"></textarea>
+            <input type="hidden" id="hiddenDate" name="hiddenDate">
             <input type="submit" class="submitButton" value="작성">
         </form>
     </div>
@@ -123,12 +125,18 @@
                 var buttonList = daySelectionElement.getElementsByTagName('button');
                 var idOfWriteHourSelect = document.getElementById('writeHourSelect').id;
                 var idOfWriteMinuteSelect = document.getElementById('writeMinuteSelect').id;
+                var hiddenDateElement = document.getElementById('hiddenDate');
+                var targetDataDate = e.target.getAttribute('data-date');
 
+                //모달창 자식 생성 및 모달창 diplay: block
                 var newAllScheduleDiv = document.createElement('div');
                 newAllScheduleDiv.setAttribute('id', 'allSchedule');
                 modal.appendChild(newAllScheduleDiv);
 
                 document.getElementById('modal').style.display = "block";
+
+                //data-date 값 삽입
+                document.getElementById('hiddenDate').value = targetDataDate;
 
                 //일자 색 변경
                 for (i = 0; i < 31; i++) {
@@ -140,7 +148,7 @@
                 createOption(idOfWriteHourSelect, idOfWriteMinuteSelect)
 
                 for(var i = 0; i < scheduleDataList.length; i++) {
-                    createSchedule(i, scheduleDataList);
+                    createSchedule(i, targetDataDate, scheduleDataList);
                 }
             }
 

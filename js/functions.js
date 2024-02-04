@@ -11,13 +11,16 @@ function yearPlusEvent() {
 }
 
 function modifyEvent(e) {
-    var keepDivScheduleElement = document.getElementById('divSchedule');
-    var keepHiddenScheduleElement = document.getElementById('hiddenSchedule');
+    var targetParentElement = e.target.parentElement;
+    var childList = targetParentElement.children;
 
-    keepDivScheduleElement.style.display = "none";
-    keepHiddenScheduleElement.style.display = "flex";
-    e.target.style.display = "none";
-    document.getElementById('delete').style.display = "none";
+    for (i = 0; i < childList.length; i++) {
+        if (i !== 1) {
+            childList[i].style.display = "none";
+        } else {
+            childList[i].style.display = "flex";
+        }
+    }
 
     createOption('modifyHourSelect', 'modifyMinuteSelect');
 }
