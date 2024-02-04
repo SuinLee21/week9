@@ -62,7 +62,6 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         newSubmitButton.setAttribute('value', '저장');
 
         newModifyDiv.setAttribute('class', 'modify');
-        // newModifyDiv.setAttribute('data-value', '');
         newModifyDiv.setAttribute('onclick', 'modifyEvent(event)');
         newModifyDiv.innerText = '수정';
 

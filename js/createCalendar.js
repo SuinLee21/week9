@@ -22,7 +22,7 @@ function createMonth() {
     document.getElementById('monthButton' + (date.getMonth() + 1).toString()).style.backgroundColor = "rgb(218, 227, 243)";
 }
 
-function createDay(month, isTargetNumEqualTodayMonth) {
+function createDay(month, isTargetNumEqualTodayMonth, scheduleDataList) {
     var year = document.getElementById('year').innerText;
     var mainElement = document.getElementById('main');
     var daySectionElement = document.getElementById('daySection');
@@ -33,6 +33,8 @@ function createDay(month, isTargetNumEqualTodayMonth) {
     var thirtyList = [4, 6, 9, 11];
     var dayCount = 1;
     var lastDay = 0;
+    var scheduleCountList = [];
+    var dateList = [];
 
     if (thirtyOneList.includes(month)) {
         lastDay = 31;
@@ -40,6 +42,19 @@ function createDay(month, isTargetNumEqualTodayMonth) {
         lastDay = 30;
     } else {
         lastDay = 28;
+    }
+
+    for (i = 0; i < lastDay; i++) {
+        scheduleCountList.push(0);
+    }
+    for (i = 0; i < scheduleDataList.length; i++) {
+        var yearAndMonth = scheduleDataList[i][4].substr(0, 6);
+        if (yearAndMonth === `${year}0${month}` || yearAndMonth === `${year}${month}`) {
+            dateList.push(scheduleDataList[i][4].substr(6, 2));
+        }
+    }
+    for (i = 0; i < dateList.length; i++) {
+        scheduleCountList[parseInt(dateList[i]) - 1]++;
     }
 
     if (daySectionElement) {
@@ -52,12 +67,15 @@ function createDay(month, isTargetNumEqualTodayMonth) {
     for (day = 1; day <= 35; day++) {
         var newDayButton = document.createElement('button');
         var newDayTextDiv = document.createElement('div');
-        // var createScheduleDiv = document.createElement('div');
+        var newScheduleCountDiv = document.createElement('div');
 
         newDayButton.setAttribute('class', 'day');
 
-        // createScheduleDiv.setAttribute('class', 'scheduleCount');
         if (dayCount <= lastDay) {
+            if (scheduleCountList[day - 1]) {
+                newScheduleCountDiv.setAttribute('class', 'scheduleCount');
+                newScheduleCountDiv.innerText = scheduleCountList[day - 1];
+            }
             newDayButton.setAttribute('id', `day${day}`);
             newDayButton.setAttribute('data-value', `${day - 1}`);
             if (month < 10 && day < 10) {
@@ -83,7 +101,7 @@ function createDay(month, isTargetNumEqualTodayMonth) {
         newDaySectionDiv.appendChild(newDayButton);
 
         newDayButton.appendChild(newDayTextDiv);
-        // newDayButton.appendChild(createScheduleDiv);
+        newDayButton.appendChild(newScheduleCountDiv);
     }
     mainElement.appendChild(newDaySectionDiv)
 
@@ -107,9 +125,5 @@ function createDayEvent(e) {
         isTargetNumEqualTodayMonth = true;
     }
 
-    createDay(targetNum, isTargetNumEqualTodayMonth);
+    createDay(targetNum, isTargetNumEqualTodayMonth, scheduleDataList);
 }
-
-createYear();
-createMonth();
-createDay(date.getMonth() + 1, true);

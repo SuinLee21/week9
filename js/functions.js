@@ -1,13 +1,38 @@
+function printMatchingDay() {
+    var monthSectionElement = document.getElementById('monthSection');
+    var buttonList = monthSectionElement.getElementsByTagName('button');
+    var month = 0;
+    var isMonthEqual = false;
+
+    for (i = 0; i < buttonList.length; i++) {
+        if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
+            month = parseInt(buttonList[i].innerText);
+        }
+    }
+
+    if (month == date.getMonth() + 1) {
+        isMonthEqual = true;
+    }
+
+    console.log(month)
+
+    createDay(month, isMonthEqual, scheduleDataList);
+}
+
 function yearMinusEvent() {
     var yearElement = document.getElementById('year');
     var yearValue = parseInt(yearElement.innerText) - 1;
     yearElement.innerText = yearValue;
+
+    printMatchingDay();
 }
 
 function yearPlusEvent() {
     var yearElement = document.getElementById('year');
     var yearValue = parseInt(yearElement.innerText) + 1;
     yearElement.innerText = yearValue;
+
+    printMatchingDay();
 }
 
 function modifyEvent(e) {

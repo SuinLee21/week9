@@ -93,7 +93,7 @@
             </div>
         </div>
         <form action="../jspAction/createScheduleAction.jsp" class="scheduleWritingSection"
-            onsubmit="checkValidityEvent({hour: true, minute: true, text: true},
+            onsubmit="return checkValidityEvent({hour: true, minute: true, text: true},
             {idOfHourSelect: 'writeHourSelect', idOfMinuteSelect: 'writeMinuteSelect', idOfTextarea: 'scheduleTextarea'})">
             <select id="writeHourSelect" class="writeSelect" name="writeHourSelect">
                 <option value="">시</option>
@@ -160,5 +160,8 @@
             alert('접근 권한이 없습니다.');
             location.href = "../page/login.html";
         }
+        createYear();
+        createMonth();
+        createDay(date.getMonth() + 1, true, scheduleDataList);
     </script>
 </body>
