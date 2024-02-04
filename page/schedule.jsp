@@ -116,8 +116,6 @@
         var isLogginIn = <%=isLogginIn%>;
         var scheduleDataList = <%=scheduleDataList%>;
 
-        console.log(scheduleDataList)
-
         if(isLogginIn){
             function openModalEvent(e) {
                 var modalElement = document.getElementById('modal');
@@ -126,7 +124,7 @@
                 var idOfWriteHourSelect = document.getElementById('writeHourSelect').id;
                 var idOfWriteMinuteSelect = document.getElementById('writeMinuteSelect').id;
                 var hiddenDateElement = document.getElementById('hiddenDate');
-                var targetDataDate = e.target.getAttribute('data-date');
+                var targetDataDate = null;
 
                 //모달창 자식 생성 및 모달창 diplay: block
                 var newAllScheduleDiv = document.createElement('div');
@@ -135,15 +133,27 @@
 
                 document.getElementById('modal').style.display = "block";
 
+                if(e.target === e.currentTarget){
+                    targetDataDate = e.target.getAttribute('data-date');
+                    //data-date 값 삽입
+                    document.getElementById('hiddenDate').value = targetDataDate;
+
+                    //일자 색 변경
+                    for (i = 0; i < 31; i++) {
+                        buttonList[i].style.backgroundColor = "white";
+                    }
+                    buttonList[e.target.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
+                }else{
+                    targetDataDate = e.currentTarget.getAttribute('data-date');
+                    for (i = 0; i < 31; i++) {
+                        buttonList[i].style.backgroundColor = "white";
+                    }
+                    buttonList[e.currentTarget.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
+                }
+
                 //data-date 값 삽입
                 document.getElementById('hiddenDate').value = targetDataDate;
-
-                //일자 색 변경
-                for (i = 0; i < 31; i++) {
-                    buttonList[i].style.backgroundColor = "white";
-                }
-                buttonList[e.target.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
-
+                
                 //option 생성
                 createOption(idOfWriteHourSelect, idOfWriteMinuteSelect)
 

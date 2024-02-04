@@ -1,5 +1,4 @@
 function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
-    console.log(scheduleDataList)
     if (targetDataDate === scheduleDataList[scheduleNum][4]) {
         var newAllScheduleDiv = document.getElementById('allSchedule');
 
