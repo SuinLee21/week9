@@ -31,7 +31,7 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         newScheduleTextHtwo.setAttribute('class', 'scheduleText');
         newScheduleTextHtwo.innerText = scheduleDataList[scheduleNum][5];
 
-        newHiddenScheduleForm.setAttribute('action', 'scheduleEditAction.jsp');
+        newHiddenScheduleForm.setAttribute('action', '../jspAction/scheduleEditAction.jsp');
         newHiddenScheduleForm.setAttribute('id', `hiddenSchedule${scheduleNum}`);
         newHiddenScheduleForm.setAttribute('class', 'hiddenSchedule');
         newHiddenScheduleForm.setAttribute
@@ -39,12 +39,14 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         //
         newModifyHourSelect.setAttribute('id', `modifyHourSelect${scheduleNum}`);
         newModifyHourSelect.setAttribute('class', 'modifySelect');
+        newModifyHourSelect.setAttribute('name', 'modifyHourSelect');
 
         newHourOption.setAttribute('value', '');
         newHourOption.innerText = '시';
 
         newModifyMinuteSelect.setAttribute('id', `modifyMinuteSelect${scheduleNum}`);
         newModifyMinuteSelect.setAttribute('class', 'modifySelect');
+        newModifyMinuteSelect.setAttribute('name', 'modifyMinuteSelect');
 
         newMinuteOption.setAttribute('value', '');
         newMinuteOption.innerText = '분';
@@ -52,10 +54,11 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         newModifyTextarea.setAttribute('maxlength', '100');
         newModifyTextarea.setAttribute('id', `modifyTextarea${scheduleNum}`);
         newModifyTextarea.setAttribute('class', 'modifyTextarea');
+        newModifyTextarea.setAttribute('name', 'modifyTextarea');
 
         newHiddenInput.setAttribute('type', 'hidden');
-        newHiddenInput.setAttribute('name', 'modifyText');
-        newHiddenInput.setAttribute('value', '');
+        newHiddenInput.setAttribute('name', 'scheduleIdx');
+        newHiddenInput.setAttribute('value', scheduleDataList[scheduleNum][0]);
 
         newSubmitButton.setAttribute('type', 'submit');
         newSubmitButton.setAttribute('value', '저장');
@@ -94,7 +97,7 @@ function createOption(idOfHourSelect, idOfMinuteSelect) {
     var hourSelectElement = document.getElementById(idOfHourSelect);
     var minuteSelectElement = document.getElementById(idOfMinuteSelect);
 
-    for (i = 1; i <= 23; i++) {
+    for (i = 0; i <= 23; i++) {
         var newOption = document.createElement('option');
 
         newOption.setAttribute('value', `${i}`);
@@ -102,7 +105,7 @@ function createOption(idOfHourSelect, idOfMinuteSelect) {
 
         hourSelectElement.appendChild(newOption);
     }
-    for (i = 1; i <= 59; i++) {
+    for (i = 0; i <= 59; i++) {
         var newOption = document.createElement('option');
 
         newOption.setAttribute('value', `${i}`);

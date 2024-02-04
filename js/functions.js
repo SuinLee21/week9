@@ -38,6 +38,9 @@ function yearPlusEvent() {
 function modifyEvent(e) {
     var targetParentElement = e.target.parentElement;
     var childList = targetParentElement.children;
+    var hTwoList = targetParentElement.getElementsByTagName('h2');
+    var textareaList = targetParentElement.getElementsByTagName('textarea');
+    var selectList = targetParentElement.getElementsByTagName('select');
 
     for (i = 0; i < childList.length; i++) {
         if (i !== 1) {
@@ -47,5 +50,7 @@ function modifyEvent(e) {
         }
     }
 
-    createOption('modifyHourSelect', 'modifyMinuteSelect');
+    textareaList[0].value = hTwoList[0].innerText;
+
+    createOption(selectList[0].id, selectList[1].id);
 }

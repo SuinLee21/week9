@@ -79,13 +79,14 @@
                 <form id="hiddenSchedule" class="hiddenSchedule"
                     onsubmit="checkValidityEvent({hour: true, minute: true, text: true},
                 {idOfHourSelect: 'modifyHourSelect', idOfMinuteSelect: 'modifyMinuteSelect', idOfTextarea: 'modifyTextarea'})">
-                    <select id="modifyHourSelect" class="modifySelect">
+                    <select id="modifyHourSelect" class="modifySelect" name="modifyHourSelect">
                         <option value="">시</option>
                     </select>
-                    <select id="modifyMinuteSelect" class="modifySelect">
+                    <select id="modifyMinuteSelect" class="modifySelect" name="modifyMinuteSelect">
                         <option value="">분</option>
                     </select>
-                    <textarea maxlength="100" id="modifyTextarea" class="modifyTextarea"></textarea>
+                    <textarea maxlength="100" id="modifyTextarea" class="modifyTextarea" name="modifyTextarea"></textarea>
+                    <input type="hidden" value=''>
                     <input type="submit" value="저장">
                 </form>
                 <div id="modify" class="modify" onclick="modifyEvent(event)">수정</div>
@@ -153,7 +154,7 @@
 
                 //data-date 값 삽입
                 document.getElementById('hiddenDate').value = targetDataDate;
-                
+
                 //option 생성
                 createOption(idOfWriteHourSelect, idOfWriteMinuteSelect)
 
