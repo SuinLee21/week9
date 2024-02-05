@@ -121,6 +121,7 @@
         if(isLogginIn){
             function openModalEvent(e) {
                 var modalElement = document.getElementById('modal');
+                var clickedDateElement = document.getElementById('clickedDate');
                 var daySelectionElement = document.getElementById('daySection');
                 var buttonList = daySelectionElement.getElementsByTagName('button');
                 var idOfWriteHourSelect = document.getElementById('writeHourSelect').id;
@@ -137,8 +138,6 @@
 
                 if(e.target === e.currentTarget){
                     targetDataDate = e.target.getAttribute('data-date');
-                    //data-date 값 삽입
-                    document.getElementById('hiddenDate').value = targetDataDate;
 
                     //일자 색 변경
                     for (i = 0; i < 31; i++) {
@@ -147,13 +146,18 @@
                     buttonList[e.target.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
                 }else{
                     targetDataDate = e.currentTarget.getAttribute('data-date');
+
+                    //일자 색 변경
                     for (i = 0; i < 31; i++) {
                         buttonList[i].style.backgroundColor = "white";
                     }
                     buttonList[e.currentTarget.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
                 }
 
-                //data-date 값 삽입
+                //data-date 값 clickedDate에 삽입
+                clickedDateElement.innerText = targetDataDate;
+
+                //data-date 값 input type='hidden'에 삽입
                 document.getElementById('hiddenDate').value = targetDataDate;
 
                 //option 생성
