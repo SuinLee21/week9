@@ -109,25 +109,3 @@ function createDay(month, isTargetNumEqualTodayMonth, scheduleDataList) {
         document.getElementById('day' + (date.getDate()).toString()).style.backgroundColor = "rgb(218, 227, 243)";
     }
 }
-
-function changeMonthColor(element) {
-    var monthSelectionElement = document.getElementById('monthSection');
-    var buttonList = monthSelectionElement.getElementsByTagName('button');
-
-    for (i = 0; i < 12; i++) {
-        buttonList[i].style.backgroundColor = "white";
-    }
-    element.style.backgroundColor = "rgb(218, 227, 243)";
-}
-
-function createDayEvent(e) {
-    var targetNum = parseInt(e.target.innerText);
-    var isTargetNumEqualTodayMonth = false;
-
-    if (targetNum === date.getMonth() + 1) {
-        isTargetNumEqualTodayMonth = true;
-    }
-
-    changeMonthColor(e.target);
-    createDay(targetNum, isTargetNumEqualTodayMonth, scheduleDataList);
-}

@@ -19,9 +19,7 @@
     <script>
         var isLogginIn = <%=isLogginIn%>;
 
-        if(isLogginIn){
-            alert('로그아웃 되었습니다.');
-        }else{
+        if(!isLogginIn){
             alert('접근 권한이 없습니다.');
         }
         location.href = "../page/login.html";

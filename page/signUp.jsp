@@ -58,7 +58,7 @@
             var idOfIdInput = inputElement.id;
 
             if (checkValidity({ id: true }, { idOfIdInput: idOfIdInput })) {
-                window.open('../jspAction/checkDuplicateIdAction.jsp?userId=' + inputElement.value, '네이버팝업', 'width=500, height=500, resizeable=no')
+                window.open('../jspAction/checkDuplicateIdAction.jsp?userId=' + inputElement.value, '네이버팝업', 'width=500, height=500')
             }
 
             setTimeout(function(){

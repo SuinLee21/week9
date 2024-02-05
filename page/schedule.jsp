@@ -127,6 +127,63 @@
         console.log(month)
 
         if(isLogginIn){
+            function printMatchingDay() {
+                var monthSectionElement = document.getElementById('monthSection');
+                var buttonList = monthSectionElement.getElementsByTagName('button');
+                var month = 0;
+                var isMonthEqual = false;
+
+                for (i = 0; i < buttonList.length; i++) {
+                    if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
+                        month = parseInt(buttonList[i].innerText);
+                    }
+                }
+
+                if (month == date.getMonth() + 1) {
+                    isMonthEqual = true;
+                }
+
+                createDay(month, isMonthEqual, scheduleDataList);
+            }
+
+            function changeMonthColor(element) {
+                var monthSelectionElement = document.getElementById('monthSection');
+                var buttonList = monthSelectionElement.getElementsByTagName('button');
+
+                for (i = 0; i < 12; i++) {
+                    buttonList[i].style.backgroundColor = "white";
+                }
+                element.style.backgroundColor = "rgb(218, 227, 243)";
+            }
+
+            function yearMinusEvent() {
+                var yearElement = document.getElementById('year');
+                var yearValue = parseInt(yearElement.innerText) - 1;
+                yearElement.innerText = yearValue;
+
+                printMatchingDay();
+            }
+
+            function yearPlusEvent() {
+                var yearElement = document.getElementById('year');
+                var yearValue = parseInt(yearElement.innerText) + 1;
+                yearElement.innerText = yearValue;
+
+                printMatchingDay();
+            }
+
+            function createDayEvent(e) {
+                var targetNum = parseInt(e.target.innerText);
+                var isTargetNumEqualTodayMonth = false;
+
+                if (targetNum === date.getMonth() + 1) {
+                    isTargetNumEqualTodayMonth = true;
+                }
+
+                changeMonthColor(e.target);
+                createDay(targetNum, isTargetNumEqualTodayMonth, scheduleDataList);
+            }
+
             function openModalEvent(e) {
                 var modalElement = document.getElementById('modal');
                 var clickedDateElement = document.getElementById('clickedDate');
@@ -179,14 +236,57 @@
             function closeModalEvent() {
                 document.getElementById('allSchedule').remove();
                 document.getElementById('modal').style.display = "none";
-            }          
+            }
+
+            function modifyEvent(e) {
+                var targetParentElement = e.target.parentElement;
+                var childList = targetParentElement.children;
+                var hTwoList = targetParentElement.getElementsByTagName('h2');
+                var textareaList = targetParentElement.getElementsByTagName('textarea');
+                var selectList = targetParentElement.getElementsByTagName('select');
+
+                for (i = 0; i < childList.length; i++) {
+                    if (i !== 1) {
+                        childList[i].style.display = "none";
+                    } else {
+                        childList[i].style.display = "flex";
+                    }
+                }
+
+                textareaList[0].value = hTwoList[0].innerText;
+
+                createOption(selectList[0].id, selectList[1].id);
+            }
+
+            function deleteEvent(e) {
+                if (confirm('정말 삭제하겠습니까?')) {
+                    location.href = `../jspAction/scheduleDeleteAction.jsp?scheduleIdx=${e.target.getAttribute('data-value')}`;
+                }
+            }
+
+            function cancelEvent(e) {
+                e.preventDefault();
+
+                var scheduleSectionElement = e.target.parentElement.parentElement;
+                var childList = scheduleSectionElement.children;
+
+                for (i = 0; i < childList.length; i++) {
+                    if (i === 0) {
+                        childList[i].style.display = "flex";
+                    } else if (i === 1) {
+                        childList[i].style.display = "none";
+                    } else {
+                        childList[i].style.display = "block";
+                    }
+                }
+            }    
         }else{
             alert('접근 권한이 없습니다.');
             location.href = "../page/login.html";
         }
-        createYear();
-        createMonth();
-        if(month){
+
+
+        if(month){ //session("month")존재 여부에 따른 createDay()
             var monthElement = document.getElementById('monthButton' + month);
 
             changeMonthColor(monthElement);
@@ -194,5 +294,7 @@
         }else{
             createDay(date.getMonth() + 1, true, scheduleDataList);
         }
+        createYear();
+        createMonth();
     </script>
 </body>
