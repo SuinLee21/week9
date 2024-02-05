@@ -90,7 +90,7 @@
                     <input type="submit" value="저장">
                 </form>
                 <div id="modify" class="modify" onclick="modifyEvent(event)">수정</div>
-                <div id="delete" class="delete">삭제</div>
+                <a id="delete" class="delete">삭제</a>
             </div>
         </div>
         <form action="../jspAction/createScheduleAction.jsp" class="scheduleWritingSection"

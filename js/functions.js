@@ -14,8 +14,6 @@ function printMatchingDay() {
         isMonthEqual = true;
     }
 
-    console.log(month)
-
     createDay(month, isMonthEqual, scheduleDataList);
 }
 
