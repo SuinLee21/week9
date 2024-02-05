@@ -71,34 +71,34 @@
         <div id="monthSection" class="monthSection"></div>
     </main>
 
+    <%-- <div class="scheduleSection">
+        <div id="divSchedule" class="schedule">
+            <div class="scheduleTime">14시 39분</div>
+            <h2 class="scheduleText">정적데이터입니다.</h2>
+        </div>
+        <form id="hiddenSchedule" class="hiddenSchedule"
+            onsubmit="return checkValidityEvent({hour: true, minute: true, text: true},
+        {idOfHourSelect: 'modifyHourSelect', idOfMinuteSelect: 'modifyMinuteSelect', idOfTextarea: 'modifyTextarea'})">
+            <select id="modifyHourSelect" class="modifySelect" name="modifyHourSelect">
+                <option value="">시</option>
+            </select>
+            <select id="modifyMinuteSelect" class="modifySelect" name="modifyMinuteSelect">
+                <option value="">분</option>
+            </select>
+            <textarea maxlength="100" id="modifyTextarea" class="modifyTextarea" name="modifyTextarea"></textarea>
+            <input type="hidden" value=''>
+            <input type="submit" value="저장">
+            <button onclick="cancelEvent(event)">취소</button>
+        </form>
+        <div id="modify" class="modify" onclick="modifyEvent(event)">수정</div>
+        <div id="delete" class="delete" data-value="" onclick="deleteEvent(event)">삭제</div>
+    </div> --%>
+
     <div id="modal" class="modal">
         <h2 id="clickedDate"></h2>
         <h1>할 일</h1>
         <div class="closeButton" onclick="closeModalEvent()">X</div>
-        <div id="allSchedule">
-            <div class="scheduleSection">
-                <div id="divSchedule" class="schedule">
-                    <div class="scheduleTime">14시 39분</div>
-                    <h2 class="scheduleText">정적데이터입니다.</h2>
-                </div>
-                <form id="hiddenSchedule" class="hiddenSchedule"
-                    onsubmit="return checkValidityEvent({hour: true, minute: true, text: true},
-                {idOfHourSelect: 'modifyHourSelect', idOfMinuteSelect: 'modifyMinuteSelect', idOfTextarea: 'modifyTextarea'})">
-                    <select id="modifyHourSelect" class="modifySelect" name="modifyHourSelect">
-                        <option value="">시</option>
-                    </select>
-                    <select id="modifyMinuteSelect" class="modifySelect" name="modifyMinuteSelect">
-                        <option value="">분</option>
-                    </select>
-                    <textarea maxlength="100" id="modifyTextarea" class="modifyTextarea" name="modifyTextarea"></textarea>
-                    <input type="hidden" value=''>
-                    <input type="submit" value="저장">
-                    <button onclick="cancelEvent(event)">취소</button>
-                </form>
-                <div id="modify" class="modify" onclick="modifyEvent(event)">수정</div>
-                <div id="delete" class="delete" data-value="" onclick="deleteEvent(event)">삭제</div>
-            </div>
-        </div>
+        <div id="allSchedule"></div>
         <form action="../jspAction/createScheduleAction.jsp" class="scheduleWritingSection"
             onsubmit="return checkValidityEvent({hour: true, minute: true, text: true},
             {idOfHourSelect: 'writeHourSelect', idOfMinuteSelect: 'writeMinuteSelect', idOfTextarea: 'scheduleTextarea'})">
@@ -118,7 +118,6 @@
     <script src="../js/checkValidity.js"></script>
     <script src="../js/createCalendar.js"></script>
     <script src="../js/createSchedule.js"></script>
-    <script src="../js/functions.js"></script>
     <script>
         var isLogginIn = <%=isLogginIn%>;
         var scheduleDataList = <%=scheduleDataList%>;
@@ -239,23 +238,43 @@
             }
 
             function modifyEvent(e) {
-                var targetParentElement = e.target.parentElement;
-                var childList = targetParentElement.children;
-                var hTwoList = targetParentElement.getElementsByTagName('h2');
-                var textareaList = targetParentElement.getElementsByTagName('textarea');
-                var selectList = targetParentElement.getElementsByTagName('select');
+                var allScheduleElement = document.getElementById('allSchedule');
+                var scheduleSectionList = allScheduleElement.children;
+                var scheduleSectionChildList = null;
+                var hTwoList = null;
+                var textareaList = null;
+                var selectList = null;
 
-                for (i = 0; i < childList.length; i++) {
-                    if (i !== 1) {
-                        childList[i].style.display = "none";
-                    } else {
-                        childList[i].style.display = "flex";
+                for (var i = 0; i < scheduleSectionList.length; i++) {
+                    scheduleSectionChildList = scheduleSectionList[i].children;
+
+                    for (var j = 0; j < scheduleSectionChildList.length; j++) {
+                        if (j === 0) {
+                            scheduleSectionChildList[j].style.display = "flex";
+                        } else if (j === 1) {
+                            scheduleSectionChildList[j].style.display = "none";
+                        } else {
+                            scheduleSectionChildList[j].style.display = "block";
+                        }
                     }
-                }
 
-                textareaList[0].value = hTwoList[0].innerText;
+                    if(e.target.parentElement === scheduleSectionList[i]){
+                        hTwoList = scheduleSectionList[i].getElementsByTagName('h2');
+                        textareaList = scheduleSectionList[i].getElementsByTagName('textarea');
+                        selectList = scheduleSectionList[i].getElementsByTagName('select');
 
-                createOption(selectList[0].id, selectList[1].id);
+                        for (var k = 0; k < scheduleSectionChildList.length; k++) {
+                            if (k !== 1) {
+                                scheduleSectionChildList[k].style.display = "none";
+                            } else {
+                                scheduleSectionChildList[k].style.display = "flex";
+                            }
+                        }
+
+                        textareaList[0].value = hTwoList[0].innerText;
+                        createOption(selectList[0].id, selectList[1].id);
+                    }
+                }                
             }
 
             function deleteEvent(e) {
@@ -286,15 +305,17 @@
         }
 
 
+        createYear();
+        createMonth();
         if(month){ //session("month")존재 여부에 따른 createDay()
             var monthElement = document.getElementById('monthButton' + month);
 
             changeMonthColor(monthElement);
             createDay(month, false, scheduleDataList);
+            console.log('aa');
         }else{
             createDay(date.getMonth() + 1, true, scheduleDataList);
+            console.log('bb')
         }
-        createYear();
-        createMonth();
     </script>
 </body>
