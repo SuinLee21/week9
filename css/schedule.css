@@ -154,6 +154,7 @@ textarea {
     /* align-items: center; */
     display: none;
     height: 100%;
+    margin: 0;
 }
 
 .modifySelect {
@@ -176,7 +177,7 @@ textarea {
 }
 
 .modify {
-    width: 30px;
+    width: 33px;
     /* height: fit-content; */
     color: gray;
     font-size: 14px;
@@ -185,11 +186,12 @@ textarea {
 }
 
 .delete {
-    width: 30px;
+    width: 33px;
     color: gray;
     font-size: 14px;
     margin: 5px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .scheduleWritingSection {

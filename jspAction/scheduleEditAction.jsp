@@ -7,14 +7,14 @@
 <% 
     request.setCharacterEncoding("utf-8");
 
-    String scheduleIdxValue = request.getParameter("scheduleIdx"); 
+    int scheduleIdxValue = Integer.parseInt(request.getParameter("scheduleIdx"));
     String hourSelectValue = request.getParameter("modifyHourSelect"); 
     String minuteSelectValue = request.getParameter("modifyMinuteSelect"); 
     String textValue = request.getParameter("modifyTextarea"); 
 
     boolean isContentPresent = false;
     
-    if(textValue != ""){
+    if(hourSelectValue != "" || minuteSelectValue != "" || textValue != ""){
         isContentPresent = true;
 
         Class.forName("com.mysql.jdbc.Driver"); 
@@ -26,7 +26,7 @@
         query.setInt(1, Integer.parseInt(hourSelectValue));
         query.setInt(2, Integer.parseInt(minuteSelectValue));
         query.setString(3, textValue);
-        query.setInt(4, Integer.parseInt(scheduleIdxValue));
+        query.setInt(4, scheduleIdxValue);
         query.setInt(5, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
         query.executeUpdate();
     }

@@ -17,7 +17,7 @@
     if(session.getAttribute("idx") != null){
         isLogginIn = true;
 
-        if(textValue != ""){
+        if(hourSelectValue != "" || minuteSelectValue != "" || textValue != ""){
             isContentPresent = true;
 
             Class.forName("com.mysql.jdbc.Driver"); 

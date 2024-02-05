@@ -77,7 +77,7 @@
                     <h2 class="scheduleText">정적데이터입니다.</h2>
                 </div>
                 <form id="hiddenSchedule" class="hiddenSchedule"
-                    onsubmit="checkValidityEvent({hour: true, minute: true, text: true},
+                    onsubmit="return checkValidityEvent({hour: true, minute: true, text: true},
                 {idOfHourSelect: 'modifyHourSelect', idOfMinuteSelect: 'modifyMinuteSelect', idOfTextarea: 'modifyTextarea'})">
                     <select id="modifyHourSelect" class="modifySelect" name="modifyHourSelect">
                         <option value="">시</option>
@@ -88,6 +88,7 @@
                     <textarea maxlength="100" id="modifyTextarea" class="modifyTextarea" name="modifyTextarea"></textarea>
                     <input type="hidden" value=''>
                     <input type="submit" value="저장">
+                    <button onclick="cancelEvent(event)">취소</button>
                 </form>
                 <div id="modify" class="modify" onclick="modifyEvent(event)">수정</div>
                 <a id="delete" class="delete">삭제</a>

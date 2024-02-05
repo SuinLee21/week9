@@ -52,3 +52,20 @@ function modifyEvent(e) {
 
     createOption(selectList[0].id, selectList[1].id);
 }
+
+function cancelEvent(e) {
+    e.preventDefault();
+
+    var scheduleSectionElement = e.target.parentElement.parentElement;
+    var childList = scheduleSectionElement.children;
+
+    for (i = 0; i < childList.length; i++) {
+        if (i === 0) {
+            childList[i].style.display = "flex";
+        } else if (i === 1) {
+            childList[i].style.display = "none";
+        } else {
+            childList[i].style.display = "block";
+        }
+    }
+}

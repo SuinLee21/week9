@@ -14,6 +14,7 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         var newModifyTextarea = document.createElement('textarea');
         var newHiddenInput = document.createElement('input');
         var newSubmitButton = document.createElement('input');
+        var newCancelButton = document.createElement('button');
         var newModifyDiv = document.createElement('div');
         var newDeleteDiv = document.createElement('a');
 
@@ -35,7 +36,7 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         newHiddenScheduleForm.setAttribute('id', `hiddenSchedule${scheduleNum}`);
         newHiddenScheduleForm.setAttribute('class', 'hiddenSchedule');
         newHiddenScheduleForm.setAttribute
-            ('onsubmit', `checkValidityEvent({hour: true, minute: true, text: true}, {idOfHourSelect: 'modifyHourSelect${scheduleNum}', idOfMinuteSelect: 'modifyMinuteSelect${scheduleNum}', idOfTextarea: 'modifyTextarea'${scheduleNum}})`);
+            ('onsubmit', `return checkValidityEvent({hour: true, minute: true, text: true}, {idOfHourSelect: 'modifyHourSelect${scheduleNum}', idOfMinuteSelect: 'modifyMinuteSelect${scheduleNum}', idOfTextarea: 'modifyTextarea${scheduleNum}'})`);
         //
         newModifyHourSelect.setAttribute('id', `modifyHourSelect${scheduleNum}`);
         newModifyHourSelect.setAttribute('class', 'modifySelect');
@@ -63,6 +64,9 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         newSubmitButton.setAttribute('type', 'submit');
         newSubmitButton.setAttribute('value', '저장');
 
+        newCancelButton.setAttribute('onclick', 'cancelEvent(event)');
+        newCancelButton.innerText = '취소';
+
         newModifyDiv.setAttribute('class', 'modify');
         newModifyDiv.setAttribute('onclick', 'modifyEvent(event)');
         newModifyDiv.innerText = '수정';
@@ -89,6 +93,7 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         newHiddenScheduleForm.appendChild(newModifyTextarea);
         newHiddenScheduleForm.appendChild(newHiddenInput);
         newHiddenScheduleForm.appendChild(newSubmitButton);
+        newHiddenScheduleForm.appendChild(newCancelButton);
 
         newModifyHourSelect.appendChild(newHourOption);
         newModifyMinuteSelect.appendChild(newMinuteOption);
