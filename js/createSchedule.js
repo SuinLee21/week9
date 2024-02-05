@@ -16,7 +16,7 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         var newSubmitButton = document.createElement('input');
         var newCancelButton = document.createElement('button');
         var newModifyDiv = document.createElement('div');
-        var newDeleteDiv = document.createElement('a');
+        var newDeleteDiv = document.createElement('div');
 
         // setAttribute
 
@@ -71,9 +71,9 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         newModifyDiv.setAttribute('onclick', 'modifyEvent(event)');
         newModifyDiv.innerText = '수정';
 
-        newDeleteDiv.setAttribute
-            ('href', `../jspAction/scheduleDeleteAction.jsp?scheduleIdx=${scheduleDataList[scheduleNum][0]}`);
         newDeleteDiv.setAttribute('class', 'delete');
+        newDeleteDiv.setAttribute('data-value', `${scheduleDataList[scheduleNum][0]}`);
+        newDeleteDiv.setAttribute('onclick', 'deleteEvent(event)');
         newDeleteDiv.innerText = '삭제';
 
         // appendChild

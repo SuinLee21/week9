@@ -8,11 +8,15 @@
 <% 
     request.setCharacterEncoding("utf-8");
 
+    String month = null;
+
     boolean isLogginIn = false;
+
     ArrayList<ArrayList<String>> scheduleDataList = new ArrayList<ArrayList<String>>();
 
     if(session.getAttribute("idx") != null){
         isLogginIn = true;
+        month = String.valueOf(session.getAttribute("month"));
 
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin");
@@ -39,6 +43,7 @@
 
             scheduleDataList.add(temp);
         }
+        session.removeAttribute("month");
     }
 %>
 
@@ -91,7 +96,7 @@
                     <button onclick="cancelEvent(event)">취소</button>
                 </form>
                 <div id="modify" class="modify" onclick="modifyEvent(event)">수정</div>
-                <a id="delete" class="delete">삭제</a>
+                <div id="delete" class="delete" data-value="" onclick="deleteEvent(event)">삭제</div>
             </div>
         </div>
         <form action="../jspAction/createScheduleAction.jsp" class="scheduleWritingSection"
@@ -117,6 +122,9 @@
     <script>
         var isLogginIn = <%=isLogginIn%>;
         var scheduleDataList = <%=scheduleDataList%>;
+        var month = <%=month%>;
+
+        console.log(month)
 
         if(isLogginIn){
             function openModalEvent(e) {
@@ -178,6 +186,13 @@
         }
         createYear();
         createMonth();
-        createDay(date.getMonth() + 1, true, scheduleDataList);
+        if(month){
+            var monthElement = document.getElementById('monthButton' + month);
+
+            changeMonthColor(monthElement);
+            createDay(month, false, scheduleDataList);
+        }else{
+            createDay(date.getMonth() + 1, true, scheduleDataList);
+        }
     </script>
 </body>

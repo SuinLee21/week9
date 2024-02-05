@@ -10,7 +10,8 @@
     int scheduleIdxValue = Integer.parseInt(request.getParameter("scheduleIdx"));
     String hourSelectValue = request.getParameter("modifyHourSelect"); 
     String minuteSelectValue = request.getParameter("modifyMinuteSelect"); 
-    String textValue = request.getParameter("modifyTextarea"); 
+    String textValue = request.getParameter("modifyTextarea");
+    String month = "";
 
     boolean isContentPresent = false;
     
@@ -20,8 +21,19 @@
         Class.forName("com.mysql.jdbc.Driver"); 
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
-        String sql = "UPDATE schedule SET hour=?, minute=?, contents=? WHERE idx=? AND user_idx=?";
-        PreparedStatement query = conn.prepareStatement(sql);
+        String sql = "SELECT date from schedule WHERE idx=?";
+        PreparedStatement query = conn.prepareStatement(sql); 
+
+        query.setInt(1, scheduleIdxValue);
+
+        ResultSet result = query.executeQuery();
+
+        while(result.next()){
+            month = result.getString("date").substring(4, 6);
+        }
+
+        sql = "UPDATE schedule SET hour=?, minute=?, contents=? WHERE idx=? AND user_idx=?";
+        query = conn.prepareStatement(sql);
 
         query.setInt(1, Integer.parseInt(hourSelectValue));
         query.setInt(2, Integer.parseInt(minuteSelectValue));
@@ -29,6 +41,8 @@
         query.setInt(4, scheduleIdxValue);
         query.setInt(5, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
         query.executeUpdate();
+
+        session.setAttribute("month", month);
     }
 %>
 
@@ -42,9 +56,7 @@
     <script>
         var isContentPresent = <%=isContentPresent%>;
 
-        if(isContentPresent){
-            alert('수정이 완료되었습니다.');
-        }else{
+        if(!isContentPresent){
             alert('값을 입력하세요.')
         }
         location.href = "../page/schedule.jsp";

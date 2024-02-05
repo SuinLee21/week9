@@ -110,20 +110,24 @@ function createDay(month, isTargetNumEqualTodayMonth, scheduleDataList) {
     }
 }
 
-function createDayEvent(e) {
+function changeMonthColor(element) {
     var monthSelectionElement = document.getElementById('monthSection');
     var buttonList = monthSelectionElement.getElementsByTagName('button');
-    var targetNum = parseInt(e.target.innerText);
-    var isTargetNumEqualTodayMonth = false;
 
     for (i = 0; i < 12; i++) {
         buttonList[i].style.backgroundColor = "white";
     }
-    e.target.style.backgroundColor = "rgb(218, 227, 243)";
+    element.style.backgroundColor = "rgb(218, 227, 243)";
+}
+
+function createDayEvent(e) {
+    var targetNum = parseInt(e.target.innerText);
+    var isTargetNumEqualTodayMonth = false;
 
     if (targetNum === date.getMonth() + 1) {
         isTargetNumEqualTodayMonth = true;
     }
 
+    changeMonthColor(e.target);
     createDay(targetNum, isTargetNumEqualTodayMonth, scheduleDataList);
 }

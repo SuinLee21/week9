@@ -53,6 +53,12 @@ function modifyEvent(e) {
     createOption(selectList[0].id, selectList[1].id);
 }
 
+function deleteEvent(e) {
+    if (confirm('정말 삭제하겠습니까?')) {
+        location.href = `../jspAction/scheduleDeleteAction.jsp?scheduleIdx=${e.target.getAttribute('data-value')}`;
+    }
+}
+
 function cancelEvent(e) {
     e.preventDefault();
 

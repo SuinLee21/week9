@@ -9,7 +9,8 @@
     String hourSelectValue = request.getParameter("writeHourSelect"); 
     String minuteSelectValue = request.getParameter("writeMinuteSelect"); 
     String dateValue = request.getParameter("hiddenDate");
-    String textValue = request.getParameter("scheduleTextarea"); 
+    String textValue = request.getParameter("scheduleTextarea");
+    String month = "";
     
     boolean isLogginIn = false;
     boolean isContentPresent = false;
@@ -19,6 +20,7 @@
 
         if(hourSelectValue != "" || minuteSelectValue != "" || textValue != ""){
             isContentPresent = true;
+            month = dateValue.substring(4, 6);
 
             Class.forName("com.mysql.jdbc.Driver"); 
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
@@ -32,6 +34,8 @@
             query.setString(4, dateValue);
             query.setString(5, textValue);
             query.executeUpdate();
+
+            session.setAttribute("month", month);
         }
     }
 %>
