@@ -8,6 +8,9 @@
 <% 
     request.setCharacterEncoding("utf-8"); 
     String idValue = request.getParameter("userId");
+    String pwValue = request.getParameter("userPw");
+    String nameValue = request.getParameter("userName");
+    String phoneNumValue = request.getParameter("userPhoneNum");
 
     String regexId = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,12}$";
 
@@ -32,9 +35,12 @@
         }
         if(id != ""){
             isIdDuplicate = true;
-        }else{
-            session.setAttribute("id", idValue);
         }
+
+        session.setAttribute("id", idValue);
+        session.setAttribute("pw", pwValue);
+        session.setAttribute("name", nameValue);
+        session.setAttribute("phoneNum", phoneNumValue);
     }
 %>
 

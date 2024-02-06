@@ -20,8 +20,6 @@ function checkValidity(booleanOptions, htmlOptions) {
         if (idInputElement.disabled === false) {
             alert('아이디 중복체크를 해주세요.');
             return false;
-        } else {
-            idInputElement.disabled = false;
         }
     }
     if (booleanOptions.pw === true) {

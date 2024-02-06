@@ -2,9 +2,15 @@
 
 <%
     String sessionId = "";
+    String sessionPw = "";
+    String sessionName = "";
+    String sessionPhoneNum = "";
 
     if(session.getAttribute("id") != null){
         sessionId = String.valueOf(session.getAttribute("id"));
+        sessionPw = String.valueOf(session.getAttribute("pw"));
+        sessionName = String.valueOf(session.getAttribute("name"));
+        sessionPhoneNum = String.valueOf(session.getAttribute("phoneNum"));
         session.invalidate();
     }
 %>
@@ -17,7 +23,7 @@
 </head>
 
 <body>
-    <form action="../jspAction/signUpAction.jsp" class="accountForm" onsubmit="return checkValidityEvent({id:true, pw:true, name:true, phoneNum:true, inputDiabled: true}, 
+    <form action="../jspAction/signUpAction.jsp" class="accountForm" onsubmit="return checkValidityEvent({id:true, checkButton: true, pw:true, name:true, phoneNum:true, inputDiabled: true}, 
         {idOfIdInput: 'userId', idOfPwInput: 'userPw', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
         <div class="idInputParent">
             <input maxlength="12" type="text" id="userId" class="accountFormChild" name="userId"
@@ -44,21 +50,45 @@
     <script src="../js/checkValidity.js"></script>
     <script src="../js/utill.js"></script>
     <script>
-        var inputElement = document.getElementById('userId');
+        var idInputElement = document.getElementById('userId');
+        var pwInputElement = document.getElementById('userPw');
+        var nameInputElement = document.getElementById('userName');
+        var phoneNumInputElement = document.getElementById('userPhoneNum');
+
         var sessionId = "<%=sessionId%>";
+        var sessionPw = "<%=sessionPw%>";
+        var sessionName = "<%=sessionName%>";
+        var sessionPhoneNum = "<%=sessionPhoneNum%>";
+
+        console.log(sessionPw)
+        console.log(sessionName)
+        console.log(sessionPhoneNum)
         
         if(sessionId){
-            inputElement.value = sessionId;
-            inputElement.disabled = true;
+            idInputElement.value = sessionId;
+            idInputElement.disabled = true;
+        }
+        if(sessionPw){
+            pwInputElement.value = sessionPw;
+        }
+        if(sessionName){
+            nameInputElement.value = sessionName;
+        }
+        if(sessionPhoneNum){
+            phoneNumInputElement.value = sessionPhoneNum;
         }
 
         function openPopUpEvent(e) {
             e.preventDefault();
 
-            var idOfIdInput = inputElement.id;
+            var idOfIdInput = idInputElement.id;
 
             if (checkValidity({ id: true }, { idOfIdInput: idOfIdInput })) {
-                window.open('../jspAction/checkDuplicateIdAction.jsp?userId=' + inputElement.value, '네이버팝업', 'width=500, height=500')
+                window.open("../jspAction/checkDuplicateIdAction.jsp\?userId=" + idInputElement.value 
+                + "&userPw=" + pwInputElement.value 
+                + "&userName=" + nameInputElement.value 
+                + "&userPhoneNum=" + phoneNumInputElement.value
+                , '네이버팝업', 'width=500, height=500')
             }
 
             setTimeout(function(){
