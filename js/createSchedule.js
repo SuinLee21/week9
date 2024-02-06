@@ -37,7 +37,6 @@ function createSchedule(scheduleNum, targetDataDate, scheduleDataList) {
         newHiddenScheduleForm.setAttribute('class', 'hiddenSchedule');
         newHiddenScheduleForm.setAttribute
             ('onsubmit', `return checkValidityEvent({hour: true, minute: true, text: true}, {idOfHourSelect: 'modifyHourSelect${scheduleNum}', idOfMinuteSelect: 'modifyMinuteSelect${scheduleNum}', idOfTextarea: 'modifyTextarea${scheduleNum}'})`);
-        //
         newModifyHourSelect.setAttribute('id', `modifyHourSelect${scheduleNum}`);
         newModifyHourSelect.setAttribute('class', 'modifySelect');
         newModifyHourSelect.setAttribute('name', 'modifyHourSelect');

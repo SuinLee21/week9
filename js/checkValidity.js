@@ -68,8 +68,11 @@ function checkValidity(booleanOptions, htmlOptions) {
         }
     }
     if (booleanOptions.text === true) {
-        var scheduleTextareaElement = document.getElementById(htmlOptions.idOfTextarea);
-        if (!scheduleTextareaElement.value) {
+        var textValue = document.getElementById(htmlOptions.idOfTextarea).value;
+        textValue = textValue.replace(/\n|\r/g, '');
+        document.getElementById(htmlOptions.idOfTextarea).value = textValue;
+
+        if (!textValue) {
             alert('내용을 입력하세요');
             return false;
         }

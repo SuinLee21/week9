@@ -24,7 +24,7 @@
         month = result.getString("date").substring(4, 6);
     }
 
-    sql = "Delete FROM schedule WHERE idx=? AND user_idx=?";
+    sql = "DELETE FROM schedule WHERE idx=? AND user_idx=?";
     query = conn.prepareStatement(sql);
 
     query.setInt(1, scheduleIdxValue);

@@ -21,8 +21,9 @@
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin");
 
-        String sql = "SELECT * FROM schedule";
-        PreparedStatement query = conn.prepareStatement(sql); 
+        String sql = "SELECT * FROM schedule WHERE user_idx=?";
+        PreparedStatement query = conn.prepareStatement(sql);
+        query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
         ResultSet result = query.executeQuery();
 
         while(result.next()){
@@ -123,12 +124,11 @@
         var scheduleDataList = <%=scheduleDataList%>;
         var month = <%=month%>;
 
-        console.log(month)
-
         if(isLogginIn){
             function printMatchingDay() {
                 var monthSectionElement = document.getElementById('monthSection');
                 var buttonList = monthSectionElement.getElementsByTagName('button');
+                var year = document.getElementById('year').innerText;
                 var month = 0;
                 var isMonthEqual = false;
 
@@ -138,7 +138,7 @@
                     }
                 }
 
-                if (month == date.getMonth() + 1) {
+                if (month == date.getMonth() + 1 && year == date.getFullYear()) {
                     isMonthEqual = true;
                 }
 
@@ -173,14 +173,15 @@
 
             function createDayEvent(e) {
                 var targetNum = parseInt(e.target.innerText);
-                var isTargetNumEqualTodayMonth = false;
+                var year = document.getElementById('year').innerText;
+                var isTodayDateMatching = false;
 
-                if (targetNum === date.getMonth() + 1) {
-                    isTargetNumEqualTodayMonth = true;
+                if (targetNum === date.getMonth() + 1 && year == date.getFullYear()) {
+                    isTodayDateMatching = true;
                 }
 
                 changeMonthColor(e.target);
-                createDay(targetNum, isTargetNumEqualTodayMonth, scheduleDataList);
+                createDay(targetNum, isTodayDateMatching, scheduleDataList);
             }
 
             function openModalEvent(e) {
@@ -312,10 +313,8 @@
 
             changeMonthColor(monthElement);
             createDay(month, false, scheduleDataList);
-            console.log('aa');
         }else{
             createDay(date.getMonth() + 1, true, scheduleDataList);
-            console.log('bb')
         }
     </script>
 </body>

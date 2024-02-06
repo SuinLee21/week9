@@ -22,7 +22,7 @@ function createMonth() {
     document.getElementById('monthButton' + (date.getMonth() + 1).toString()).style.backgroundColor = "rgb(218, 227, 243)";
 }
 
-function createDay(month, isTargetNumEqualTodayMonth, scheduleDataList) {
+function createDay(month, isTodayDateMatching, scheduleDataList) {
     var year = document.getElementById('year').innerText;
     var mainElement = document.getElementById('main');
     var daySectionElement = document.getElementById('daySection');
@@ -105,7 +105,7 @@ function createDay(month, isTargetNumEqualTodayMonth, scheduleDataList) {
     }
     mainElement.appendChild(newDaySectionDiv)
 
-    if (isTargetNumEqualTodayMonth) {
+    if (isTodayDateMatching) {
         document.getElementById('day' + (date.getDate()).toString()).style.backgroundColor = "rgb(218, 227, 243)";
     }
 }
