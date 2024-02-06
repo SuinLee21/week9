@@ -73,7 +73,7 @@
                 alert('전화번호를 다시 입력하세요.');
                 location.href = "../page/profileEdit.jsp";
             }else{
-                alert('내정보 수정이 완료되었습니다.');
+                alert('회원정보가 수정되었습니다.');
                 location.href = "../page/schedule.jsp";
             }
         }else{

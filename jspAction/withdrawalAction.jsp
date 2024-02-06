@@ -7,10 +7,7 @@
 <% 
     request.setCharacterEncoding("utf-8");
 
-    boolean isLogginIn = false;
-
     if(session.getAttribute("idx") != null){
-        isLogginIn = true;
 
         Class.forName("com.mysql.jdbc.Driver"); 
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
@@ -32,13 +29,6 @@
 
 <body>
     <script>
-        var isLogginIn = <%=isLogginIn%>;
-
-        if(isLogginIn){
-            alert('회원탈퇴 되었습니다.');
-        }else{
-            alert('접근 권한이 없습니다.')
-        }
         location.href = "../page/login.html";
     </script>
 </body>

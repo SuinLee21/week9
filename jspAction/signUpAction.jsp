@@ -74,18 +74,19 @@
             var isRegexPhoneNumValid = <%=isRegexPhoneNumValid%>;
 
             if(!isRegexIdValid){
-                alert('아이디를 다시 입력하세요.');
+                alert('아이디를 다시 입력해주세요.');
                 location.href = "../page/signUp.html";
             }else if(!isRegexPwValid){
-                alert('비밀번호를 다시 입력하세요.');
+                alert('비밀번호를 다시 입력해주세요.');
                 location.href = "../page/signUp.html";
             }else if(!isRegexNameValid){
-                alert('이름을 다시 입력하세요.');
+                alert('이름을 다시 입력해주세요.');
                 location.href = "../page/signUp.html";
             }else if(!isRegexPhoneNumValid){
-                alert('전화번호를 다시 입력하세요.');
+                alert('전화번호를 다시 입력해주세요.');
                 location.href = "../page/signUp.html";
             }else{
+                alert('정상적으로 가입되었습니다.')
                 location.href = "../page/login.html";
             }
         }

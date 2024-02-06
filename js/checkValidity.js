@@ -11,7 +11,7 @@ function checkValidity(booleanOptions, htmlOptions) {
     if (booleanOptions.id === true) {
         var idInputElement = document.getElementById(htmlOptions.idOfIdInput);
         if (!regexId.test(idInputElement.value)) {
-            alert('아이디를 다시 입력하세요');
+            alert('아이디를 다시 입력해주세요.');
             return false;
         }
     }
@@ -27,21 +27,21 @@ function checkValidity(booleanOptions, htmlOptions) {
     if (booleanOptions.pw === true) {
         var pwInputElement = document.getElementById(htmlOptions.idOfPwInput);
         if (!regexPw.test(pwInputElement.value)) {
-            alert('비밀번호를 다시 입력하세요');
+            alert('비밀번호를 다시 입력해주세요.');
             return false;
         }
     }
     if (booleanOptions.name === true) {
         var nameInputElement = document.getElementById(htmlOptions.idOfNameInput);
         if (!regexName.test(nameInputElement.value)) {
-            alert('이름을 다시 입력하세요');
+            alert('이름을 다시 입력해주세요.');
             return false;
         }
     }
     if (booleanOptions.phoneNum === true) {
         var phoneNumInputElement = document.getElementById(htmlOptions.idOfPhoneNumInput);
         if (!regexPhoneNum.test(phoneNumInputElement.value)) {
-            alert('전화번호를 다시 입력하세요');
+            alert('전화번호를 다시 입력해주세요.');
             return false;
         }
     }
@@ -56,14 +56,14 @@ function checkValidity(booleanOptions, htmlOptions) {
     if (booleanOptions.hour === true) {
         var hourSelectElement = document.getElementById(htmlOptions.idOfHourSelect);
         if (!hourSelectElement.options[hourSelectElement.selectedIndex].value) {
-            alert('시를 선택하세요');
+            alert('시를 선택해주세요.');
             return false;
         }
     }
     if (booleanOptions.minute === true) {
         var minuteSelectElement = document.getElementById(htmlOptions.idOfMinuteSelect);
         if (!minuteSelectElement.options[minuteSelectElement.selectedIndex].value) {
-            alert('분을 선택하세요');
+            alert('분을 선택해주세요.');
             return false;
         }
     }
@@ -73,7 +73,7 @@ function checkValidity(booleanOptions, htmlOptions) {
         document.getElementById(htmlOptions.idOfTextarea).value = textValue;
 
         if (!textValue) {
-            alert('내용을 입력하세요');
+            alert('내용을 입력해주세요.');
             return false;
         }
     }

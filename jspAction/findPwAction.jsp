@@ -58,19 +58,19 @@
         var isRegexPhoneNumValid = <%=isRegexPhoneNumValid%>;
 
         if(!isRegexIdValid){
-            alert('아이디를 다시 입력하세요.');
+            alert('아이디를 다시 입력해주세요.');
             location.href = "../page/findPw.html";
         }else if(!isRegexNameValid){
-            alert('이름을 다시 입력하세요.');
+            alert('이름을 다시 입력해주세요.');
             location.href = "../page/findPw.html";
         }else if(!isRegexPhoneNumValid){
-            alert('전화번호를 다시 입력하세요.');
+            alert('전화번호를 다시 입력해주세요.');
             location.href = "../page/findPw.html";
         }else{
             if(pw !== ""){
                 location.href = "../page/findPwResult.jsp";
             }else{
-                alert('가입된 정보가 없습니다.');
+                alert('회원정보가 일치하지 않습니다.');
                 location.href = "../page/findPw.html";
             }
         }

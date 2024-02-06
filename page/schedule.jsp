@@ -228,7 +228,7 @@
                 //option 생성
                 createOption(idOfWriteHourSelect, idOfWriteMinuteSelect)
 
-                for(var i = 0; i < scheduleDataList.length; i++) {
+                for(var i = scheduleDataList.length - 1; i >= 0; i--) {
                     createSchedule(i, targetDataDate, scheduleDataList);
                 }
             }

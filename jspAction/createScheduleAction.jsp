@@ -13,13 +13,18 @@
     String month = "";
     
     boolean isLogginIn = false;
+    boolean isHourSelected = false;
+    boolean isMinuteSelected = false;
     boolean isContentPresent = false;
 
     if(session.getAttribute("idx") != null){
         isLogginIn = true;
 
         if(hourSelectValue != "" || minuteSelectValue != "" || textValue != ""){
+            isHourSelected = true;
+            isMinuteSelected = true;
             isContentPresent = true;
+
             month = dateValue.substring(4, 6);
             textValue = textValue.replaceAll("(\r\n|\r|\n|\n\r)", "");
 
@@ -52,10 +57,16 @@
         var isLogginIn = <%=isLogginIn%>;
 
         if(isLogginIn){
+            var isHourSelected = <%=isHourSelected%>;
+            var isMinuteSelected = <%=isMinuteSelected%>;
             var isContentPresent = <%=isContentPresent%>;
 
-            if(!isContentPresent){
-                alert('값을 입력하세요.');
+            if(!isHourSelected){
+                alert('시를 선택해주세요.')
+            }else if(!isMinuteSelected){
+                alert('분을 선택해주세요.')
+            }else if(!isContentPresent){
+                alert('값을 입력해주세요.');
             }
             location.href = "../page/schedule.jsp"
         }else{

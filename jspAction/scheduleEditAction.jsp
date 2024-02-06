@@ -14,8 +14,13 @@
     String month = "";
 
     boolean isContentPresent = false;
+    boolean isHourSelected = false;
+    boolean isMinuteSelected = false;
+    
     
     if(hourSelectValue != "" || minuteSelectValue != "" || textValue != ""){
+        isHourSelected = true;
+        isMinuteSelected = true;
         isContentPresent = true;
         textValue = textValue.replaceAll("(\r\n|\r|\n|\n\r)", "");
 
@@ -55,9 +60,15 @@
 
 <body>
     <script>
+        var isHourSelected = <%=isHourSelected%>;
+        var isMinuteSelected = <%=isMinuteSelected%>;
         var isContentPresent = <%=isContentPresent%>;
 
-        if(!isContentPresent){
+        if(!isHourSelected){
+            alert('시를 선택해주세요.')
+        }else if(!isMinuteSelected){
+            alert('분을 선택해주세요.')
+        }else if(!isContentPresent){
             alert('값을 입력하세요.')
         }
         location.href = "../page/schedule.jsp";
