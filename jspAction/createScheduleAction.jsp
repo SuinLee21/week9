@@ -21,6 +21,7 @@
         if(hourSelectValue != "" || minuteSelectValue != "" || textValue != ""){
             isContentPresent = true;
             month = dateValue.substring(4, 6);
+            textValue = textValue.replaceAll("(\r\n|\r|\n|\n\r)", "");
 
             Class.forName("com.mysql.jdbc.Driver"); 
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
