@@ -6,45 +6,53 @@
 <%@ page import="java.util.ArrayList" %>
 
 <% 
-    request.setCharacterEncoding("utf-8");
-
+    String errMessage = "";
     String month = null;
-
-    boolean isLogginIn = false;
-
+    boolean isLogginIn = true;
     ArrayList<ArrayList<String>> scheduleDataList = new ArrayList<ArrayList<String>>();
 
-    if(session.getAttribute("idx") != null){
-        isLogginIn = true;
-        month = String.valueOf(session.getAttribute("month"));
+    try{
+        request.setCharacterEncoding("utf-8");
 
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin");
-
-        String sql = "SELECT * FROM schedule WHERE user_idx=?";
-        PreparedStatement query = conn.prepareStatement(sql);
-        query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
-        ResultSet result = query.executeQuery();
-
-        while(result.next()){
-            String scheduleIdx = result.getString("idx");
-            String userIdx = result.getString("user_idx");
-            String hour = String.valueOf(result.getInt("hour"));
-            String minute = String.valueOf(result.getInt("minute"));
-            String date = result.getString("date"); 
-            String contents = result.getString("contents");
-
-            ArrayList<String> temp = new ArrayList<String>();
-            temp.add("\"" + scheduleIdx + "\"");
-            temp.add("\"" + userIdx + "\"");
-            temp.add("\"" + hour + "\"");
-            temp.add("\"" + minute + "\"");
-            temp.add("\"" + date + "\"");
-            temp.add("\"" + contents + "\"");
-
-            scheduleDataList.add(temp);
+        if(session.getAttribute("idx") == null){
+            throw new Exception("접근 권한이 없습니다."); //더 이상 아래 코드 실행 안 되게.
         }
-        session.removeAttribute("month");
+
+        if(session.getAttribute("idx") != null){
+            month = String.valueOf(session.getAttribute("month"));
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin");
+
+            String sql = "SELECT * FROM schedule WHERE user_idx=?";
+            PreparedStatement query = conn.prepareStatement(sql);
+            query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
+            ResultSet result = query.executeQuery();
+
+            while(result.next()){
+                String scheduleIdx = result.getString("idx");
+                String userIdx = result.getString("user_idx");
+                String hour = String.valueOf(result.getInt("hour"));
+                String minute = String.valueOf(result.getInt("minute"));
+                String date = result.getString("date"); 
+                String contents = result.getString("contents");
+
+                ArrayList<String> temp = new ArrayList<String>();
+                temp.add("\"" + scheduleIdx + "\"");
+                temp.add("\"" + userIdx + "\"");
+                temp.add("\"" + hour + "\"");
+                temp.add("\"" + minute + "\"");
+                temp.add("\"" + date + "\"");
+                temp.add("\"" + contents + "\"");
+
+                scheduleDataList.add(temp);
+            }
+            session.removeAttribute("month");
+        }
+    } catch (Exception e) {
+        errMessage = e.getMessage();
+        // out.println(e.getMessage());
+        isLogginIn = false;
     }
 %>
 
@@ -121,10 +129,27 @@
     <script src="../js/createSchedule.js"></script>
     <script>
         var isLogginIn = <%=isLogginIn%>;
+        var errMessage = "<%=errMessage%>";
         var scheduleDataList = <%=scheduleDataList%>;
         var month = <%=month%>;
 
-        if(isLogginIn){
+        if(!isLogginIn){
+            alert(errMessage);
+            location.href = "../page/login.html";
+        }
+
+        createYear();
+        createMonth();
+        if(month){ //session("month")존재 여부에 따른 createDay()
+            var monthElement = document.getElementById('monthButton' + month);
+
+            changeMonthColor(monthElement);
+            createDay(month, false, scheduleDataList);
+        }else{
+            createDay(date.getMonth() + 1, true, scheduleDataList);
+        }
+
+        window.onload = function() {
             function printMatchingDay() {
                 var monthSectionElement = document.getElementById('monthSection');
                 var buttonList = monthSectionElement.getElementsByTagName('button');
@@ -280,7 +305,7 @@
 
             function deleteEvent(e) {
                 if (confirm('정말 삭제하겠습니까?')) {
-                    location.href = `../jspAction/scheduleDeleteAction.jsp?scheduleIdx=${e.target.getAttribute('data-value')}`;
+                    location.href = '../jspAction/scheduleDeleteAction.jsp?scheduleIdx=' + e.target.getAttribute('data-value');
                 }
             }
 
@@ -299,22 +324,7 @@
                         childList[i].style.display = "block";
                     }
                 }
-            }    
-        }else{
-            alert('접근 권한이 없습니다.');
-            location.href = "../page/login.html";
-        }
-
-
-        createYear();
-        createMonth();
-        if(month){ //session("month")존재 여부에 따른 createDay()
-            var monthElement = document.getElementById('monthButton' + month);
-
-            changeMonthColor(monthElement);
-            createDay(month, false, scheduleDataList);
-        }else{
-            createDay(date.getMonth() + 1, true, scheduleDataList);
+            }
         }
     </script>
 </body>
