@@ -9,16 +9,23 @@
     String pw = "";
     String name = "";
     String phoneNum = "";
-    
-    boolean isLogginIn = false;
+    String errMessage = "";
+    boolean isLogginIn = true;
 
-    if(session.getAttribute("idx") != null){
-        isLogginIn = true;
+    try{
+        if(session.getAttribute("idx") == null){
+            throw new Exception("접근 권한이 없습니다.");
+        }
 
-        id = String.valueOf(session.getAttribute("id"));
-        pw = String.valueOf(session.getAttribute("pw"));
-        name = String.valueOf(session.getAttribute("name"));
-        phoneNum = String.valueOf(session.getAttribute("phoneNum"));
+        if(session.getAttribute("idx") != null){
+            id = String.valueOf(session.getAttribute("id"));
+            pw = String.valueOf(session.getAttribute("pw"));
+            name = String.valueOf(session.getAttribute("name"));
+            phoneNum = String.valueOf(session.getAttribute("phoneNum"));
+        }
+    }catch(Exception e){
+        errMessage = e.getMessage();
+        isLogginIn = false;
     }
 %>
 
@@ -56,6 +63,7 @@
     <script src="../js/utill.js"></script>
     <script>
         var isLogginIn = <%=isLogginIn%>;
+        var errMessage = "<%=errMessage%>";
 
         if (isLogginIn) {
             var id = "<%=id%>";
@@ -63,24 +71,24 @@
             var name = "<%=name%>";
             var phoneNum = "<%=phoneNum%>";
 
-            console.log(document.getElementById('userId').disabled === true)
-
             document.getElementById('userId').value = id;
             document.getElementById('userId').disabled = true;
             document.getElementById('userPw').value = pw;
             document.getElementById('userName').value = name;
             document.getElementById('userPhoneNum').value = phoneNum;
         } else {
-            alert('접근 권한이 없습니다.');
+            alert(errMessage);
             location.href = "login.html";
         }
 
-        function confirmWithdrawalEvent(e) {
-            e.preventDefault();
+        window.onload = function() {
+            function confirmWithdrawalEvent(e) {
+                e.preventDefault();
 
-            if (confirm("정말 탈퇴하겠습니까?")) {
-                location.href = "../jspAction/withdrawalAction.jsp";
+                if (confirm("정말 탈퇴하겠습니까?")) {
+                    location.href = "../jspAction/withdrawalAction.jsp";
+                }
             }
-        }       
+        }
     </script>
 </body>

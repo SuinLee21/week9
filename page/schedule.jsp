@@ -51,7 +51,6 @@
         }
     } catch (Exception e) {
         errMessage = e.getMessage();
-        // out.println(e.getMessage());
         isLogginIn = false;
     }
 %>

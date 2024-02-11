@@ -9,16 +9,23 @@
     String pw = "";
     String name = "";
     String phoneNum = "";
-    
-    boolean isLogginIn = false;
+    String errMessage = "";
+    boolean isLogginIn = true;
 
-    if(session.getAttribute("idx") != null){
-        isLogginIn = true;
+    try{
+        if(session.getAttribute("idx") == null){
+            throw new Exception("접근 권한이 없습니다.");
+        }
 
-        id = String.valueOf(session.getAttribute("id"));
-        pw = String.valueOf(session.getAttribute("pw"));
-        name = String.valueOf(session.getAttribute("name"));
-        phoneNum = String.valueOf(session.getAttribute("phoneNum"));
+        if(session.getAttribute("idx") != null){
+            id = String.valueOf(session.getAttribute("id"));
+            pw = String.valueOf(session.getAttribute("pw"));
+            name = String.valueOf(session.getAttribute("name"));
+            phoneNum = String.valueOf(session.getAttribute("phoneNum"));
+        }
+    }catch(Exception e){
+        errMessage = e.getMessage();
+        isLogginIn = false;
     }
 %>
 
@@ -39,6 +46,7 @@
 
     <script>
         var isLogginIn = <%=isLogginIn%>;
+        var errMessage = "<%=errMessage%>";
 
         if (isLogginIn) {
             var id = "<%=id%>";
@@ -53,7 +61,7 @@
             document.getElementById('printName').innerText = "이름 : " + name;
             document.getElementById('printPhoneNum').innerText = "전화번호 : " + phoneNum;
         } else {
-            alert('접근 권한이 없습니다.');
+            alert(errMessage);
             location.href = "login.html";
         }
     </script>

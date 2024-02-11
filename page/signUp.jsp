@@ -47,7 +47,6 @@
         <a href="login.html">로그인 페이지로 이동</a>
     </form>
 
-    <script src="../js/checkValidity.js"></script>
     <script src="../js/utill.js"></script>
     <script>
         var idInputElement = document.getElementById('userId');
@@ -59,10 +58,6 @@
         var sessionPw = "<%=sessionPw%>";
         var sessionName = "<%=sessionName%>";
         var sessionPhoneNum = "<%=sessionPhoneNum%>";
-
-        console.log(sessionPw)
-        console.log(sessionName)
-        console.log(sessionPhoneNum)
         
         if(sessionId){
             idInputElement.value = sessionId;

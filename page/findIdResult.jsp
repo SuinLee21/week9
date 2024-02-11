@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html" pageEncoding="utf-8" %>
 
-<% 
-    boolean isIdFound = false;
+<%
+    boolean isIdFound = true;
+    String errMessage = "";
+    String sessionPw = "";
 
-    String sessionId = "";
+    try{
+        if(session.getAttribute("id") == null){
+            throw new Exception("접근 권한이 없습니다.");
+        }
 
-    if(session.getAttribute("id") != null && session.getAttribute("pw") == null){
-        isIdFound = true;
-        sessionId = String.valueOf(session.getAttribute("id"));
-        session.invalidate();
+        if(session.getAttribute("id") != null && session.getAttribute("pw") == null){
+            sessionPw = String.valueOf(session.getAttribute("pw"));
+            session.invalidate();
+        }
+    }catch(Exception e){
+        errMessage = e.getMessage();
+        isIdFound = false;
     }
 %>
 
@@ -32,12 +40,13 @@
 
     <script>
         var isIdFound = <%=isIdFound%>;
+        var errMessage = "<%=errMessage%>";
         var sessionId = "<%=sessionId%>";
 
         if(isIdFound){
             document.getElementById('foundId').innerText = '아이디 : ' + sessionId;
         }else{
-            alert('접근 권한이 없습니다.');
+            alert(errMessage);
             location.href = "../page/login.html";
         }
     </script>

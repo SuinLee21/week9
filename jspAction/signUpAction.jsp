@@ -11,6 +11,7 @@
     String pwValue = request.getParameter("userPw");
     String nameValue = request.getParameter("userName");
     String phoneNumValue = request.getParameter("userPhoneNum");
+    String errMessage = "";
 
     String regexId = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,12}$";
     String regexPw = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,16}$";
@@ -21,29 +22,26 @@
     boolean isRegexPwValid = Pattern.matches(regexPw, pwValue);
     boolean isRegexNameValid = Pattern.matches(regexName, nameValue);
     boolean isRegexPhoneNumValid = Pattern.matches(regexPhoneNum, phoneNumValue);
-    boolean isIdDuplicate = false;
 
     String id = "";
 
-    if(isRegexIdValid && isRegexPwValid && isRegexNameValid && isRegexPhoneNumValid){
-        Class.forName("com.mysql.jdbc.Driver"); 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
-
-        String sql = "SELECT id FROM user WHERE id=?";//
-        PreparedStatement query = conn.prepareStatement(sql);
-
-        query.setString(1, idValue);
-
-        ResultSet result = query.executeQuery(); 
-
-        while(result.next()){
-            id = result.getString("id");
+    try{
+        if(!isRegexIdValid){
+            throw new Exception("아이디를 다시 입력해주세요.");
+        }else if(!isRegexPwValid){
+            throw new Exception("비밀번호를 다시 입력해주세요.");
+        }else if(!isRegexNameValid){
+            throw new Exception("이름을 다시 입력해주세요.");
+        }else if(!isRegexPhoneNumValid){
+            throw new Exception("전화번호를 다시 입력해주세요.");
         }
-        if(id != ""){//
-            isIdDuplicate = true;
-        }else{
-            sql = "INSERT INTO user(id, pw, name, phoneNum) VALUES(?, ?, ?, ?)";
-            query = conn.prepareStatement(sql);
+
+        if(isRegexIdValid && isRegexPwValid && isRegexNameValid && isRegexPhoneNumValid){
+            Class.forName("com.mysql.jdbc.Driver"); 
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
+
+            String sql = "INSERT INTO user(id, pw, name, phoneNum) VALUES(?, ?, ?, ?)";
+            PreparedStatement query = conn.prepareStatement(sql);
 
             query.setString(1, idValue);
             query.setString(2, pwValue);
@@ -51,6 +49,8 @@
             query.setString(4, phoneNumValue);
             query.executeUpdate();
         }
+    }catch(Exception e){
+        errMessage = e.getMessage();
     }
 %>
 
@@ -62,33 +62,27 @@
 
 <body>
     <script>
-        var isIdDuplicate = <%=isIdDuplicate%>;
+        var isRegexIdValid = <%=isRegexIdValid%>;
+        var isRegexPwValid = <%=isRegexPwValid%>;
+        var isRegexNameValid = <%=isRegexNameValid%>;
+        var isRegexPhoneNumValid = <%=isRegexPhoneNumValid%>;
+        var errMessage = "<%=errMessage%>";
 
-        if(isIdDuplicate){
-            alert('중복된 아이디입니다. 다시 입력해주세요.');
+        if(!isRegexIdValid){
+            alert(errMessage);
+            location.href = "../page/signUp.jsp";
+        }else if(!isRegexPwValid){
+            alert(errMessage);
+            location.href = "../page/signUp.jsp";
+        }else if(!isRegexNameValid){
+            alert(errMessage);
+            location.href = "../page/signUp.jsp";
+        }else if(!isRegexPhoneNumValid){
+            alert(errMessage);
             location.href = "../page/signUp.jsp";
         }else{
-            var isRegexIdValid = <%=isRegexIdValid%>;
-            var isRegexPwValid = <%=isRegexPwValid%>;
-            var isRegexNameValid = <%=isRegexNameValid%>;
-            var isRegexPhoneNumValid = <%=isRegexPhoneNumValid%>;
-
-            if(!isRegexIdValid){
-                alert('아이디를 다시 입력해주세요.');
-                location.href = "../page/signUp.html";
-            }else if(!isRegexPwValid){
-                alert('비밀번호를 다시 입력해주세요.');
-                location.href = "../page/signUp.html";
-            }else if(!isRegexNameValid){
-                alert('이름을 다시 입력해주세요.');
-                location.href = "../page/signUp.html";
-            }else if(!isRegexPhoneNumValid){
-                alert('전화번호를 다시 입력해주세요.');
-                location.href = "../page/signUp.html";
-            }else{
-                alert('정상적으로 가입되었습니다.')
-                location.href = "../page/login.html";
-            }
+            alert('정상적으로 가입되었습니다.')
+            location.href = "../page/login.html";
         }
     </script>
 </body>

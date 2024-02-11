@@ -11,6 +11,7 @@
     String pwValue = request.getParameter("userPw");
     String nameValue = request.getParameter("userName");
     String phoneNumValue = request.getParameter("userPhoneNum");
+    String errMessage = "";
 
     String regexId = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,12}$";
 
@@ -19,28 +20,37 @@
 
     String id = "";
 
-    if(isRegexIdValid){
-        Class.forName("com.mysql.jdbc.Driver"); 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
-
-        String sql = "SELECT id FROM user WHERE id=?";
-        PreparedStatement query = conn.prepareStatement(sql);
-
-        query.setString(1, idValue);
-
-        ResultSet result = query.executeQuery(); 
-
-        while(result.next()){
-            id = result.getString("id");
-        }
-        if(id != ""){
-            isIdDuplicate = true;
+    try{
+        if(!isRegexIdValid){
+            throw new Exception("아이디를 다시 입력해주세요.");
         }
 
-        session.setAttribute("id", idValue);
-        session.setAttribute("pw", pwValue);
-        session.setAttribute("name", nameValue);
-        session.setAttribute("phoneNum", phoneNumValue);
+        if(isRegexIdValid){
+            Class.forName("com.mysql.jdbc.Driver"); 
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
+
+            String sql = "SELECT id FROM user WHERE id=?";
+            PreparedStatement query = conn.prepareStatement(sql);
+
+            query.setString(1, idValue);
+
+            ResultSet result = query.executeQuery(); 
+
+            while(result.next()){
+                id = result.getString("id");
+            }
+            if(id != ""){
+                isIdDuplicate = true;
+            }else{
+                session.setAttribute("id", idValue);
+            }
+
+            session.setAttribute("pw", pwValue);
+            session.setAttribute("name", nameValue);
+            session.setAttribute("phoneNum", phoneNumValue);
+        }
+    }catch(Exception e){
+        errMessage = e.getMessage();
     }
 %>
 
@@ -69,13 +79,12 @@
 
     <script>
         var isRegexIdValid = <%=isRegexIdValid%>;
+        var errMessage = "<%=errMessage%>";
         var isIdDuplicate = <%=isIdDuplicate%>;
         var idValue = "<%=idValue%>";
 
-        console.log(idValue)
-
         if(!isRegexIdValid){
-            alert('아이디를 다시 입력하세요.');
+            alert(errMessage);
         }else{
             if(isIdDuplicate){
                 document.getElementById('isDisabled').innerText = "사용할 수 없는 아이디입니다.";

@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html" pageEncoding="utf-8" %>
 
 <% 
-    boolean isPwFound = false;
-
+    boolean isPwFound = true;
+    String errMessage = "";
     String sessionPw = "";
 
-    if(session.getAttribute("pw") != null && session.getAttribute("id") == null){
-        isPwFound = true;
-        sessionPw = String.valueOf(session.getAttribute("pw"));
-        session.invalidate();
+    try{
+        if(session.getAttribute("pw") == null){
+            throw new Exception("접근 권한이 없습니다.");
+        }
+
+        if(session.getAttribute("pw") != null && session.getAttribute("id") == null){
+            sessionPw = String.valueOf(session.getAttribute("pw"));
+            session.invalidate();
+        }
+    }catch(Exception e){
+        errMessage = e.getMessage();
+        isPwFound = false;
     }
 %>
 
@@ -31,12 +39,13 @@
 
     <script>
         var isPwFound = <%=isPwFound%>;
+        var errMessage = "<%=errMessage%>";
         var sessionPw = "<%=sessionPw%>";
 
         if(isPwFound){
             document.getElementById('foundPw').innerText = '비밀번호 : ' + sessionPw;
         }else{
-            alert('접근 권한이 없습니다.');
+            alert(errMessage);
             location.href = "../page/login.html";
         }
     </script>
