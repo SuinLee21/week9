@@ -148,182 +148,187 @@
             createDay(date.getMonth() + 1, true, scheduleDataList);
         }
 
-        window.onload = function() {
-            function printMatchingDay() {
-                var monthSectionElement = document.getElementById('monthSection');
-                var buttonList = monthSectionElement.getElementsByTagName('button');
-                var year = document.getElementById('year').innerText;
-                var month = 0;
-                var isMonthEqual = false;
+        function printMatchingDay() {
+            var monthSectionElement = document.getElementById('monthSection');
+            var buttonList = monthSectionElement.getElementsByTagName('button');
+            var year = document.getElementById('year').innerText;
+            var month = 0;
+            var isMonthEqual = false;
 
-                for (i = 0; i < buttonList.length; i++) {
-                    if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
-                        month = parseInt(buttonList[i].innerText);
-                    }
+            for (i = 0; i < buttonList.length; i++) {
+                if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
+                    month = parseInt(buttonList[i].innerText);
                 }
-
-                if (month == date.getMonth() + 1 && year == date.getFullYear()) {
-                    isMonthEqual = true;
-                }
-
-                createDay(month, isMonthEqual, scheduleDataList);
             }
 
-            function changeMonthColor(element) {
-                var monthSelectionElement = document.getElementById('monthSection');
-                var buttonList = monthSelectionElement.getElementsByTagName('button');
+            if (month == date.getMonth() + 1 && year == date.getFullYear()) {
+                isMonthEqual = true;
+            }
 
-                for (i = 0; i < 12; i++) {
+            createDay(month, isMonthEqual, scheduleDataList);
+        }
+
+        function changeMonthColor(element) {
+            var monthSelectionElement = document.getElementById('monthSection');
+            var buttonList = monthSelectionElement.getElementsByTagName('button');
+
+            for (i = 0; i < 12; i++) {
+                buttonList[i].style.backgroundColor = "white";
+            }
+            element.style.backgroundColor = "rgb(218, 227, 243)";
+        }
+
+        function yearMinusEvent() {
+            var yearElement = document.getElementById('year');
+            var yearValue = parseInt(yearElement.innerText) - 1;
+            yearElement.innerText = yearValue;
+
+            printMatchingDay();
+        }
+
+        function yearPlusEvent() {
+            var yearElement = document.getElementById('year');
+            var yearValue = parseInt(yearElement.innerText) + 1;
+            yearElement.innerText = yearValue;
+
+            printMatchingDay();
+        }
+
+        function createDayEvent(e) {
+            var targetNum = parseInt(e.target.innerText);
+            var year = document.getElementById('year').innerText;
+            var isTodayDateMatching = false;
+
+            if (targetNum === date.getMonth() + 1 && year == date.getFullYear()) {
+                isTodayDateMatching = true;
+            }
+
+            changeMonthColor(e.target);
+            createDay(targetNum, isTodayDateMatching, scheduleDataList);
+        }
+
+        function openModalEvent(e) {
+            var modalElement = document.getElementById('modal');
+            var clickedDateElement = document.getElementById('clickedDate');
+            var daySelectionElement = document.getElementById('daySection');
+            var buttonList = daySelectionElement.getElementsByTagName('button');
+            var idOfWriteHourSelect = document.getElementById('writeHourSelect').id;
+            var idOfWriteMinuteSelect = document.getElementById('writeMinuteSelect').id;
+            var hiddenDateElement = document.getElementById('hiddenDate');
+            var targetDataDate = null;
+
+            //모달창 자식 생성 및 모달창 diplay: block
+            var newAllScheduleDiv = document.createElement('div');
+            newAllScheduleDiv.setAttribute('id', 'allSchedule');
+            modal.appendChild(newAllScheduleDiv);
+
+            document.getElementById('modal').style.display = "block";
+
+            if(e.target === e.currentTarget){
+                targetDataDate = e.target.getAttribute('data-date');
+
+                //일자 색 변경
+                for (i = 0; i < 31; i++) {
                     buttonList[i].style.backgroundColor = "white";
                 }
-                element.style.backgroundColor = "rgb(218, 227, 243)";
-            }
+                buttonList[e.target.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
+            }else{
+                targetDataDate = e.currentTarget.getAttribute('data-date');
 
-            function yearMinusEvent() {
-                var yearElement = document.getElementById('year');
-                var yearValue = parseInt(yearElement.innerText) - 1;
-                yearElement.innerText = yearValue;
-
-                printMatchingDay();
-            }
-
-            function yearPlusEvent() {
-                var yearElement = document.getElementById('year');
-                var yearValue = parseInt(yearElement.innerText) + 1;
-                yearElement.innerText = yearValue;
-
-                printMatchingDay();
-            }
-
-            function createDayEvent(e) {
-                var targetNum = parseInt(e.target.innerText);
-                var year = document.getElementById('year').innerText;
-                var isTodayDateMatching = false;
-
-                if (targetNum === date.getMonth() + 1 && year == date.getFullYear()) {
-                    isTodayDateMatching = true;
+                //일자 색 변경
+                for (i = 0; i < 31; i++) {
+                    buttonList[i].style.backgroundColor = "white";
                 }
-
-                changeMonthColor(e.target);
-                createDay(targetNum, isTodayDateMatching, scheduleDataList);
+                buttonList[e.currentTarget.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
             }
 
-            function openModalEvent(e) {
-                var modalElement = document.getElementById('modal');
-                var clickedDateElement = document.getElementById('clickedDate');
-                var daySelectionElement = document.getElementById('daySection');
-                var buttonList = daySelectionElement.getElementsByTagName('button');
-                var idOfWriteHourSelect = document.getElementById('writeHourSelect').id;
-                var idOfWriteMinuteSelect = document.getElementById('writeMinuteSelect').id;
-                var hiddenDateElement = document.getElementById('hiddenDate');
-                var targetDataDate = null;
+            //data-date 값 clickedDate에 삽입
+            clickedDateElement.innerText = targetDataDate;
 
-                //모달창 자식 생성 및 모달창 diplay: block
-                var newAllScheduleDiv = document.createElement('div');
-                newAllScheduleDiv.setAttribute('id', 'allSchedule');
-                modal.appendChild(newAllScheduleDiv);
+            //data-date 값 input type='hidden'에 삽입
+            document.getElementById('hiddenDate').value = targetDataDate;
 
-                document.getElementById('modal').style.display = "block";
+            //option 생성
+            createOption(idOfWriteHourSelect, idOfWriteMinuteSelect)
 
-                if(e.target === e.currentTarget){
-                    targetDataDate = e.target.getAttribute('data-date');
-
-                    //일자 색 변경
-                    for (i = 0; i < 31; i++) {
-                        buttonList[i].style.backgroundColor = "white";
-                    }
-                    buttonList[e.target.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
-                }else{
-                    targetDataDate = e.currentTarget.getAttribute('data-date');
-
-                    //일자 색 변경
-                    for (i = 0; i < 31; i++) {
-                        buttonList[i].style.backgroundColor = "white";
-                    }
-                    buttonList[e.currentTarget.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
-                }
-
-                //data-date 값 clickedDate에 삽입
-                clickedDateElement.innerText = targetDataDate;
-
-                //data-date 값 input type='hidden'에 삽입
-                document.getElementById('hiddenDate').value = targetDataDate;
-
-                //option 생성
-                createOption(idOfWriteHourSelect, idOfWriteMinuteSelect)
-
-                for(var i = scheduleDataList.length - 1; i >= 0; i--) {
-                    createSchedule(i, targetDataDate, scheduleDataList);
-                }
+            for(var i = scheduleDataList.length - 1; i >= 0; i--) {
+                createSchedule(i, targetDataDate, scheduleDataList);
             }
+        }
 
-            function closeModalEvent() {
-                document.getElementById('allSchedule').remove();
-                document.getElementById('modal').style.display = "none";
-            }
+        function closeModalEvent() {
+            document.getElementById('allSchedule').remove();
+            document.getElementById('modal').style.display = "none";
+        }
 
-            function modifyEvent(e) {
-                var allScheduleElement = document.getElementById('allSchedule');
-                var scheduleSectionList = allScheduleElement.children;
-                var scheduleSectionChildList = null;
-                var hTwoList = null;
-                var textareaList = null;
-                var selectList = null;
+        function modifyEvent(e) {
+            var allScheduleElement = document.getElementById('allSchedule');
+            var scheduleSectionList = allScheduleElement.children;
+            var scheduleSectionChildList = null;
+            var scheduleTime = null;
+            var hTwoList = null;
+            var textareaList = null;
+            var selectList = null;
 
-                for (var i = 0; i < scheduleSectionList.length; i++) {
-                    scheduleSectionChildList = scheduleSectionList[i].children;
+            for (var i = 0; i < scheduleSectionList.length; i++) {
+                scheduleSectionChildList = scheduleSectionList[i].children;
 
-                    for (var j = 0; j < scheduleSectionChildList.length; j++) {
-                        if (j === 0) {
-                            scheduleSectionChildList[j].style.display = "flex";
-                        } else if (j === 1) {
-                            scheduleSectionChildList[j].style.display = "none";
-                        } else {
-                            scheduleSectionChildList[j].style.display = "block";
-                        }
-                    }
-
-                    if(e.target.parentElement === scheduleSectionList[i]){
-                        hTwoList = scheduleSectionList[i].getElementsByTagName('h2');
-                        textareaList = scheduleSectionList[i].getElementsByTagName('textarea');
-                        selectList = scheduleSectionList[i].getElementsByTagName('select');
-
-                        for (var k = 0; k < scheduleSectionChildList.length; k++) {
-                            if (k !== 1) {
-                                scheduleSectionChildList[k].style.display = "none";
-                            } else {
-                                scheduleSectionChildList[k].style.display = "flex";
-                            }
-                        }
-
-                        textareaList[0].value = hTwoList[0].innerText;
-                        createOption(selectList[0].id, selectList[1].id);
-                    }
-                }                
-            }
-
-            function deleteEvent(e) {
-                if (confirm('정말 삭제하겠습니까?')) {
-                    location.href = '../jspAction/scheduleDeleteAction.jsp?scheduleIdx=' + e.target.getAttribute('data-value');
-                }
-            }
-
-            function cancelEvent(e) {
-                e.preventDefault();
-
-                var scheduleSectionElement = e.target.parentElement.parentElement;
-                var childList = scheduleSectionElement.children;
-
-                for (i = 0; i < childList.length; i++) {
-                    if (i === 0) {
-                        childList[i].style.display = "flex";
-                    } else if (i === 1) {
-                        childList[i].style.display = "none";
+                for (var j = 0; j < scheduleSectionChildList.length; j++) {
+                    if (j === 0) {
+                        scheduleSectionChildList[j].style.display = "flex";
+                    } else if (j === 1) {
+                        scheduleSectionChildList[j].style.display = "none";
                     } else {
-                        childList[i].style.display = "block";
+                        scheduleSectionChildList[j].style.display = "block";
                     }
+                }
+
+                if(e.target.parentElement === scheduleSectionList[i]){
+                    hTwoList = scheduleSectionList[i].getElementsByTagName('h2');
+                    textareaList = scheduleSectionList[i].getElementsByTagName('textarea');
+                    selectList = scheduleSectionList[i].getElementsByTagName('select');
+
+                    for (var k = 0; k < scheduleSectionChildList.length; k++) {
+                        if (k !== 1) {
+                            scheduleSectionChildList[k].style.display = "none";
+                        } else {
+                            scheduleSectionChildList[k].style.display = "flex";
+                        }
+                    }
+
+                    textareaList[0].value = hTwoList[0].innerText;
+                    createOption(selectList[0].id, selectList[1].id);
+
+                    scheduleTime = scheduleSectionChildList[0].children[0].innerText;
+
+                    selectList[0].options[parseInt(scheduleTime.substr(0, 2)) + 1].selected = true;
+                    selectList[1].options[parseInt(scheduleTime.substr(4, 2)) + 1].selected = true;
+                }
+            }                
+        }
+
+        function deleteEvent(e) {
+            if (confirm('정말 삭제하겠습니까?')) {
+                location.href = '../jspAction/scheduleDeleteAction.jsp?scheduleIdx=' + e.target.getAttribute('data-value');
+            }
+        }
+
+        function cancelEvent(e) {
+            e.preventDefault();
+
+            var scheduleSectionElement = e.target.parentElement.parentElement;
+            var childList = scheduleSectionElement.children;
+
+            for (i = 0; i < childList.length; i++) {
+                if (i === 0) {
+                    childList[i].style.display = "flex";
+                } else if (i === 1) {
+                    childList[i].style.display = "none";
+                } else {
+                    childList[i].style.display = "block";
                 }
             }
         }
+
     </script>
 </body>
