@@ -7,7 +7,9 @@
 
 <% 
     String errMessage = "";
+    String year = null;
     String month = null;
+    String yearAndMonth = null;
     boolean isLogginIn = true;
     ArrayList<ArrayList<String>> scheduleDataList = new ArrayList<ArrayList<String>>();
 
@@ -19,34 +21,43 @@
         }
 
         if(session.getAttribute("idx") != null){
+            year = String.valueOf(session.getAttribute("year"));
             month = String.valueOf(session.getAttribute("month"));
+
+            if(year == null){
+                throw new Exception("year 값에 문제가 생겼습니다.");
+            }
+            if(month == null){
+                throw new Exception("month 값에 문제가 생겼습니다.");
+            }
+
+            yearAndMonth = year + month;
 
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin");
 
-            String sql = "SELECT * FROM schedule WHERE user_idx=?";
+            String sql = "SELECT * FROM schedule WHERE user_idx=? AND left(date, 6)=202402";
             PreparedStatement query = conn.prepareStatement(sql);
             query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
             ResultSet result = query.executeQuery();
 
             while(result.next()){
-                String scheduleIdx = result.getString("idx");
-                String userIdx = result.getString("user_idx");
-                String hour = String.valueOf(result.getInt("hour"));
-                String minute = String.valueOf(result.getInt("minute"));
+                String scheduleIdx = String.valueOf(result.getInt("idx"));
+                String userIdx = String.valueOf(result.getInt("user_idx"));
+                String time = String.valueOf(result.getInt("time"));
                 String date = result.getString("date"); 
                 String contents = result.getString("contents");
 
                 ArrayList<String> temp = new ArrayList<String>();
                 temp.add("\"" + scheduleIdx + "\"");
                 temp.add("\"" + userIdx + "\"");
-                temp.add("\"" + hour + "\"");
-                temp.add("\"" + minute + "\"");
+                temp.add("\"" + time + "\"");
                 temp.add("\"" + date + "\"");
                 temp.add("\"" + contents + "\"");
 
                 scheduleDataList.add(temp);
             }
+            session.removeAttribute("year");
             session.removeAttribute("month");
         }
     } catch (Exception e) {
