@@ -36,9 +36,10 @@
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin");
 
-            String sql = "SELECT * FROM schedule WHERE user_idx=? AND left(date, 6)=202402";
+            String sql = "SELECT * FROM schedule WHERE user_idx=? AND left(date, 6)=?";
             PreparedStatement query = conn.prepareStatement(sql);
             query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
+            query.setInt(2, yearAndMonth);
             ResultSet result = query.executeQuery();
 
             while(result.next()){
@@ -191,18 +192,35 @@
 
         function yearMinusEvent() {
             var yearElement = document.getElementById('year');
-            var yearValue = parseInt(yearElement.innerText) - 1;
-            yearElement.innerText = yearValue;
+            var year = parseInt(yearElement.innerText) - 1;
 
-            printMatchingDay();
+            var monthSectionElement = document.getElementById('monthSection');
+            var buttonList = monthSectionElement.getElementsByTagName('button');
+            var month = 0;
+
+            for (i = 0; i < buttonList.length; i++) {
+                if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
+                    month = parseInt(buttonList[i].innerText);
+                }
+            }
+
+            location.href = `../jspAction/dateSessionAction.jsp?year=${year}&month=${month}`
         }
-
         function yearPlusEvent() {
             var yearElement = document.getElementById('year');
-            var yearValue = parseInt(yearElement.innerText) + 1;
-            yearElement.innerText = yearValue;
+            var year = parseInt(yearElement.innerText) + 1;
 
-            printMatchingDay();
+            var monthSectionElement = document.getElementById('monthSection');
+            var buttonList = monthSectionElement.getElementsByTagName('button');
+            var month = 0;
+
+            for (i = 0; i < buttonList.length; i++) {
+                if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
+                    month = parseInt(buttonList[i].innerText);
+                }
+            }
+
+            location.href = `../jspAction/dateSessionAction.jsp?year=${year}&month=${month}`
         }
 
         function createDayEvent(e) {
