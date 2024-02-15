@@ -8,7 +8,6 @@
 
 <% 
     LocalDate now = LocalDate.now();
-
     String errMessage = "";
     String year = null;
     String month = null;
@@ -31,7 +30,11 @@
                 year = String.valueOf(now.getYear());
             }
             if(month == "null"){
-                month = String.valueOf(now.getMonthValue());
+                if(now.getMonthValue() < 10){
+                    month = "0" + String.valueOf(now.getMonthValue());
+                }else{
+                    month = String.valueOf(now.getMonthValue());
+                }
             }
 
             yearAndMonth = year + month;
@@ -114,14 +117,14 @@
         var isLogginIn = <%=isLogginIn%>;
         var errMessage = "<%=errMessage%>";
         var year = "<%=year%>";
-        var month = "<%=month%>";
+        var month = <%=month%>;
         var dateList = <%=dateList%>;
 
         if(!isLogginIn){
             alert(errMessage);
             location.href = "../page/login.html";
         }
-        console.log(month);
+        
         createYear(year);
         createMonth(month);
         createDay(year, month, dateList);

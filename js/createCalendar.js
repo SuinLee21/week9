@@ -24,7 +24,7 @@ function createMonth(month) {
 
 function createDay(year, month, dateList) {
     var daySectionElement = document.getElementById('daySection');
-    console.log(month)
+    console.log(dateList)
     var thirtyOneList = [1, 3, 5, 7, 8, 10, 12];
     var thirtyList = [4, 6, 9, 11];
     var dayCount = 1;
@@ -52,6 +52,7 @@ function createDay(year, month, dateList) {
         scheduleCountList[parseInt(dayList[i]) - 1]++;
     }
 
+    console.log(scheduleCountList);
     //day 생성
     for (day = 1; day <= 35; day++) {
         var newDayButton = document.createElement('button');
