@@ -71,6 +71,6 @@
         }else if(!isContentPresent){
             alert('값을 입력하세요.')
         }
-        location.href = "../page/schedule.jsp";
+        location.href = "../page/modal.jsp";
     </script>
 </body>

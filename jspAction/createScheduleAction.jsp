@@ -49,7 +49,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>createSchduleAction</title>
 </head>
 
 <body>
@@ -68,10 +68,10 @@
             }else if(!isContentPresent){
                 alert('값을 입력해주세요.');
             }
-            location.href = "../page/schedule.jsp"
+            location.href = "../page/modal.jsp"
         }else{
             alert('접근 권한이 없습니다.');
-            location.href = "../page/schedule.jsp";
+            location.href = "../page/login.html";
         }
     </script>
 </body>

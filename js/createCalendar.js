@@ -24,7 +24,7 @@ function createMonth(month) {
 
 function createDay(year, month, dateList) {
     var daySectionElement = document.getElementById('daySection');
-
+    console.log(month)
     var thirtyOneList = [1, 3, 5, 7, 8, 10, 12];
     var thirtyList = [4, 6, 9, 11];
     var dayCount = 1;
@@ -33,9 +33,9 @@ function createDay(year, month, dateList) {
     var dayList = [];
 
     //month의 최대 일자 계산
-    if (thirtyOneList.includes(month)) {
+    if (thirtyOneList.includes(parseInt(month))) {
         lastDay = 31;
-    } else if (thirtyList.includes(month)) {
+    } else if (thirtyList.includes(parseInt(month))) {
         lastDay = 30;
     } else {
         lastDay = 28;
@@ -43,7 +43,7 @@ function createDay(year, month, dateList) {
 
     //각 일자의 스케줄 갯수 세기
     for (i = 0; i < dateList.length; i++) {
-        dayList.push(dateList[i][4].substr(6, 2));
+        dayList.push(dateList[i][0].substr(6, 2));
     }
     for (i = 0; i < lastDay; i++) {
         scheduleCountList.push(0);
@@ -93,7 +93,7 @@ function createDay(year, month, dateList) {
         newDayButton.appendChild(newScheduleCountDiv);
     }
 
-    if (date.getFullYear === parseInt(year) || date.getMonth() === parseInt(month)) {
+    if (date.getFullYear() === parseInt(year) && date.getMonth() + 1 === parseInt(month)) {
         document.getElementById('day' + (date.getDate()).toString()).style.backgroundColor = "rgb(218, 227, 243)";
     }
 }

@@ -42,6 +42,6 @@
 
 <body>
     <script>
-        location.href = "../page/schedule.jsp";
+        location.href = "../page/modal.jsp";
     </script>
 </body>

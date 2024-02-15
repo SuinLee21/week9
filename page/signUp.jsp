@@ -48,6 +48,7 @@
     </form>
 
     <script src="../js/utill.js"></script>
+    <script src="../js/checkValidity.js"></script>
     <script>
         var idInputElement = document.getElementById('userId');
         var pwInputElement = document.getElementById('userPw');

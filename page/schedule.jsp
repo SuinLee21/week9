@@ -13,9 +13,8 @@
     String year = null;
     String month = null;
     String yearAndMonth = null;
-    String date = ""; 
     boolean isLogginIn = true;
-    ArrayList<String> dateList = new ArrayList<String>();
+    ArrayList<ArrayList<String>> dateList = new ArrayList<ArrayList<String>>();
 
     try{
         request.setCharacterEncoding("utf-8");
@@ -28,10 +27,10 @@
             year = String.valueOf(session.getAttribute("year"));
             month = String.valueOf(session.getAttribute("month"));
 
-            if(year == null){
+            if(year == "null"){
                 year = String.valueOf(now.getYear());
             }
-            if(month == null){
+            if(month == "null"){
                 month = String.valueOf(now.getMonthValue());
             }
 
@@ -43,12 +42,12 @@
             String sql = "SELECT * FROM schedule WHERE user_idx=? AND left(date, 6)=?";
             PreparedStatement query = conn.prepareStatement(sql);
             query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
-            query.setInt(2, yearAndMonth);
+            query.setString(2, yearAndMonth);
             ResultSet result = query.executeQuery();
 
             while(result.next()){
+                String date = result.getString("date");
                 ArrayList<String> temp = new ArrayList<String>();
-                date = result.getString("date");
                 temp.add("\"" + date + "\"");
                 dateList.add(temp);
             }
@@ -110,69 +109,42 @@
         <div id="delete" class="delete" data-value="" onclick="deleteEvent(event)">삭제</div>
     </div> --%>
 
-    <div id="modal" class="modal">
-        <h2 id="clickedDate"></h2>
-        <h1>할 일</h1>
-        <div class="closeButton" onclick="closeModalEvent()">X</div>
-        <div id="allSchedule"></div>
-        <form action="../jspAction/createScheduleAction.jsp" class="scheduleWritingSection"
-            onsubmit="return checkValidityEvent({hour: true, minute: true, text: true},
-            {idOfHourSelect: 'writeHourSelect', idOfMinuteSelect: 'writeMinuteSelect', idOfTextarea: 'scheduleTextarea'})">
-            <select id="writeHourSelect" class="writeSelect" name="writeHourSelect">
-                <option value="">시</option>
-            </select>
-            <select id="writeMinuteSelect" class="writeSelect" name="writeMinuteSelect">
-                <option value="">분</option>
-            </select>
-            <textarea maxlength="100" id="scheduleTextarea" class="scheduleInput"
-                placeholder="내용을 입력하세요.(100자 이하)" name="scheduleTextarea"></textarea>
-            <input type="hidden" id="hiddenDate" name="hiddenDate">
-            <input type="submit" class="submitButton" value="작성">
-        </form>
-    </div>
-
-    <script src="../js/checkValidity.js"></script>
     <script src="../js/createCalendar.js"></script>
-    <script src="../js/createSchedule.js"></script>
     <script>
         var isLogginIn = <%=isLogginIn%>;
         var errMessage = "<%=errMessage%>";
-        var year = <%=year%>;
-        var month = <%=month%>;
+        var year = "<%=year%>";
+        var month = "<%=month%>";
         var dateList = <%=dateList%>;
 
         if(!isLogginIn){
             alert(errMessage);
             location.href = "../page/login.html";
         }
-
+        console.log(month);
         createYear(year);
         createMonth(month);
         createDay(year, month, dateList);
 
         function yearMinusEvent() {
-            var yearElement = document.getElementById('year');
-            var year = parseInt(yearElement.innerText) - 1;
+            year = parseInt(year) - 1;
 
             var monthSectionElement = document.getElementById('monthSection');
             var buttonList = monthSectionElement.getElementsByTagName('button');
-            var month = 0;
 
             for (i = 0; i < buttonList.length; i++) {
                 if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
                     month = parseInt(buttonList[i].innerText);
                 }
             }
-
-            location.href = `../jspAction/dateSessionAction.jsp?year=${year}&month=${month}`
+            
+            location.href = `../jspAction/dateSessionAction.jsp?year=\${year}&month=\${month}`;
         }
         function yearPlusEvent() {
-            var yearElement = document.getElementById('year');
-            var year = parseInt(yearElement.innerText) + 1;
+            year = parseInt(year) + 1;
 
             var monthSectionElement = document.getElementById('monthSection');
             var buttonList = monthSectionElement.getElementsByTagName('button');
-            var month = 0;
 
             for (i = 0; i < buttonList.length; i++) {
                 if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
@@ -180,14 +152,14 @@
                 }
             }
 
-            location.href = `../jspAction/dateSessionAction.jsp?year=${year}&month=${month}`
+            location.href = `../jspAction/dateSessionAction.jsp?year=\${year}&month=\${month}`
         }
 
         function createDayEvent(e) {
             var year = document.getElementById('year').innerText;
             var month = parseInt(e.target.innerText);
 
-            location.href = `../jspAction/dateSessionAction.jsp?year=${year}&month=${month}`
+            location.href = `../jspAction/dateSessionAction.jsp?year=\${year}&month=\${month}`
         }
 
         function openModalEvent(e) {
@@ -214,7 +186,7 @@
             }
             
             //모달창 오픈
-            window.open("modal.jsp\?date=" + targetDataDate, '모달창', 'width=700, height=722');
+            window.open(`modal.jsp?date=\${targetDataDate}`, '모달창', 'width=700, height=722');
         }
     </script>
 </body>
