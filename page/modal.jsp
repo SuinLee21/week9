@@ -7,11 +7,9 @@
 
 <% 
     String errMessage = "";
-    String year = null;
-    String month = null;
-    String yearAndMonth = null;
-    String date = ""; 
+    String date = request.getParameter("date");
     boolean isLogginIn = true;
+    ArrayList<ArrayList<String>> scheduleDataList = new ArrayList<ArrayList<String>>();
 
     try{
         request.setCharacterEncoding("utf-8");
@@ -21,8 +19,6 @@
         }
 
         if(session.getAttribute("idx") != null){
-            year = String.valueOf(session.getAttribute("year"));
-            month = String.valueOf(session.getAttribute("month"));
 
             if(year == null){
                 throw new Exception("year 값에 문제가 생겼습니다.");
@@ -31,22 +27,27 @@
                 throw new Exception("month 값에 문제가 생겼습니다.");
             }
 
-            yearAndMonth = year + month;
-
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin");
 
-            String sql = "SELECT * FROM schedule WHERE user_idx=? AND left(date, 6)=?";
+            String sql = "SELECT * FROM schedule WHERE user_idx=? AND date=?";
             PreparedStatement query = conn.prepareStatement(sql);
             query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
-            query.setInt(2, yearAndMonth);
+            query.setInt(2, date);
             ResultSet result = query.executeQuery();
 
             while(result.next()){
-                date = result.getString("date");
+                String scheduleIdx = String.valueOf(result.getInt("idx"));
+                String time = String.valueOf(result.getInt("time"));
+                String contents = result.getString("contents");
+
+                ArrayList<String> temp = new ArrayList<String>();
+                temp.add("\"" + scheduleIdx + "\"");
+                temp.add("\"" + time + "\"");
+                temp.add("\"" + contents + "\"");
+
+                scheduleDataList.add(temp);
             }
-            session.removeAttribute("year");
-            session.removeAttribute("month");
         }
     } catch (Exception e) {
         errMessage = e.getMessage();
@@ -57,27 +58,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>modal</title>
     <link rel="stylesheet" type="text/css" href="../css/schedule.css">
 </head>
 
 <body>
-    <nav>
-        <a class="navLink" href="../jspAction/logoutAction.jsp">로그아웃</a>
-        <a class="navLink" href="profileEdit.jsp">내 정보 수정</a>
-        <a class="navLink" href="viewprofile.jsp">내 정보 보기</a>
-    </nav>
-
-    <main id="main">
-        <div class="yearSection">
-            <img class="yearButton" src="../img/left.jpg" onclick="yearMinusEvent()">
-            <div id="year" class="year"></div>
-            <img class="yearButton" src="../img/right.jpg" onclick="yearPlusEvent()">
-        </div>
-
-        <div id="monthSection" class="monthSection"></div>
-    </main>
-
     <%-- <div class="scheduleSection">
         <div id="divSchedule" class="schedule">
             <div class="scheduleTime">14시 39분</div>
@@ -104,7 +89,6 @@
     <div id="modal" class="modal">
         <h2 id="clickedDate"></h2>
         <h1>할 일</h1>
-        <div class="closeButton" onclick="closeModalEvent()">X</div>
         <div id="allSchedule"></div>
         <form action="../jspAction/createScheduleAction.jsp" class="scheduleWritingSection"
             onsubmit="return checkValidityEvent({hour: true, minute: true, text: true},
@@ -129,7 +113,6 @@
         var isLogginIn = <%=isLogginIn%>;
         var errMessage = "<%=errMessage%>";
         var scheduleDataList = <%=scheduleDataList%>;
-        var year = <%=year%>;
         var month = <%=month%>;
 
         if(!isLogginIn){
@@ -137,97 +120,22 @@
             location.href = "../page/login.html";
         }
 
-        createYear();
-        createMonth();
-        if(month){ //session("month")존재 여부에 따른 createDay()
-            var monthElement = document.getElementById('monthButton' + month);
-
-            changeMonthColor(monthElement);
-            createDay(month, false, scheduleDataList);
-        }else{
-            createDay(date.getMonth() + 1, true, scheduleDataList);
-        }
-
-        function printMatchingDay() {
-            var monthSectionElement = document.getElementById('monthSection');
-            var buttonList = monthSectionElement.getElementsByTagName('button');
-            var year = document.getElementById('year').innerText;
-            var month = 0;
-            var isMonthEqual = false;
-
-            for (i = 0; i < buttonList.length; i++) {
-                if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
-                    month = parseInt(buttonList[i].innerText);
-                }
-            }
-
-            if (month == date.getMonth() + 1 && year == date.getFullYear()) {
-                isMonthEqual = true;
-            }
-
-            createDay(month, isMonthEqual, scheduleDataList);
-        }
-
-        function changeMonthColor(element) {
-            var monthSelectionElement = document.getElementById('monthSection');
-            var buttonList = monthSelectionElement.getElementsByTagName('button');
-
-            for (i = 0; i < 12; i++) {
-                buttonList[i].style.backgroundColor = "white";
-            }
-            element.style.backgroundColor = "rgb(218, 227, 243)";
-        }
-
-        function yearMinusEvent() {
-            var yearElement = document.getElementById('year');
-            var year = parseInt(yearElement.innerText) - 1;
-
-            var monthSectionElement = document.getElementById('monthSection');
-            var buttonList = monthSectionElement.getElementsByTagName('button');
-            var month = 0;
-
-            for (i = 0; i < buttonList.length; i++) {
-                if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
-                    month = parseInt(buttonList[i].innerText);
-                }
-            }
-
-            location.href = `../jspAction/dateSessionAction.jsp?year=${year}&month=${month}`
-        }
-        function yearPlusEvent() {
-            var yearElement = document.getElementById('year');
-            var year = parseInt(yearElement.innerText) + 1;
-
-            var monthSectionElement = document.getElementById('monthSection');
-            var buttonList = monthSectionElement.getElementsByTagName('button');
-            var month = 0;
-
-            for (i = 0; i < buttonList.length; i++) {
-                if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
-                    month = parseInt(buttonList[i].innerText);
-                }
-            }
-
-            location.href = `../jspAction/dateSessionAction.jsp?year=${year}&month=${month}`
-        }
-
-        function createDayEvent(e) {
-            var targetNum = parseInt(e.target.innerText);
-            var year = document.getElementById('year').innerText;
-            var isTodayDateMatching = false;
-
-            if (targetNum === date.getMonth() + 1 && year == date.getFullYear()) {
-                isTodayDateMatching = true;
-            }
-
-            changeMonthColor(e.target);
-            createDay(targetNum, isTodayDateMatching, scheduleDataList);
-        }
-
         function openModalEvent(e) {
+            var modalElement = document.getElementById('modal');
+            var clickedDateElement = document.getElementById('clickedDate');
             var daySelectionElement = document.getElementById('daySection');
             var buttonList = daySelectionElement.getElementsByTagName('button');
+            var idOfWriteHourSelect = document.getElementById('writeHourSelect').id;
+            var idOfWriteMinuteSelect = document.getElementById('writeMinuteSelect').id;
+            var hiddenDateElement = document.getElementById('hiddenDate');
             var targetDataDate = null;
+
+            //모달창 자식 생성 및 모달창 diplay: block
+            var newAllScheduleDiv = document.createElement('div');
+            newAllScheduleDiv.setAttribute('id', 'allSchedule');
+            modal.appendChild(newAllScheduleDiv);
+
+            document.getElementById('modal').style.display = "block";
 
             if(e.target === e.currentTarget){
                 targetDataDate = e.target.getAttribute('data-date');
@@ -246,9 +154,89 @@
                 }
                 buttonList[e.currentTarget.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
             }
-            
-            //모달창 오픈
-            window.open("modal.jsp\?date=" + targetDataDate, '모달창', 'width=700, height=722');
+
+            //data-date 값 clickedDate에 삽입
+            clickedDateElement.innerText = targetDataDate;
+
+            //data-date 값 input type='hidden'에 삽입
+            document.getElementById('hiddenDate').value = targetDataDate;
+
+            //option 생성
+            createOption(idOfWriteHourSelect, idOfWriteMinuteSelect)
+
+            for(var i = scheduleDataList.length - 1; i >= 0; i--) {
+                createSchedule(i, targetDataDate, scheduleDataList);
+            }
         }
+
+        function modifyEvent(e) {
+            var allScheduleElement = document.getElementById('allSchedule');
+            var scheduleSectionList = allScheduleElement.children;
+            var scheduleSectionChildList = null;
+            var scheduleTime = null;
+            var hTwoList = null;
+            var textareaList = null;
+            var selectList = null;
+
+            for (var i = 0; i < scheduleSectionList.length; i++) {
+                scheduleSectionChildList = scheduleSectionList[i].children;
+
+                for (var j = 0; j < scheduleSectionChildList.length; j++) {
+                    if (j === 0) {
+                        scheduleSectionChildList[j].style.display = "flex";
+                    } else if (j === 1) {
+                        scheduleSectionChildList[j].style.display = "none";
+                    } else {
+                        scheduleSectionChildList[j].style.display = "block";
+                    }
+                }
+
+                if(e.target.parentElement === scheduleSectionList[i]){
+                    hTwoList = scheduleSectionList[i].getElementsByTagName('h2');
+                    textareaList = scheduleSectionList[i].getElementsByTagName('textarea');
+                    selectList = scheduleSectionList[i].getElementsByTagName('select');
+
+                    for (var k = 0; k < scheduleSectionChildList.length; k++) {
+                        if (k !== 1) {
+                            scheduleSectionChildList[k].style.display = "none";
+                        } else {
+                            scheduleSectionChildList[k].style.display = "flex";
+                        }
+                    }
+
+                    textareaList[0].value = hTwoList[0].innerText;
+                    createOption(selectList[0].id, selectList[1].id);
+
+                    scheduleTime = scheduleSectionChildList[0].children[0].innerText;
+
+                    selectList[0].options[parseInt(scheduleTime.substr(0, 2)) + 1].selected = true;
+                    selectList[1].options[parseInt(scheduleTime.substr(4, 2)) + 1].selected = true;
+                }
+            }                
+        }
+
+        function deleteEvent(e) {
+            if (confirm('정말 삭제하겠습니까?')) {
+                location.href = '../jspAction/scheduleDeleteAction.jsp?scheduleIdx=' + e.target.getAttribute('data-value');
+            }
+        }
+
+        function cancelEvent(e) {
+            e.preventDefault();
+
+            var scheduleSectionElement = e.target.parentElement.parentElement;
+            var childList = scheduleSectionElement.children;
+
+            for (i = 0; i < childList.length; i++) {
+                if (i === 0) {
+                    childList[i].style.display = "flex";
+                } else if (i === 1) {
+                    childList[i].style.display = "none";
+                } else {
+                    childList[i].style.display = "block";
+                }
+            }
+        }
+
     </script>
 </body>
