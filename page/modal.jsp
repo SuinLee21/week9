@@ -114,60 +114,21 @@
         var errMessage = "<%=errMessage%>";
         var scheduleDataList = <%=scheduleDataList%>;
         var month = <%=month%>;
+        var idOfWriteHourSelect = document.getElementById('writeHourSelect').id;
+        var idOfWriteMinuteSelect = document.getElementById('writeMinuteSelect').id;
 
         if(!isLogginIn){
             alert(errMessage);
             location.href = "../page/login.html";
         }
 
-        function openModalEvent(e) {
-            var modalElement = document.getElementById('modal');
-            var clickedDateElement = document.getElementById('clickedDate');
-            var daySelectionElement = document.getElementById('daySection');
-            var buttonList = daySelectionElement.getElementsByTagName('button');
-            var idOfWriteHourSelect = document.getElementById('writeHourSelect').id;
-            var idOfWriteMinuteSelect = document.getElementById('writeMinuteSelect').id;
-            var hiddenDateElement = document.getElementById('hiddenDate');
-            var targetDataDate = null;
-
-            //모달창 자식 생성 및 모달창 diplay: block
-            var newAllScheduleDiv = document.createElement('div');
-            newAllScheduleDiv.setAttribute('id', 'allSchedule');
-            modal.appendChild(newAllScheduleDiv);
-
-            document.getElementById('modal').style.display = "block";
-
-            if(e.target === e.currentTarget){
-                targetDataDate = e.target.getAttribute('data-date');
-
-                //일자 색 변경
-                for (i = 0; i < 31; i++) {
-                    buttonList[i].style.backgroundColor = "white";
-                }
-                buttonList[e.target.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
-            }else{
-                targetDataDate = e.currentTarget.getAttribute('data-date');
-
-                //일자 색 변경
-                for (i = 0; i < 31; i++) {
-                    buttonList[i].style.backgroundColor = "white";
-                }
-                buttonList[e.currentTarget.dataset.value].style.backgroundColor = "rgb(218, 227, 243)";
-            }
-
-            //data-date 값 clickedDate에 삽입
-            clickedDateElement.innerText = targetDataDate;
-
-            //data-date 값 input type='hidden'에 삽입
-            document.getElementById('hiddenDate').value = targetDataDate;
-
-            //option 생성
-            createOption(idOfWriteHourSelect, idOfWriteMinuteSelect)
-
-            for(var i = scheduleDataList.length - 1; i >= 0; i--) {
-                createSchedule(i, targetDataDate, scheduleDataList);
-            }
+        for(var i = scheduleDataList.length - 1; i >= 0; i--) {
+            createSchedule(i, scheduleDataList);
         }
+
+        document.getElementById('hiddenDate').value = targetDataDate;
+
+        createOption(idOfWriteHourSelect, idOfWriteMinuteSelect)
 
         function modifyEvent(e) {
             var allScheduleElement = document.getElementById('allSchedule');
