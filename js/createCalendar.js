@@ -1,12 +1,12 @@
 var date = new Date();
 
-function createYear() {
+function createYear(year) {
     var yearElement = document.getElementById('year');
 
-    yearElement.innerText = date.getFullYear();
+    yearElement.innerText = year;
 }
 
-function createMonth() {
+function createMonth(month) {
     var monthSectionElement = document.getElementById('monthSection');
 
     for (i = 1; i <= 12; i++) {
@@ -19,23 +19,20 @@ function createMonth() {
 
         monthSectionElement.appendChild(newMonthButton);
     }
-    document.getElementById('monthButton' + (date.getMonth() + 1).toString()).style.backgroundColor = "rgb(218, 227, 243)";
+    document.getElementById('monthButton' + month).style.backgroundColor = "rgb(218, 227, 243)";
 }
 
-function createDay(month, isTodayDateMatching, scheduleDataList) {
-    var year = document.getElementById('year').innerText;
-    var mainElement = document.getElementById('main');
+function createDay(year, month, dateList) {
     var daySectionElement = document.getElementById('daySection');
-
-    var newDaySectionDiv = document.createElement('div');
 
     var thirtyOneList = [1, 3, 5, 7, 8, 10, 12];
     var thirtyList = [4, 6, 9, 11];
     var dayCount = 1;
     var lastDay = 0;
     var scheduleCountList = [];
-    var dateList = [];
+    var dayList = [];
 
+    //month의 최대 일자 계산
     if (thirtyOneList.includes(month)) {
         lastDay = 31;
     } else if (thirtyList.includes(month)) {
@@ -44,26 +41,18 @@ function createDay(month, isTodayDateMatching, scheduleDataList) {
         lastDay = 28;
     }
 
+    //각 일자의 스케줄 갯수 세기
+    for (i = 0; i < dateList.length; i++) {
+        dayList.push(dateList[i][4].substr(6, 2));
+    }
     for (i = 0; i < lastDay; i++) {
         scheduleCountList.push(0);
     }
-    for (i = 0; i < scheduleDataList.length; i++) {
-        var yearAndMonth = scheduleDataList[i][4].substr(0, 6);
-        if (yearAndMonth === `${year}0${month}` || yearAndMonth === `${year}${month}`) {
-            dateList.push(scheduleDataList[i][4].substr(6, 2));
-        }
-    }
-    for (i = 0; i < dateList.length; i++) {
-        scheduleCountList[parseInt(dateList[i]) - 1]++;
+    for (i = 0; i < dayList.length; i++) {
+        scheduleCountList[parseInt(dayList[i]) - 1]++;
     }
 
-    if (daySectionElement) {
-        daySectionElement.remove();
-    }
-
-    newDaySectionDiv.setAttribute('id', 'daySection');
-    newDaySectionDiv.setAttribute('class', 'daySection');
-
+    //day 생성
     for (day = 1; day <= 35; day++) {
         var newDayButton = document.createElement('button');
         var newDayTextDiv = document.createElement('div');
@@ -98,14 +87,13 @@ function createDay(month, isTodayDateMatching, scheduleDataList) {
             newDayTextDiv.innerText = "\n"
         }
 
-        newDaySectionDiv.appendChild(newDayButton);
+        daySectionElement.appendChild(newDayButton);
 
         newDayButton.appendChild(newDayTextDiv);
         newDayButton.appendChild(newScheduleCountDiv);
     }
-    mainElement.appendChild(newDaySectionDiv)
 
-    if (isTodayDateMatching) {
+    if (date.getFullYear === parseInt(year) || date.getMonth() === parseInt(month)) {
         document.getElementById('day' + (date.getDate()).toString()).style.backgroundColor = "rgb(218, 227, 243)";
     }
 }

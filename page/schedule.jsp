@@ -4,14 +4,18 @@
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.time.LocalDate" %>
 
 <% 
+    LocalDate now = LocalDate.now();
+
     String errMessage = "";
     String year = null;
     String month = null;
     String yearAndMonth = null;
     String date = ""; 
     boolean isLogginIn = true;
+    ArrayList<String> dateList = new ArrayList<String>();
 
     try{
         request.setCharacterEncoding("utf-8");
@@ -25,10 +29,10 @@
             month = String.valueOf(session.getAttribute("month"));
 
             if(year == null){
-                throw new Exception("year 값에 문제가 생겼습니다.");
+                year = String.valueOf(now.getYear());
             }
             if(month == null){
-                throw new Exception("month 값에 문제가 생겼습니다.");
+                month = String.valueOf(now.getMonthValue());
             }
 
             yearAndMonth = year + month;
@@ -43,7 +47,10 @@
             ResultSet result = query.executeQuery();
 
             while(result.next()){
+                ArrayList<String> temp = new ArrayList<String>();
                 date = result.getString("date");
+                temp.add("\"" + date + "\"");
+                dateList.add(temp);
             }
             session.removeAttribute("year");
             session.removeAttribute("month");
@@ -76,6 +83,8 @@
         </div>
 
         <div id="monthSection" class="monthSection"></div>
+
+        <div id="daySection" class="daySection"></div>
     </main>
 
     <%-- <div class="scheduleSection">
@@ -128,55 +137,18 @@
     <script>
         var isLogginIn = <%=isLogginIn%>;
         var errMessage = "<%=errMessage%>";
-        var scheduleDataList = <%=scheduleDataList%>;
         var year = <%=year%>;
         var month = <%=month%>;
+        var dateList = <%=dateList%>;
 
         if(!isLogginIn){
             alert(errMessage);
             location.href = "../page/login.html";
         }
 
-        createYear();
-        createMonth();
-        if(month){ //session("month")존재 여부에 따른 createDay()
-            var monthElement = document.getElementById('monthButton' + month);
-
-            changeMonthColor(monthElement);
-            createDay(month, false, scheduleDataList);
-        }else{
-            createDay(date.getMonth() + 1, true, scheduleDataList);
-        }
-
-        function printMatchingDay() {
-            var monthSectionElement = document.getElementById('monthSection');
-            var buttonList = monthSectionElement.getElementsByTagName('button');
-            var year = document.getElementById('year').innerText;
-            var month = 0;
-            var isMonthEqual = false;
-
-            for (i = 0; i < buttonList.length; i++) {
-                if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
-                    month = parseInt(buttonList[i].innerText);
-                }
-            }
-
-            if (month == date.getMonth() + 1 && year == date.getFullYear()) {
-                isMonthEqual = true;
-            }
-
-            createDay(month, isMonthEqual, scheduleDataList);
-        }
-
-        function changeMonthColor(element) {
-            var monthSelectionElement = document.getElementById('monthSection');
-            var buttonList = monthSelectionElement.getElementsByTagName('button');
-
-            for (i = 0; i < 12; i++) {
-                buttonList[i].style.backgroundColor = "white";
-            }
-            element.style.backgroundColor = "rgb(218, 227, 243)";
-        }
+        createYear(year);
+        createMonth(month);
+        createDay(year, month, dateList);
 
         function yearMinusEvent() {
             var yearElement = document.getElementById('year');
@@ -212,16 +184,10 @@
         }
 
         function createDayEvent(e) {
-            var targetNum = parseInt(e.target.innerText);
             var year = document.getElementById('year').innerText;
-            var isTodayDateMatching = false;
+            var month = parseInt(e.target.innerText);
 
-            if (targetNum === date.getMonth() + 1 && year == date.getFullYear()) {
-                isTodayDateMatching = true;
-            }
-
-            changeMonthColor(e.target);
-            createDay(targetNum, isTodayDateMatching, scheduleDataList);
+            location.href = `../jspAction/dateSessionAction.jsp?year=${year}&month=${month}`
         }
 
         function openModalEvent(e) {
