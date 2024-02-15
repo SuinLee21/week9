@@ -10,7 +10,7 @@
     String minuteSelectValue = request.getParameter("writeMinuteSelect"); 
     String dateValue = request.getParameter("hiddenDate");
     String textValue = request.getParameter("scheduleTextarea");
-    String month = "";
+    String time = null;
     
     boolean isLogginIn = false;
     boolean isHourSelected = false;
@@ -25,23 +25,20 @@
             isMinuteSelected = true;
             isContentPresent = true;
 
-            month = dateValue.substring(4, 6);
+            time = hourSelectValue + minuteSelectValue;
             textValue = textValue.replaceAll("(\r\n|\r|\n|\n\r)", "");
 
             Class.forName("com.mysql.jdbc.Driver"); 
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
-            String sql = "INSERT INTO schedule(user_idx, hour, minute, date, contents) VALUES(?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO schedule(user_idx, time, date, contents) VALUES(?, ?, ?, ?)";
             PreparedStatement query = conn.prepareStatement(sql);
 
             query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
-            query.setInt(2, Integer.parseInt(hourSelectValue));
-            query.setInt(3, Integer.parseInt(minuteSelectValue));
-            query.setString(4, dateValue);
-            query.setString(5, textValue);
+            query.setString(2, time);
+            query.setString(3, dateValue);
+            query.setString(4, textValue);
             query.executeUpdate();
-
-            session.setAttribute("month", month);
         }
     }
 %>
@@ -60,6 +57,7 @@
             var isHourSelected = <%=isHourSelected%>;
             var isMinuteSelected = <%=isMinuteSelected%>;
             var isContentPresent = <%=isContentPresent%>;
+            var dateValue = <%=dateValue%>;
 
             if(!isHourSelected){
                 alert('시를 선택해주세요.')
@@ -68,7 +66,7 @@
             }else if(!isContentPresent){
                 alert('값을 입력해주세요.');
             }
-            location.href = "../page/modal.jsp"
+            location.href = `../page/modal.jsp?date=\${dateValue}`;
         }else{
             alert('접근 권한이 없습니다.');
             location.href = "../page/login.html";

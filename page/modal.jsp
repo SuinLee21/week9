@@ -36,6 +36,7 @@
                 ArrayList<String> temp = new ArrayList<String>();
                 temp.add("\"" + scheduleIdx + "\"");
                 temp.add("\"" + time + "\"");
+                temp.add("\"" + date + "\"");
                 temp.add("\"" + contents + "\"");
 
                 scheduleDataList.add(temp);
@@ -85,12 +86,13 @@
         var idOfWriteHourSelect = document.getElementById('writeHourSelect').id;
         var idOfWriteMinuteSelect = document.getElementById('writeMinuteSelect').id;
 
+        scheduleDataList.sort((a, b) => a[1] - b[1]);
         if(!isLogginIn){
             alert(errMessage);
             location.href = "../page/login.html";
         }
 
-        for(var i = scheduleDataList.length - 1; i >= 0; i--) {
+        for(var i = 0; i < scheduleDataList.length; i++) {
             createSchedule(i, scheduleDataList);
         }
 
@@ -147,7 +149,7 @@
 
         function deleteEvent(e) {
             if (confirm('정말 삭제하겠습니까?')) {
-                location.href = '../jspAction/scheduleDeleteAction.jsp?scheduleIdx=' + e.target.getAttribute('data-value');
+                location.href = `../jspAction/scheduleDeleteAction.jsp?scheduleIdx=\${e.target.getAttribute('data-value')}&date=\${date}`;
             }
         }
 

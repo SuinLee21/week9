@@ -8,30 +8,17 @@
     request.setCharacterEncoding("utf-8");
 
     int scheduleIdxValue = Integer.parseInt(request.getParameter("scheduleIdx"));
-    String month = "";
+    String dateValue = request.getParameter("date");
 
     Class.forName("com.mysql.jdbc.Driver"); 
     Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
-    String sql = "SELECT date from schedule WHERE idx=?";
+    String sql = "DELETE FROM schedule WHERE idx=? AND user_idx=?";
     PreparedStatement query = conn.prepareStatement(sql); 
-
-    query.setInt(1, scheduleIdxValue);
-
-    ResultSet result = query.executeQuery();
-
-    while(result.next()){
-        month = result.getString("date").substring(4, 6);
-    }
-
-    sql = "DELETE FROM schedule WHERE idx=? AND user_idx=?";
-    query = conn.prepareStatement(sql);
 
     query.setInt(1, scheduleIdxValue);
     query.setInt(2, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
     query.executeUpdate();
-
-    session.setAttribute("month", month);
 %>
 
 <head>
@@ -42,6 +29,7 @@
 
 <body>
     <script>
-        location.href = "../page/modal.jsp";
+        var dateValue = <%=dateValue%>;
+        location.href = `../page/modal.jsp?date=\${dateValue}`;
     </script>
 </body>

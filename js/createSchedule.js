@@ -12,7 +12,8 @@ function createSchedule(scheduleNum, scheduleDataList) {
     var newHourOption = document.createElement('option');
     var newMinuteOption = document.createElement('option');
     var newModifyTextarea = document.createElement('textarea');
-    var newHiddenInput = document.createElement('input');
+    var newHiddenScheduleIdx = document.createElement('input');
+    var newHiddenDate = document.createElement('input');
     var newSubmitButton = document.createElement('input');
     var newCancelButton = document.createElement('button');
     var newModifyDiv = document.createElement('div');
@@ -56,9 +57,13 @@ function createSchedule(scheduleNum, scheduleDataList) {
     newModifyTextarea.setAttribute('class', 'modifyTextarea');
     newModifyTextarea.setAttribute('name', 'modifyTextarea');
 
-    newHiddenInput.setAttribute('type', 'hidden');
-    newHiddenInput.setAttribute('name', 'scheduleIdx');
-    newHiddenInput.setAttribute('value', scheduleDataList[scheduleNum][0]);
+    newHiddenScheduleIdx.setAttribute('type', 'hidden');
+    newHiddenScheduleIdx.setAttribute('name', 'scheduleIdx');
+    newHiddenScheduleIdx.setAttribute('value', scheduleDataList[scheduleNum][0]);
+
+    newHiddenDate.setAttribute('type', 'hidden');
+    newHiddenDate.setAttribute('name', 'date');
+    newHiddenDate.setAttribute('value', scheduleDataList[scheduleNum][2]);
 
     newSubmitButton.setAttribute('type', 'submit');
     newSubmitButton.setAttribute('value', '저장');
@@ -90,7 +95,8 @@ function createSchedule(scheduleNum, scheduleDataList) {
     newHiddenScheduleForm.appendChild(newModifyHourSelect);
     newHiddenScheduleForm.appendChild(newModifyMinuteSelect);
     newHiddenScheduleForm.appendChild(newModifyTextarea);
-    newHiddenScheduleForm.appendChild(newHiddenInput);
+    newHiddenScheduleForm.appendChild(newHiddenScheduleIdx);
+    newHiddenScheduleForm.appendChild(newHiddenDate);
     newHiddenScheduleForm.appendChild(newSubmitButton);
     newHiddenScheduleForm.appendChild(newCancelButton);
 
@@ -105,7 +111,11 @@ function createOption(idOfHourSelect, idOfMinuteSelect) {
     for (i = 0; i <= 23; i++) {
         var newOption = document.createElement('option');
 
-        newOption.setAttribute('value', `${i}`);
+        if (i < 10) {
+            newOption.setAttribute('value', `0${i}`);
+        } else {
+            newOption.setAttribute('value', `${i}`);
+        }
         newOption.innerText = i;
 
         hourSelectElement.appendChild(newOption);
@@ -113,7 +123,11 @@ function createOption(idOfHourSelect, idOfMinuteSelect) {
     for (i = 0; i <= 59; i++) {
         var newOption = document.createElement('option');
 
-        newOption.setAttribute('value', `${i}`);
+        if (i < 10) {
+            newOption.setAttribute('value', `0${i}`);
+        } else {
+            newOption.setAttribute('value', `${i}`);
+        }
         newOption.innerText = i;
 
         minuteSelectElement.appendChild(newOption);

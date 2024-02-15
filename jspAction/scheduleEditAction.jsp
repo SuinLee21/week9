@@ -8,54 +8,42 @@
     request.setCharacterEncoding("utf-8");
 
     int scheduleIdxValue = Integer.parseInt(request.getParameter("scheduleIdx"));
+    String dateValue = request.getParameter("date");
     String hourSelectValue = request.getParameter("modifyHourSelect"); 
     String minuteSelectValue = request.getParameter("modifyMinuteSelect"); 
     String textValue = request.getParameter("modifyTextarea");
-    String month = "";
+    String time = null;
 
     boolean isContentPresent = false;
     boolean isHourSelected = false;
     boolean isMinuteSelected = false;
     
-    
     if(hourSelectValue != "" || minuteSelectValue != "" || textValue != ""){
         isHourSelected = true;
         isMinuteSelected = true;
         isContentPresent = true;
+
+        time = hourSelectValue + minuteSelectValue;
         textValue = textValue.replaceAll("(\r\n|\r|\n|\n\r)", "");
 
         Class.forName("com.mysql.jdbc.Driver"); 
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
-        String sql = "SELECT date from schedule WHERE idx=?";
+        String sql = "UPDATE schedule SET time=?, contents=? WHERE idx=? AND user_idx=?";
         PreparedStatement query = conn.prepareStatement(sql); 
 
-        query.setInt(1, scheduleIdxValue);
-
-        ResultSet result = query.executeQuery();
-
-        while(result.next()){
-            month = result.getString("date").substring(4, 6);
-        }
-
-        sql = "UPDATE schedule SET hour=?, minute=?, contents=? WHERE idx=? AND user_idx=?";
-        query = conn.prepareStatement(sql);
-
-        query.setInt(1, Integer.parseInt(hourSelectValue));
-        query.setInt(2, Integer.parseInt(minuteSelectValue));
-        query.setString(3, textValue);
-        query.setInt(4, scheduleIdxValue);
-        query.setInt(5, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
+        query.setString(1, time);
+        query.setString(2, textValue);
+        query.setInt(3, scheduleIdxValue);
+        query.setInt(4, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
         query.executeUpdate();
-
-        session.setAttribute("month", month);
     }
 %>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>scheduleEditAction</title>
 </head>
 
 <body>
@@ -63,6 +51,7 @@
         var isHourSelected = <%=isHourSelected%>;
         var isMinuteSelected = <%=isMinuteSelected%>;
         var isContentPresent = <%=isContentPresent%>;
+        var dateValue = <%=dateValue%>;
 
         if(!isHourSelected){
             alert('시를 선택해주세요.')
@@ -71,6 +60,6 @@
         }else if(!isContentPresent){
             alert('값을 입력하세요.')
         }
-        location.href = "../page/modal.jsp";
+        location.href = `../page/modal.jsp?date=\${dateValue}`;
     </script>
 </body>
