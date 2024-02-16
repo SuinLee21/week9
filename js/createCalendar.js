@@ -24,7 +24,7 @@ function createMonth(month) {
 
 function createDay(year, month, dateList) {
     var daySectionElement = document.getElementById('daySection');
-
+    console.log(dateList)
     var thirtyOneList = [1, 3, 5, 7, 8, 10, 12];
     var thirtyList = [4, 6, 9, 11];
     var dayCount = 1;

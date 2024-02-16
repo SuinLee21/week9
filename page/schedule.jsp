@@ -124,7 +124,8 @@
             alert(errMessage);
             location.href = "../page/login.html";
         }
-        
+        console.log(dateList);
+        console.log(year, month);
         createYear(year);
         createMonth(month);
         createDay(year, month, dateList);
@@ -136,8 +137,14 @@
             var buttonList = monthSectionElement.getElementsByTagName('button');
 
             for (i = 0; i < buttonList.length; i++) {
+                var buttonInnerText = buttonList[i].innerText;
+
                 if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
-                    month = parseInt(buttonList[i].innerText);
+                    if(buttonInnerText < 10){
+                        month = `0\${buttonInnerText}`;
+                    }else{
+                        month = buttonInnerText;
+                    }
                 }
             }
             
@@ -150,8 +157,14 @@
             var buttonList = monthSectionElement.getElementsByTagName('button');
 
             for (i = 0; i < buttonList.length; i++) {
+                var buttonInnerText = buttonList[i].innerText;
+
                 if (buttonList[i].style.backgroundColor === "rgb(218, 227, 243)") {
-                    month = parseInt(buttonList[i].innerText);
+                    if(buttonInnerText < 10){
+                        month = `0\${buttonInnerText}`;
+                    }else{
+                        month = buttonInnerText;
+                    }
                 }
             }
 
@@ -160,7 +173,14 @@
 
         function createDayEvent(e) {
             var year = document.getElementById('year').innerText;
-            var month = parseInt(e.target.innerText);
+            var month = null;
+            var monthInnerText = e.target.innerText;
+
+            if(monthInnerText < 10){
+                month = `0\${monthInnerText}`;
+            }else{
+                month = monthInnerText;
+            }
 
             location.href = `../jspAction/dateSessionAction.jsp?year=\${year}&month=\${month}`
         }
