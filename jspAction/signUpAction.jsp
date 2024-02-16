@@ -22,6 +22,7 @@
     boolean isRegexPwValid = Pattern.matches(regexPw, pwValue);
     boolean isRegexNameValid = Pattern.matches(regexName, nameValue);
     boolean isRegexPhoneNumValid = Pattern.matches(regexPhoneNum, phoneNumValue);
+    boolean isValidData = false;
 
     String id = "";
 
@@ -37,6 +38,8 @@
         }
 
         if(isRegexIdValid && isRegexPwValid && isRegexNameValid && isRegexPhoneNumValid){
+            isValidData = true;
+
             Class.forName("com.mysql.jdbc.Driver"); 
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
@@ -63,8 +66,9 @@
 <body>
     <script>
         var errMessage = "<%=errMessage%>";
+        var isValidData = <%=isValidData%>;
 
-        if(errMessage){
+        if(!isValidData){
             alert(errMessage);
             location.href = "../page/signUp.jsp";
         }else{

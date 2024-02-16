@@ -16,6 +16,7 @@
     String regexId = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,12}$";
 
     boolean isRegexIdValid = Pattern.matches(regexId, idValue);
+    boolean isValidData = false;
     boolean isIdDuplicate = false;
 
     String id = "";
@@ -26,6 +27,8 @@
         }
 
         if(isRegexIdValid){
+            isValidData = true;
+            
             Class.forName("com.mysql.jdbc.Driver"); 
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
@@ -78,12 +81,12 @@
     <h1 id="isDisabled" class="isDisabled"></h1>
 
     <script>
-        var isRegexIdValid = <%=isRegexIdValid%>;
+        var isValidData = <%=isValidData%>;
         var errMessage = "<%=errMessage%>";
         var isIdDuplicate = <%=isIdDuplicate%>;
         var idValue = "<%=idValue%>";
 
-        if(!isRegexIdValid){
+        if(!isValidData){
             alert(errMessage);
         }else{
             if(isIdDuplicate){

@@ -11,6 +11,7 @@
     String idValue = request.getParameter("userId");
     String nameValue = request.getParameter("userName");
     String phoneNumValue = request.getParameter("userPhoneNum");
+    String errMessage = "";
 
     String regexId = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,12}$";
     String regexName = "^[가-힣]{2,10}$";
@@ -19,28 +20,48 @@
     boolean isRegexIdValid = Pattern.matches(regexId, idValue);
     boolean isRegexNameValid = Pattern.matches(regexName, nameValue);
     boolean isRegexPhoneNumValid = Pattern.matches(regexPhoneNum, phoneNumValue);
+    boolean isValidData = false;
+    boolean isInfoMatching = false;
 
     String pw = "";
 
-    if(isRegexIdValid && isRegexNameValid && isRegexPhoneNumValid){
-        Class.forName("com.mysql.jdbc.Driver"); 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
-
-        String sql = "SELECT * FROM user WHERE id=? AND name=? AND phoneNum=?";
-        PreparedStatement query = conn.prepareStatement(sql); 
-        
-        query.setString(1, idValue);
-        query.setString(2, nameValue);
-        query.setString(3, phoneNumValue);
-
-        ResultSet result = query.executeQuery(); 
-
-        while(result.next()){
-            pw = result.getString("pw");
+    try{
+        if(!isRegexIdValid){
+            throw new Exception("아이디를 다시 입력해주세요.");
+        }else if(!isRegexNameValid){
+            throw new Exception("이름을 다시 입력해주세요.");
+        }else if(!isRegexPhoneNumValid){
+            throw new Exception("전화번호를 다시 입력해주세요.");
         }
-        if(pw != ""){
-            session.setAttribute("pw", pw);
+
+        if(isRegexIdValid && isRegexNameValid && isRegexPhoneNumValid){
+            isValidData = true;
+
+            Class.forName("com.mysql.jdbc.Driver"); 
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
+
+            String sql = "SELECT * FROM user WHERE id=? AND name=? AND phoneNum=?";
+            PreparedStatement query = conn.prepareStatement(sql); 
+            
+            query.setString(1, idValue);
+            query.setString(2, nameValue);
+            query.setString(3, phoneNumValue);
+
+            ResultSet result = query.executeQuery(); 
+
+            while(result.next()){
+                pw = result.getString("pw");
+            }
+            if(pw == ""){
+                throw new Exception("회원정보가 일치하지 않습니다.");
+            }
+            if(pw != ""){
+                isInfoMatching = true;
+                session.setAttribute("pw", pw);
+            }
         }
+    }catch(Exception e){
+        errMessage = e.getMessage();
     }
 %>
 
@@ -52,25 +73,18 @@
 
 <body>
     <script>
-        var pw = "<%=pw%>";
-        var isRegexIdValid = <%=isRegexIdValid%>;
-        var isRegexNameValid = <%=isRegexNameValid%>;
-        var isRegexPhoneNumValid = <%=isRegexPhoneNumValid%>;
+        var errMessage = "<%=errMessage%>";
+        var isValidData = <%=isValidData%>;
+        var isInfoMatching = <%=isInfoMatching%>;
 
-        if(!isRegexIdValid){
-            alert('아이디를 다시 입력해주세요.');
-            location.href = "../page/findPw.html";
-        }else if(!isRegexNameValid){
-            alert('이름을 다시 입력해주세요.');
-            location.href = "../page/findPw.html";
-        }else if(!isRegexPhoneNumValid){
-            alert('전화번호를 다시 입력해주세요.');
+        if(!isValidData){
+            alert(errMessage);
             location.href = "../page/findPw.html";
         }else{
-            if(pw !== ""){
+            if(isInfoMatching){
                 location.href = "../page/findPwResult.jsp";
             }else{
-                alert('회원정보가 일치하지 않습니다.');
+                alert(errMessage);
                 location.href = "../page/findPw.html";
             }
         }

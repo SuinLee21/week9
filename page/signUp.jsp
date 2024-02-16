@@ -23,7 +23,8 @@
 </head>
 
 <body>
-    <form action="../jspAction/signUpAction.jsp" class="accountForm">
+    <form action="../jspAction/signUpAction.jsp" class="accountForm" onsubmit="return checkValidityEvent({id:true, checkButton: true, pw:true, name:true, phoneNum:true, inputDiabled: true}, 
+        {idOfIdInput: 'userId', idOfPwInput: 'userPw', idOfNameInput: 'userName', idOfPhoneNumInput: 'userPhoneNum'})">
         <div class="idInputParent">
             <input maxlength="12" type="text" id="userId" class="accountFormChild" name="userId"
                 placeholder="아이디(영어+숫자, 각 최소 1개 이상, 8~12 글자)">
@@ -47,7 +48,7 @@
     </form>
 
     <script src="../js/utill.js"></script>
-    <%-- <script src="../js/checkValidity.js"></script> --%>
+    <script src="../js/checkValidity.js"></script>
     <script>
         var idInputElement = document.getElementById('userId');
         var pwInputElement = document.getElementById('userPw');

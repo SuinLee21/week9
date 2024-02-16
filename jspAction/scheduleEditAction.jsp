@@ -15,37 +15,41 @@
     String time = null;
     String errMessage = "";
 
-    boolean isLoginIn = true;
+    boolean isLogginIn = true;
+    boolean isValidData = false;
 
     try{
         if(session.getAttribute("idx") == null){
-            isLoginIn = false;
+            isLogginIn = false;
             throw new Exception("접근 권한이 없습니다.");
         }
 
-        if(hourSelectValue == "" || hourSelectValue == null){
-            throw new Exception("시를 선택해주세요.");
-        }else if(minuteSelectValue == "" || minuteSelectValue == null){
-            throw new Exception("분을 선택해주세요.");
-        }else if(textValue == "" || textValue == null){
-            throw new Exception("값을 입력해주세요.");
-        }
+        if(session.getAttribute("idx") != null){
+            if(hourSelectValue == "" || hourSelectValue == null){
+                throw new Exception("시를 선택해주세요.");
+            }else if(minuteSelectValue == "" || minuteSelectValue == null){
+                throw new Exception("분을 선택해주세요.");
+            }else if(textValue == "" || textValue == null){
+                throw new Exception("값을 입력해주세요.");
+            }
 
-        if(hourSelectValue != "" || minuteSelectValue != "" || textValue != ""){
-            time = hourSelectValue + minuteSelectValue;
-            textValue = textValue.replaceAll("(\r\n|\r|\n|\n\r)", "");
+            if(hourSelectValue != "" || minuteSelectValue != "" || textValue != ""){
+                isValidData = true;
+                time = hourSelectValue + minuteSelectValue;
+                textValue = textValue.replaceAll("(\r\n|\r|\n|\n\r)", "");
 
-            Class.forName("com.mysql.jdbc.Driver"); 
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
+                Class.forName("com.mysql.jdbc.Driver"); 
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
-            String sql = "UPDATE schedule SET time=?, contents=? WHERE idx=? AND user_idx=?";
-            PreparedStatement query = conn.prepareStatement(sql); 
+                String sql = "UPDATE schedule SET time=?, contents=? WHERE idx=? AND user_idx=?";
+                PreparedStatement query = conn.prepareStatement(sql); 
 
-            query.setString(1, time);
-            query.setString(2, textValue);
-            query.setInt(3, scheduleIdxValue);
-            query.setInt(4, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
-            query.executeUpdate();
+                query.setString(1, time);
+                query.setString(2, textValue);
+                query.setInt(3, scheduleIdxValue);
+                query.setInt(4, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
+                query.executeUpdate();
+            }
         }
     }catch(Exception e){
         errMessage = e.getMessage();
@@ -63,14 +67,14 @@
     <script>
         var dateValue = <%=dateValue%>;
         var errMessage = "<%=errMessage%>";
-        var isLoginIn = <%=isLoginIn%>;
+        var isValidData = <%=isValidData%>;
+        var isLogginIn = <%=isLogginIn%>;
 
-        if(!isLoginIn){
+        if(!isLogginIn){
             alert(errMessage);
             location.href = "../page/login.html";
         }else{
-            //값이 없을 때 체크
-            if(errMessage){
+            if(!isValidData){
                 alert(errMessage);
             }
             location.href = `../page/modal.jsp?date=\${dateValue}`;

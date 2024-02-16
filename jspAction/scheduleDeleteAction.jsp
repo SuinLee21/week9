@@ -11,11 +11,11 @@
     String dateValue = request.getParameter("date");
     String errMessage = "";
 
-    boolean isLoginIn = true; 
+    boolean isLogginIn = true; 
 
     try{
         if(session.getAttribute("idx") == null){
-            isLoginIn = false;
+            isLogginIn = false;
             throw new Exception("접근 권한이 없습니다.");
         }
 
@@ -46,9 +46,9 @@
     <script>
         var dateValue = <%=dateValue%>;
         var errMessage = "<%=errMessage%>";
-        var isLoginIn = <%=isLoginIn%>;
+        var isLogginIn = <%=isLogginIn%>;
 
-        if(!isLoginIn){
+        if(!isLogginIn){
             alert(errMessage);
             location.href = "../page/login.html";
         }else{

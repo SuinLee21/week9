@@ -36,6 +36,7 @@
 <body>
 
     <h1 id="foundId"></h1>
+    <h2>새로고침 시, 비밀번호를 더 이상 볼 수 없습니다.</h2>
     <a href="../page/login.html">로그인 페이지로 이동</a>
 
     <script>
