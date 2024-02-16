@@ -189,7 +189,7 @@
             }
             
             //모달창 오픈
-            window.open(`modal.jsp?date=\${targetDataDate}`, '모달창', 'width=700, height=722');
+            window.open(`modal.jsp?date=\${targetDataDate}`, '모달창', 'width=700, height=880');
         }
     </script>
 </body>

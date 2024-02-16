@@ -62,26 +62,13 @@
 
 <body>
     <script>
-        var isRegexIdValid = <%=isRegexIdValid%>;
-        var isRegexPwValid = <%=isRegexPwValid%>;
-        var isRegexNameValid = <%=isRegexNameValid%>;
-        var isRegexPhoneNumValid = <%=isRegexPhoneNumValid%>;
         var errMessage = "<%=errMessage%>";
 
-        if(!isRegexIdValid){
-            alert(errMessage);
-            location.href = "../page/signUp.jsp";
-        }else if(!isRegexPwValid){
-            alert(errMessage);
-            location.href = "../page/signUp.jsp";
-        }else if(!isRegexNameValid){
-            alert(errMessage);
-            location.href = "../page/signUp.jsp";
-        }else if(!isRegexPhoneNumValid){
+        if(errMessage){
             alert(errMessage);
             location.href = "../page/signUp.jsp";
         }else{
-            alert('정상적으로 가입되었습니다.')
+            alert('정상적으로 가입되었습니다.');
             location.href = "../page/login.html";
         }
     </script>

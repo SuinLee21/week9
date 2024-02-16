@@ -3,7 +3,7 @@
 <%
     boolean isIdFound = true;
     String errMessage = "";
-    String sessionPw = "";
+    String sessionId = "";
 
     try{
         if(session.getAttribute("id") == null){
@@ -11,7 +11,7 @@
         }
 
         if(session.getAttribute("id") != null && session.getAttribute("pw") == null){
-            sessionPw = String.valueOf(session.getAttribute("pw"));
+            sessionId = String.valueOf(session.getAttribute("id"));
             session.invalidate();
         }
     }catch(Exception e){

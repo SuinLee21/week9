@@ -6,18 +6,29 @@
 
 <% 
     request.setCharacterEncoding("utf-8");
+    String errMessage = "";
+    boolean isLogginIn = true;
 
-    if(session.getAttribute("idx") != null){
+    try{
+        if(session.getAttribute("idx") == null){
+            throw new Exception("접근 권한이 없습니다.");
+        }
 
-        Class.forName("com.mysql.jdbc.Driver"); 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
+        if(session.getAttribute("idx") != null){
 
-        String sql = "Delete FROM user WHERE idx=?";
-        PreparedStatement query = conn.prepareStatement(sql);
+            Class.forName("com.mysql.jdbc.Driver"); 
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduler", "suin", "suin"); 
 
-        query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
-        query.executeUpdate();
-        session.invalidate();
+            String sql = "Delete FROM user WHERE idx=?";
+            PreparedStatement query = conn.prepareStatement(sql);
+
+            query.setInt(1, Integer.parseInt(String.valueOf(session.getAttribute("idx"))));
+            query.executeUpdate();
+            session.invalidate();
+        }
+    }catch(Exception e){
+        errMessage = e.getMessage();
+        isLogginIn = false;
     }
 %>
 
@@ -29,6 +40,12 @@
 
 <body>
     <script>
-        location.href = "../page/login.html";
+        var isLogginIn = <%=isLogginIn%>;
+        var errMessage = "<%=errMessage%>";
+
+        if (!isLogginIn) {
+            alert(errMessage);
+            location.href = "../page/login.html";
+        }
     </script>
 </body>

@@ -34,6 +34,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="../css/viewprofile.css">
+
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            width: fit-content;
+            margin: 10 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,6 +53,7 @@
         <h1 id="printName" class="text">이름 : </h1>
         <h1 id="printPhoneNum" class="text">전화번호 : </h1>
     </div>
+    <a href="../page/schedule.jsp">스케줄 페이지로 이동</a>
 
     <script>
         var isLogginIn = <%=isLogginIn%>;
@@ -53,8 +64,6 @@
             var pw = "<%=pw%>";
             var name = "<%=name%>";
             var phoneNum = "<%=phoneNum%>";
-
-            console.log(id)
 
             document.getElementById('printId').innerText = "아이디 : " + id;
             document.getElementById('printPw').innerText = "비밀번호 : " + pw;
