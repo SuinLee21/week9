@@ -75,5 +75,6 @@ function checkValidity(booleanOptions, htmlOptions) {
             return false;
         }
     }
+
     return true;
 }
