@@ -87,6 +87,7 @@
         var idOfWriteMinuteSelect = document.getElementById('writeMinuteSelect').id;
 
         scheduleDataList.sort((a, b) => a[1] - b[1]);
+        
         if(!isLogginIn){
             alert(errMessage);
             location.href = "../page/login.html";
